@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.json",
+  "paths": {
+    "@/*": [
+      "./src/*"
+    ]
+  },
+  "compilerOptions": {
+    "baseUrl": "./",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "target": "ESNext",
+    "module": "ESNext",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "allowJs": false,
+    "declaration": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "rootDir": "./src",
+    "outDir": "./types",
+    "noLib": false,
+    "lib": ["dom", "es6", "es2017"]
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ]
+}

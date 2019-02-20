@@ -1,0 +1,6 @@
+{
+  "files": [
+    "index.d.ts",
+    "shims-vue.d.ts"
+  ]
+}
