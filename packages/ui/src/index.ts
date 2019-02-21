@@ -1,5 +1,7 @@
-import Button from './button'
+import HButton from './button'
+import HView from './view'
 
 export {
-  Button
+  HView,
+  HButton
 }

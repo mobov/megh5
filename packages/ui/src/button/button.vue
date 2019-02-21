@@ -1,5 +1,5 @@
 <style scoped>
-  .button {
+  .h-button {
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -9,7 +9,7 @@
   }
 </style>
 <template>
-  <div class="button"
+  <div class="h-button"
        :style="styles"
        @click="handleAction">
     {{text}}
@@ -20,6 +20,7 @@ import Vue from 'vue'
 import { genSize, genColor } from '../core'
 
 export default Vue.extend({
+  name: 'HButton',
   props: {
     marginTop: {
       type: String

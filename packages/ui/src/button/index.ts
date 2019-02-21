@@ -1,3 +1,3 @@
-import Button from './button.vue'
+import HButton from './button.vue'
 
-export default Button
+export default HButton

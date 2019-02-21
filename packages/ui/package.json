@@ -10,7 +10,9 @@
   },
   "peerDependencies": {
     "vue": "^2.5.21",
-    "@megh5/types": "0.0.1"
+    "@megh5/types": "0.0.1",
+    "@megmore/es-helper": "^0.0.24",
+    "@megmore/scss-helper": "^0.0.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0",

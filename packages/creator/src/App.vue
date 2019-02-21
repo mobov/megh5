@@ -1,21 +1,32 @@
 <template>
   <div id="app">
-    <Button :bgSrc="BUTTON_BG"
-            :width="200"
-            fontColor="white"
-            :height="50"/>
+    <Previewer>
+      <HView bgColor="purple">
+        <HButton :bgSrc="BUTTON_BG"
+                 :width="200"
+                 fontColor="white"
+                 :height="50"/>
+        <HButton :bgSrc="BUTTON_BG"
+                 :width="200"
+                 fontColor="white"
+                 :height="50"/>
+      </HView>
+    </Previewer>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Button } from '@megh5/ui'
+import Previewer from '@/components/previewer.vue'
+import { HView, HButton } from '@megh5/ui'
 import BUTTON_BG from './assets/btn.png'
 
 export default Vue.extend({
-  name: 'app',
+  name: 'App',
   components: {
-    Button
+    Previewer,
+    HView,
+    HButton
   },
   data () {
     return {
@@ -24,14 +35,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
