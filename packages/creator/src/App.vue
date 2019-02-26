@@ -21,8 +21,9 @@
 import Vue from 'vue'
 import Previewer from '@/components/previewer.vue'
 import BUTTON_BG from './assets/btn.png'
+import { ProjectData } from './constants'
 
-const PreviewData = {
+const PreviewData: ProjectData = {
   name: 'testproject',
   version: '0.0.1',
   dependencies: [{
@@ -33,7 +34,7 @@ const PreviewData = {
     '@megmore/vui': '^0.0.2',
     'imports': ['HView', 'HButton']
   }],
-  VNode: {
+  ProjectNode: [{
     tag: 'h-view',
     rootNode: true,
     data: {
@@ -75,8 +76,9 @@ const PreviewData = {
       },
       children: []
     }]
-  }
+  }]
 }
+
 export default Vue.extend({
   name: 'App',
   components: {

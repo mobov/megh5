@@ -99,9 +99,9 @@
     <div class="element-handler-l" @mousedown.stop="enableSizeL = true"></div>
     <div class="element-handler-r" @mousedown.stop="enableSizeR = true"></div>
     <div class="element-handler-tl" @mousedown.stop="enableSizeT = true; enableSizeL = true"></div>
-    <div class="element-handler-tr" @mousedown.stop="enableSizeB = true; enableSizeR = true"></div>
-    <div class="element-handler-bl" @mousedown.stop="enableSizeL = true; enableSizeL = true"></div>
-    <div class="element-handler-br" @mousedown.stop="enableSizeR = true; enableSizeR = true"></div>
+    <div class="element-handler-tr" @mousedown.stop="enableSizeT = true; enableSizeR = true"></div>
+    <div class="element-handler-bl" @mousedown.stop="enableSizeB = true; enableSizeL = true"></div>
+    <div class="element-handler-br" @mousedown.stop="enableSizeB = true; enableSizeR = true"></div>
   </div>
 </template>
 
@@ -125,6 +125,7 @@ function getStyleVal (styleStr: string | number): number {
 
 export default Vue.extend({
   name: 'Element',
+  inject: ['Previewer'],
   data () {
     return {
       enableMove: false,
@@ -139,7 +140,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    styles () {
+    styles (): any {
       return {
         left: `${this.moveX}px`,
         top: `${this.moveY}px`,
@@ -147,8 +148,30 @@ export default Vue.extend({
         height: `${this.sizeY}px`
       }
     },
-    compStyle () {
-      return this.$slots.default[0].data.style || {}
+    compStyle (): any {
+      const { $slots } = this as any
+      return $slots!.default[0]!.data!.style || {}
+    },
+    heightLimit () {
+      return this.Previewer.height - this.moveY
+    },
+    widthLimit () {
+      return this.Previewer.width - this.moveX
+    },
+    topLimit () {
+      return 0
+    },
+    bottomLimit () {
+      return this.Previewer.height - this.sizeY
+    },
+    leftLimit () {
+      return 0
+    },
+    leftSizeLimit () {
+      return this.Previewer.width - this.moveX - this.sizeX
+    },
+    rightLimit () {
+      return this.Previewer.width - this.sizeX
     }
   },
   methods: {
@@ -162,36 +185,76 @@ export default Vue.extend({
       this.compStyle.width = '100%'
       this.compStyle.height = '100%'
     },
-    handleMouseMove (e) {
-      if (
-        this.enableMove
-      ) {
-        this.moveX += e.movementX
-        this.moveY += e.movementY
-      } else {
-        if (
-          this.enableSizeL
-        ) {
-          this.moveX += e.movementX
-          this.sizeX -= e.movementX
-        } else if (
-          this.enableSizeR
-        ) {
-          this.sizeX += e.movementX
+    handleMoveX (val: number) {
+      const { leftLimit, rightLimit } = this
+      const moveX = this.moveX + val
+
+      if (moveX >= leftLimit && moveX <= rightLimit) {
+        this.moveX = moveX
+      } else if (moveX < leftLimit) {
+        this.moveX = leftLimit
+      } else if (moveX > rightLimit) {
+        this.moveX = rightLimit
+      }
+    },
+    handleMoveY (val: number) {
+      const { topLimit, bottomLimit } = this
+      const moveY = this.moveY + val
+
+      if (moveY >= topLimit && moveY <= bottomLimit) {
+        this.moveY = moveY
+      } else if (moveY < topLimit) {
+        this.moveY = topLimit
+      } else if (moveY > bottomLimit) {
+        this.moveY = bottomLimit
+      }
+    },
+    handleSizeX (val: number, direction: 'L' | 'R') {
+      const { leftLimit, widthLimit } = this
+      const sizeX = direction === 'L' ? this.sizeX - val : this.sizeX + val
+
+      if (direction === 'L') {
+        const moveX = this.moveX + val
+        if (moveX >= leftLimit) {
+          this.sizeX = sizeX
+          this.moveX = moveX
         }
-        if (
-          this.enableSizeT
-        ) {
-          this.moveY += e.movementY
-          this.sizeY -= e.movementY
-        } else if (
-          this.enableSizeB
-        ) {
-          this.sizeY += e.movementY
+      } else if (widthLimit >= sizeX) {
+        this.sizeX = sizeX
+      }
+    },
+    handleSizeY (val: number, direction: 'T' | 'B') {
+      const { topLimit, heightLimit } = this
+      const sizeY = direction === 'T' ? this.sizeY - val : this.sizeY + val
+
+      if (direction === 'T') {
+        const moveY = this.moveY + val
+        if (moveY >= topLimit) {
+          this.sizeY = sizeY
+          this.moveY = moveY
+        }
+      } else if (heightLimit >= sizeY) {
+        this.sizeY = sizeY
+      }
+    },
+    handleMouseMove (e: MouseEvent) {
+      if (this.enableMove) {
+        this.handleMoveX(e.movementX)
+        this.handleMoveY(e.movementY)
+      } else {
+        if (this.enableSizeL) {
+          this.handleSizeX(e.movementX, 'L')
+        } else if (this.enableSizeR) {
+          this.handleSizeX(e.movementX, 'R')
+        }
+        if (this.enableSizeT) {
+          this.handleSizeY(e.movementY, 'T')
+        } else if (this.enableSizeB) {
+          this.handleSizeY(e.movementY, 'B')
         }
       }
     },
-    handleMouseUp (e) {
+    handleMouseUp () {
       this.enableMove = false
       this.enableSizeL = false
       this.enableSizeR = false

@@ -8,11 +8,10 @@
     padding: var(--device-padding);
     .previewer-screen {
       height: 736px;
+      width: 320px;
       border-radius: 32px;
       box-shadow: 0 0 0 14px #090a0d, 0 0 0 17px #9fa3a8, 0 0 34px 17px rgba(0,0,0,0.2);
       margin: 0;
-      max-width: 320px;
-      min-width: 320px;
       overflow: hidden;
       position: relative;
       z-index: 1;
@@ -28,21 +27,24 @@
   }
 </style>
 <script lang="tsx">
-import Vue from 'vue'
-import Element from '@/components/element'
+import Vue, { CreateElement, VNode } from 'vue'
+import { ProjectNode } from '@/constants'
+import Element from './element.vue'
 import { HView, HButton, HFooter } from '@megh5/ui'
 import { deepCopy } from '@megmore/es-helper'
 
-function compiler (h, VNode) {
-  const result = []
-  VNode.forEach(node => {
-    node.rootNode
-      ? result.push(h(node.tag, node.data, node.children ? compiler(h, node.children) : []))
-      : result.push(h(
-        'Element', {},
-        [h(node.tag, node.data, node.children ? compiler(h, node.children) : [])]
-      ))
-  })
+function compiler (h: CreateElement, PNode: ProjectNode []) {
+  const result: VNode[] = []
+  if (PNode !== undefined) {
+    for (let node of PNode) {
+      node.rootNode
+        ? result.push(h(node.tag, node.data, node.children ? compiler(h, node.children) : []))
+        : result.push(h(
+          'Element', {}, [h(node.tag, node.data, node.children ? compiler(h, node.children) : [])]
+        ))
+    }
+  }
+
   return result
 }
 
@@ -55,17 +57,39 @@ export default Vue.extend({
       default: () => {}
     }
   },
-  methods: {
-    RContent (h) {
-      return compiler(h, [deepCopy(this.value.VNode)])
+  data () {
+    return {
+      Previewer: {
+        height: 736,
+        width: 320
+      }
     }
   },
-  render (h) {
-    const { RContent } = this
+  computed: {
+    screenStyles () {
+      return {
+        width: `${this.Previewer.width}px`,
+        height: `${this.Previewer.height}px`
+      }
+    }
+  },
+  methods: {
+    RContent (h: CreateElement) {
+      return compiler(h, deepCopy(this.value.ProjectNode))
+    }
+  },
+  provide () {
+    return {
+      Previewer: this.Previewer
+    }
+  },
+  render (h: CreateElement) {
+    const { RContent, screenStyles } = this
+    console.log(screenStyles)
     return (
       <div class="previewer">
         <div class="previewer-mobile">
-          <figure class="previewer-screen">
+          <figure class="previewer-screen" style={screenStyles}>
             <div class="previewer-screen-main">
               {RContent(h)}
             </div>
