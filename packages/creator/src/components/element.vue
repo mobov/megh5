@@ -3,10 +3,9 @@
 
   $--element-handler-color: #03a9f4;
   .element {
-    position: absolute;
-    cursor: move;
     user-select: none;
     z-index: 1;
+    box-sizing: border-box;
   }
 
   .element-handler-t,
@@ -94,182 +93,258 @@
 <template>
   <div class="element" :style="styles" @mousedown.stop="enableMove = true">
     <slot></slot>
-    <div class="element-handler-t" @mousedown.stop="enableSizeT = true"></div>
-    <div class="element-handler-b" @mousedown.stop="enableSizeB = true"></div>
-    <div class="element-handler-l" @mousedown.stop="enableSizeL = true"></div>
-    <div class="element-handler-r" @mousedown.stop="enableSizeR = true"></div>
-    <div class="element-handler-tl" @mousedown.stop="enableSizeT = true; enableSizeL = true"></div>
-    <div class="element-handler-tr" @mousedown.stop="enableSizeT = true; enableSizeR = true"></div>
-    <div class="element-handler-bl" @mousedown.stop="enableSizeB = true; enableSizeL = true"></div>
-    <div class="element-handler-br" @mousedown.stop="enableSizeB = true; enableSizeR = true"></div>
+    <div class="element-handler-t" v-if="canSizeY" @mousedown.stop="enableSizeT = true"></div>
+    <div class="element-handler-b" v-if="canSizeY" @mousedown.stop="enableSizeB = true"></div>
+    <div class="element-handler-l" v-if="canSizeX" @mousedown.stop="enableSizeL = true"></div>
+    <div class="element-handler-r" v-if="canSizeX" @mousedown.stop="enableSizeR = true"></div>
+    <div class="element-handler-tl" v-if="canSizeX && canSizeY" @mousedown.stop="enableSizeT = true; enableSizeL = true"></div>
+    <div class="element-handler-tr" v-if="canSizeX && canSizeY" @mousedown.stop="enableSizeT = true; enableSizeR = true"></div>
+    <div class="element-handler-bl" v-if="canSizeX && canSizeY" @mousedown.stop="enableSizeB = true; enableSizeL = true"></div>
+    <div class="element-handler-br" v-if="canSizeX && canSizeY" @mousedown.stop="enableSizeB = true; enableSizeR = true"></div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { PreviewerObject } from './previewer.vue'
+import { getLayerIndex } from '@/utils/layer'
 
-function getStyleVal (styleStr: string | number): number {
-  let result = 0
-  console.log(styleStr)
+function getStyleVal (styleStr: string | number): number | string {
+  let result: string | number = 0
+
   if (typeof styleStr === 'number') {
     result = styleStr
   } else {
-    if (styleStr.indexOf('px')) {
+    if (/px/.test(styleStr)) {
       result = Number(styleStr.substring(0, styleStr.length - 2))
     } else {
-      result = 0
+      result = styleStr
     }
   }
   return result
 }
 
-export default Vue.extend({
-  name: 'Element',
-  inject: ['Previewer'],
-  data () {
+function toStyleVal (styleStr: string | number): string {
+  let result = ''
+
+  if (typeof styleStr === 'number') {
+    result = `${styleStr}px`
+  } else {
+    result = styleStr
+  }
+  return result
+}
+
+type typeDirection = 'x' | 'y' | 'xy' | 'none'
+
+@Component
+export default class Element extends Vue {
+  @Prop({ type: Boolean, default: false })
+  float!: boolean
+
+  @Prop({ type: String, default: 'xy' })
+  moveMode!: typeDirection
+
+  @Prop({ type: String, default: 'xy' })
+  sizeMode!: typeDirection
+
+  @Inject()
+  Previewer: PreviewerObject = {
+    height: 736,
+    width: 320,
+    scrollHeight: 736
+  }
+
+  enableMove = false
+  enableSizeL = false
+  enableSizeR = false
+  enableSizeT = false
+  enableSizeB = false
+  zIndex = getLayerIndex()
+  moveX: number | string = 0
+  moveY: number | string = 0
+  sizeX: number | string = 0
+  sizeY: number | string = 0
+
+  get styles (): any {
+    const styleMove = this.float ? {
+      left: toStyleVal(this.moveX),
+      top: toStyleVal(this.moveY)
+    } : {
+      marginLeft: toStyleVal(this.moveX),
+      marginTop: toStyleVal(this.moveY)
+    }
     return {
-      enableMove: false,
-      enableSizeL: false,
-      enableSizeR: false,
-      enableSizeT: false,
-      enableSizeB: false,
-      moveX: 0,
-      moveY: 0,
-      sizeX: 0,
-      sizeY: 0
+      position: this.float ? 'absolute' : 'relative',
+      cursor: this.moveMode === 'none' ? 'pointer' : 'move',
+      // transform: `translate(${this.moveX}px, ${this.moveY}px)`,
+      zIndex: this.zIndex,
+      width: toStyleVal(this.sizeX),
+      height: toStyleVal(this.sizeY),
+      ...styleMove
     }
-  },
-  computed: {
-    styles (): any {
-      return {
-        left: `${this.moveX}px`,
-        top: `${this.moveY}px`,
-        width: `${this.sizeX}px`,
-        height: `${this.sizeY}px`
-      }
-    },
-    compStyle (): any {
-      const { $slots } = this as any
-      return $slots!.default[0]!.data!.style || {}
-    },
-    heightLimit () {
-      return this.Previewer.height - this.moveY
-    },
-    widthLimit () {
-      return this.Previewer.width - this.moveX
-    },
-    topLimit () {
-      return 0
-    },
-    bottomLimit () {
-      return this.Previewer.height - this.sizeY
-    },
-    leftLimit () {
-      return 0
-    },
-    leftSizeLimit () {
-      return this.Previewer.width - this.moveX - this.sizeX
-    },
-    rightLimit () {
-      return this.Previewer.width - this.sizeX
+  }
+  get compStyle (): any {
+    const { $slots } = this as any
+    return $slots!.default[0]!.data!.style || {}
+  }
+  get parentNode (): HTMLElement {
+    return (this.$parent.$el || this.$parent) as HTMLElement
+  }
+  get parentWidth () {
+    return this.parentNode.clientWidth
+  }
+  get parentHeight () {
+    return this.parentNode.clientHeight
+  }
+  get canSizeX () {
+    return this.sizeMode.indexOf('x') !== -1
+  }
+  get canSizeY () {
+    return this.sizeMode.indexOf('y') !== -1
+  }
+  get canMoveX () {
+    return this.moveMode.indexOf('x') !== -1
+  }
+  get canMoveY () {
+    return this.moveMode.indexOf('y') !== -1
+  }
+  get heightLimit (): number {
+    return this.Previewer.scrollHeight - (this.moveY as number)
+  }
+  get widthLimit (): number {
+    return this.Previewer.width - (this.moveX as number)
+  }
+  get topLimit (): number {
+    return 0
+  }
+  get bottomLimit (): number {
+    return this.Previewer.scrollHeight - (this.sizeY as number)
+  }
+  get leftLimit (): number {
+    return 0
+  }
+  get rightLimit (): number {
+    return this.Previewer.width - (this.sizeX as number)
+  }
+
+  init () {
+    console.log(this.$slots)
+    this.moveX = getStyleVal(this.compStyle.left)
+    this.moveY = getStyleVal(this.compStyle.top)
+    this.sizeX = getStyleVal(this.compStyle.width)
+    this.sizeY = getStyleVal(this.compStyle.height)
+    this.compStyle.left = 0
+    this.compStyle.top = 0
+    this.compStyle.width = '100%'
+    this.compStyle.height = '100%'
+    // if (this.canSizeX) {
+    //   this.moveX = getStyleVal(this.compStyle.left)
+    //   this.compStyle.left = 0
+    // }
+    // if (this.canMoveY) {
+    //   this.moveY = getStyleVal(this.compStyle.top)
+    //   this.compStyle.top = 0
+    // }
+    // if (this.canSizeX) {
+    //   this.sizeX = getStyleVal(this.compStyle.width)
+    //   this.compStyle.width = '100%'
+    // }
+    // if (this.canSizeY) {
+    //   this.sizeY = getStyleVal(this.compStyle.height)
+    //   this.compStyle.height = '100%'
+    // }
+  }
+  handleMoveX (val: number) {
+    console.log(val)
+    console.log(this.moveX)
+    if (!this.canMoveX) { return }
+    const { leftLimit, rightLimit } = this
+    const moveX = this.moveX as number + val
+
+    if (moveX >= leftLimit && moveX <= rightLimit) {
+      this.moveX = moveX
+    } else if (moveX < leftLimit) {
+      this.moveX = leftLimit
+    } else if (moveX > rightLimit) {
+      this.moveX = rightLimit
     }
-  },
-  methods: {
-    init () {
-      this.moveX = getStyleVal(this.compStyle.left)
-      this.moveY = getStyleVal(this.compStyle.top)
-      this.sizeX = getStyleVal(this.compStyle.width)
-      this.sizeY = getStyleVal(this.compStyle.height)
-      this.compStyle.left = 0
-      this.compStyle.right = 0
-      this.compStyle.width = '100%'
-      this.compStyle.height = '100%'
-    },
-    handleMoveX (val: number) {
-      const { leftLimit, rightLimit } = this
-      const moveX = this.moveX + val
+  }
+  handleMoveY (val: number) {
+    if (!this.canMoveY) { return }
+    const { topLimit, bottomLimit } = this
+    const moveY = this.moveY as number + val
 
-      if (moveX >= leftLimit && moveX <= rightLimit) {
-        this.moveX = moveX
-      } else if (moveX < leftLimit) {
-        this.moveX = leftLimit
-      } else if (moveX > rightLimit) {
-        this.moveX = rightLimit
-      }
-    },
-    handleMoveY (val: number) {
-      const { topLimit, bottomLimit } = this
-      const moveY = this.moveY + val
-
-      if (moveY >= topLimit && moveY <= bottomLimit) {
-        this.moveY = moveY
-      } else if (moveY < topLimit) {
-        this.moveY = topLimit
-      } else if (moveY > bottomLimit) {
-        this.moveY = bottomLimit
-      }
-    },
-    handleSizeX (val: number, direction: 'L' | 'R') {
-      const { leftLimit, widthLimit } = this
-      const sizeX = direction === 'L' ? this.sizeX - val : this.sizeX + val
-
-      if (direction === 'L') {
-        const moveX = this.moveX + val
-        if (moveX >= leftLimit) {
-          this.sizeX = sizeX
-          this.moveX = moveX
-        }
-      } else if (widthLimit >= sizeX) {
+    if (moveY >= topLimit && moveY <= bottomLimit) {
+      this.moveY = moveY
+    } else if (moveY < topLimit) {
+      this.moveY = topLimit
+    } else if (moveY > bottomLimit) {
+      this.moveY = bottomLimit
+    }
+  }
+  handleSizeX (val: number, direction: 'L' | 'R') {
+    const { leftLimit, widthLimit } = this
+    const sizeX = this.sizeX as number + (direction === 'L' ? -val : val)
+    if (direction === 'L') {
+      const moveX = this.moveX as number + val
+      if (moveX >= leftLimit) {
         this.sizeX = sizeX
+        this.moveX = moveX
+        // if (this.float) { this.moveX = moveX }
       }
-    },
-    handleSizeY (val: number, direction: 'T' | 'B') {
-      const { topLimit, heightLimit } = this
-      const sizeY = direction === 'T' ? this.sizeY - val : this.sizeY + val
-
-      if (direction === 'T') {
-        const moveY = this.moveY + val
-        if (moveY >= topLimit) {
-          this.sizeY = sizeY
-          this.moveY = moveY
-        }
-      } else if (heightLimit >= sizeY) {
-        this.sizeY = sizeY
-      }
-    },
-    handleMouseMove (e: MouseEvent) {
-      if (this.enableMove) {
-        this.handleMoveX(e.movementX)
-        this.handleMoveY(e.movementY)
-      } else {
-        if (this.enableSizeL) {
-          this.handleSizeX(e.movementX, 'L')
-        } else if (this.enableSizeR) {
-          this.handleSizeX(e.movementX, 'R')
-        }
-        if (this.enableSizeT) {
-          this.handleSizeY(e.movementY, 'T')
-        } else if (this.enableSizeB) {
-          this.handleSizeY(e.movementY, 'B')
-        }
-      }
-    },
-    handleMouseUp () {
-      this.enableMove = false
-      this.enableSizeL = false
-      this.enableSizeR = false
-      this.enableSizeT = false
-      this.enableSizeB = false
+    } else if (widthLimit >= sizeX) {
+      this.sizeX = sizeX
     }
-  },
-  created  () {
+  }
+  handleSizeY (val: number, direction: 'T' | 'B') {
+    const { topLimit, heightLimit } = this
+    const sizeY = this.sizeY as number + (direction === 'T' ? -val : val)
+    console.log(topLimit)
+    console.log(heightLimit)
+    if (direction === 'T') {
+      const moveY = this.moveY as number + val
+      if (moveY >= topLimit) {
+        this.sizeY = sizeY
+        this.moveY = moveY
+        // if (this.float) { this.moveY = moveY }
+      }
+    } else if (heightLimit >= sizeY) {
+      this.sizeY = sizeY
+    }
+  }
+  handleMouseMove (e: MouseEvent) {
+    if (this.enableMove) {
+      this.handleMoveX(e.movementX)
+      this.handleMoveY(e.movementY)
+    } else {
+      if (this.enableSizeL) {
+        this.handleSizeX(e.movementX, 'L')
+      } else if (this.enableSizeR) {
+        this.handleSizeX(e.movementX, 'R')
+      }
+      if (this.enableSizeT) {
+        this.handleSizeY(e.movementY, 'T')
+      } else if (this.enableSizeB) {
+        this.handleSizeY(e.movementY, 'B')
+      }
+    }
+  }
+  handleMouseUp () {
+    this.enableMove = false
+    this.enableSizeL = false
+    this.enableSizeR = false
+    this.enableSizeT = false
+    this.enableSizeB = false
+  }
+  created () {
     this.init()
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
-  },
+  }
   beforeDestroy () {
     document.removeEventListener('mousemove', this.handleMouseMove)
     document.removeEventListener('mouseup', this.handleMouseUp)
   }
-})
+}
 </script>

@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -27,7 +28,6 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "example/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ]

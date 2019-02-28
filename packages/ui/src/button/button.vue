@@ -11,88 +11,43 @@
 <template>
   <div class="h-button"
        :style="styles"
-       @click="handleAction">
+       @click="onClick">
     {{text}}
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { genSize, genColor } from '../core'
 
-export default Vue.extend({
-  name: 'HButton',
-  props: {
-    marginTop: {
-      type: String
-    },
-    marginBottom: {
-      type: String
-    },
-    marginLeft: {
-      type: String
-    },
-    marginRight: {
-      type: String
-    },
-    float: {
-      type: Boolean
-    },
-    block: {
-      type: Boolean
-    },
-    height: {
-      type: [String, Number],
-      default: '20px'
-    },
-    width: {
-      type: [String, Number],
-      default: '20px'
-    },
-    fontSize: {
-      type: [String, Number],
-      default: '12px'
-    },
-    fontColor: {
-      type: String
-    },
-    bgColor: {
-      type: String
-    },
-    bgSrc: {
-      type: String
-    },
-    bgSrcActive: {
-      type: String
-    },
-    text: {
-      type: [String, Number],
-      default: '按钮'
-    }
-  },
-  computed: {
-    styles () {
-      const { width, height, fontSize, bgSrc, marginTop, marginBottom, marginLeft, marginRight, fontColor, bgColor } = this
-      const styles: any = {
-        backgroundImage: `url(${bgSrc})`
-      }
+@Component
+export default class HButton extends Vue {
+  @Prop({ type: Boolean })
+  block: boolean
 
-      genColor(styles, 'color', fontColor)
-      genColor(styles, 'backgroundColor', bgColor)
-      genSize(styles, 'width', width)
-      genSize(styles, 'height', height)
-      genSize(styles, 'fontSize', fontSize)
-      genSize(styles, 'marginTop', marginTop)
-      genSize(styles, 'marginBottom', marginBottom)
-      genSize(styles, 'marginLeft', marginLeft)
-      genSize(styles, 'marginRight', marginRight)
+  @Prop({ type: [String, Number], default: '12px' })
+  fontSize: string | number
 
-      return styles
+  @Prop({ type: String, default: '' })
+  bgSrc: string
+
+  @Prop({ type: String, default: '' })
+  bgSrcActive: string
+
+  @Prop({ type: String, default: '按钮' })
+  text!: string
+
+  get styles (): any {
+    const { fontSize, bgSrc } = this
+    console.log(this.bgSrc)
+    const styles: any = {
+      backgroundImage: `url(${bgSrc})`
     }
-  },
-  methods: {
-    handleAction (e: Event) {
-      this.$emit('click', e)
-    }
+
+    genSize(styles, 'fontSize', fontSize)
+
+    return styles
   }
-})
+  @Emit('click')
+  onClick (e: Event) { }
+}
 </script>

@@ -1,7 +1,7 @@
 
 export interface ProjectNode {
   tag: string
-  rootNode?: boolean,
+  uiConfig?: any
   data?: any
   children?: ProjectNode []
 }
