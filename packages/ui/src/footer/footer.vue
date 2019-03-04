@@ -26,7 +26,7 @@
       justify-content: space-between;
       color: #cf9159;
     }
-    a  {
+    a {
       text-decoration:none;
       outline: none;
       color: inherit;
@@ -48,9 +48,16 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { genBgImg, genSize } from '../core/utils'
 
 @Component
 export default class HFooter extends Vue {
+  @Prop({ type: [Number, String], default: 100 })
+  height!: string | number
+
+  @Prop({ type: String, default: '' })
+  bgSrc: string
+
   @Prop({ type: String })
   logo: string
 
@@ -70,9 +77,13 @@ export default class HFooter extends Vue {
   copyright: string
 
   get styles (): any {
-    return {
-      width: '100%'
-    }
+    const { height, bgSrc } = this
+    const styles = {}
+
+    genBgImg(styles, bgSrc)
+    genSize(styles, 'height', height)
+
+    return styles
   }
 }
 </script>

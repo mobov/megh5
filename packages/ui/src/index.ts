@@ -1,16 +1,10 @@
 import './core/styles/utils.scss'
-import HApp from './app'
-import HButton from './button'
-import HView from './view'
-import HFooter from './footer/'
-import HPromoCode from './promo-code'
-import HImage from './image'
+import * as Core from './core'
 
-export {
-  HApp,
-  HView,
-  HButton,
-  HFooter,
-  HPromoCode,
-  HImage
+const MegH5 = {
+  ...Core
 }
+
+export * from './entries'
+
+export default MegH5

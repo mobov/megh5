@@ -39,10 +39,21 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { imageLoaded } from '@megmore/es-helper'
 
 @Component
 export default class HPromoCode extends Vue {
   @Prop({ type: String, default: '10086' })
   src: string
+
+  async onload () {
+    const result = await imageLoaded(this.src)
+  }
+
+  get styles () {
+    return {
+      backgroundImage: `url(${this.src})`
+    }
+  }
 }
 </script>

@@ -1,6 +1,6 @@
 <style lang='scss'>
   @import "~@megmore/scss-helper/import";
-  .menu {
+  .setting {
     width: 100%;
     display: flex;
    .menu-item {
@@ -26,7 +26,7 @@ import { merge } from 'lodash'
 const uiConfig = getUiConfig()
 
 @Component
-export default class Menu extends Vue {
+export default class Setting extends Vue {
   @Prop({ type: Object, default: () => {} })
   value!: ProjectData
 
@@ -48,7 +48,7 @@ export default class Menu extends Vue {
     console.log(uiConfig)
 
     return (
-      <div class="menu">
+      <div class="setting">
         {RMenuItem()}
       </div>
     )

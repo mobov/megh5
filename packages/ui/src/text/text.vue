@@ -1,49 +1,50 @@
 <style scoped>
-  .h-button {
-    background-position: center;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .h-text {
+    display: block;
   }
 </style>
 <template>
-  <div class="h-button"
-       :style="styles"
+  <div class="h-text" :style="styles"
        @click="onClick">
     {{text}}
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genSize, genColor } from '../core'
+import { genSize } from '../core/utils'
 
 @Component
 export default class HText extends Vue {
-  @Prop({ type: Boolean })
-  block: boolean
+  @Prop({ type: Boolean, default: false })
+  float: boolean
 
-  @Prop({ type: [String, Number], default: '12px' })
-  fontSize: string | number
+  @Prop({ type: [Number, String], default: 50 })
+  height!: string | number
 
-  @Prop({ type: String, default: '' })
-  bgSrc: string
+  @Prop({ type: [Number, String], default: 100 })
+  width!: string | number
+
+  @Prop({ type: [Number, String], default: 100 })
+  fontSize!: string | number
+
+  @Prop({ type: [Number, String], default: 0 })
+  x!: string | number
+
+  @Prop({ type: [Number, String], default: 0 })
+  y!: string | number
 
   @Prop({ type: String, default: '按钮' })
   text!: string
 
   get styles (): any {
-    const { fontSize, bgSrc } = this
-    const styles: any = {
-      backgroundImage: `url(${bgSrc})`
-    }
+    const { height, width, fontSize } = this
+    const styles = {}
 
+    genSize(styles, 'width', width)
+    genSize(styles, 'height', height)
     genSize(styles, 'fontSize', fontSize)
 
     return styles
   }
-  @Emit('click')
-  onClick (e: Event) { }
 }
 </script>

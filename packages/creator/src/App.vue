@@ -1,6 +1,6 @@
 <template>
   <MApp>
-    <MView right-size="300px">
+    <MView rightSize="500px" fillHeader="left">
       <MAppBar slot="header"
                size="100%"
                color="default"
@@ -15,21 +15,22 @@
                  shape="circle"></MButton>
       </MAppBar>
       <MFlex style="height: 100%" class="m-elevation-2" v-if="showRight" slot="right">
-        <MList v-m-ripple style="width: 100%;height: 50px">
-          呵呵
-        </MList>
+        <Menu></Menu>
       </MFlex>
-      <Previewer v-model="PreviewData"></Previewer>
+      <MFlex full justify="center" align="center" style="height: 100%">
+        <Previewer v-model="PreviewData"></Previewer>
+      </MFlex>
     </MView>
   </MApp>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import Previewer from '@/components/previewer.vue'
+import Menu from '@/components/menu.vue'
 import PreviewData from './pageMock'
 
 @Component({
-  components: { Previewer }
+  components: { Previewer, Menu }
 })
 export default class App extends Vue {
   PreviewData = PreviewData

@@ -6,21 +6,39 @@
     align-items: stretch;
     flex-direction: column;
     position: relative;
-    > *:first-child {
+    .h-app-main {
       flex-grow: 1;
     }
   }
 </style>
 <template>
   <div class="h-app" :style="styles">
-    <slot></slot>
+    <div class="h-app-main">
+      <slot></slot>
+    </div>
+    <slot name="footer" />
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
+import { genSize } from '../core/utils'
 
 @Component
 export default class HApp extends Vue {
+  @Prop({ type: [Number, String], default: '100%' })
+  height!: string | number
 
+  @Prop({ type: [Number, String], default: '100%' })
+  width!: string | number
+
+  get styles (): any {
+    const { height, width } = this
+    const styles = {}
+
+    genSize(styles, 'height', height)
+    genSize(styles, 'width', width)
+
+    return styles
+  }
 }
 </script>

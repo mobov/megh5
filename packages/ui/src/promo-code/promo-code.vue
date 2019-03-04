@@ -46,10 +46,23 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { genBgImg, genPosX, genPosY, genSize } from '../core/utils'
 import GIFT from './gift.png'
 
 @Component
 export default class HPromoCode extends Vue {
+  @Prop({ type: [Number, String], default: '100%' })
+  width!: string | number
+
+  @Prop({ type: [Number, String], default: 100 })
+  height!: string | number
+
+  @Prop({ type: [Number, String], default: 0 })
+  x!: string | number
+
+  @Prop({ type: [Number, String], default: 0 })
+  y!: string | number
+
   @Prop({ type: String })
   gift: string
 
@@ -63,9 +76,16 @@ export default class HPromoCode extends Vue {
   bgSrc: string
 
   get styles (): any {
-    return {
-      backgroundImage: `url(${this.bgSrc})`
-    }
+    const { bgSrc, x, y, height, width } = this
+    const styles = {}
+
+    genBgImg(styles, bgSrc)
+    genPosX(styles, x)
+    genPosY(styles, y)
+    genSize(styles, 'height', height)
+    genSize(styles, 'width', width)
+
+    return styles
   }
   get giftSrc (): any {
     return this.gift ? this.gift : GIFT

@@ -1,2 +1,2 @@
-import HButton from './button.vue';
-export default HButton;
+import HText from './text.vue';
+export default HText;

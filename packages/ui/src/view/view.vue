@@ -7,6 +7,8 @@
     align-items: stretch;
     flex-direction: column;
     position: relative;
+    min-height: 100%;
+    min-width: 100%;
   }
 </style>
 <template>
@@ -16,35 +18,36 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
-import { genSize, genColor } from '../core'
+import { genBgImg, genSize, genPosX, genPosY } from '../core/utils'
 
 @Component
 export default class HView extends Vue {
-  @Prop({ type: String, default: '100%' })
-  minHeight: string | number
+  @Prop({ type: Boolean, default: false })
+  float: boolean
 
-  @Prop({ type: [String, Number], default: '12px' })
-  fontSize: string | number
+  @Prop({ type: [Number, String], default: '100%' })
+  height!: string | number
 
-  @Prop({ type: String })
-  fontColor: string
+  @Prop({ type: [Number, String], default: '100%' })
+  width!: string | number
 
-  @Prop({ type: String })
-  bgColor: string
+  @Prop({ type: [Number, String], default: 0 })
+  x!: string | number
 
-  @Prop({ type: String })
+  @Prop({ type: [Number, String], default: 0 })
+  y!: string | number
+
   bgSrc: string
 
   get styles (): any {
-    const { minHeight, fontSize, bgSrc, fontColor, bgColor } = this
-    const styles: any = {
-      backgroundImage: `url(${bgSrc})`
-    }
+    const { bgSrc, height, width, x, y } = this
+    const styles = {}
 
-    genColor(styles, 'color', fontColor)
-    genColor(styles, 'backgroundColor', bgColor)
-    genSize(styles, 'minHeight', minHeight)
-    genSize(styles, 'fontSize', fontSize)
+    genBgImg(styles, bgSrc)
+    genSize(styles, 'height', height)
+    genSize(styles, 'width', width)
+    genPosX(styles, x)
+    genPosY(styles, y)
 
     return styles
   }

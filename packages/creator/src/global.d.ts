@@ -1,3 +1,3 @@
-declare module '*.vue' {
-  export * from 'vue'
-}
+// declare module '*.vue' {
+//   export * from 'vue'
+// }

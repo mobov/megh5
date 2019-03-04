@@ -1,3 +1,3 @@
-import HButton from './button.vue'
+import HText from './text.vue'
 
-export default HButton
+export default HText
