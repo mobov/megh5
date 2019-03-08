@@ -323,7 +323,7 @@ export default class Element extends Vue {
         this.sizeY = sizeY
         this.moveY = moveY
       }
-    } else if (heightLimit >= sizeY) {
+    } else {
       this.sizeY = sizeY
     }
   }
