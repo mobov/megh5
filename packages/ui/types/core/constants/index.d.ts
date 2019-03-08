@@ -31,6 +31,7 @@ export interface UiNodeData extends VNodeData {
 }
 export interface UiNode {
     name: string;
+    path: string;
     nodeData: UiNodeData;
     children?: UiNode[];
 }
@@ -46,5 +47,6 @@ export interface ProjectData {
     name: string;
     version: string;
     dependencies: any;
+    mainPath: string;
     UiNodes: UiNode[];
 }

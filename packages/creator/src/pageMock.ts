@@ -1,5 +1,5 @@
 import BUTTON_BG from './assets/btn.png'
-import { ProjectData } from './constants'
+import { ProjectData } from '@megh5/ui/types/core/constants'
 
 const PreviewData: ProjectData = {
   name: 'testproject',
@@ -12,8 +12,10 @@ const PreviewData: ProjectData = {
     '@megmore/vui': '^0.0.2',
     'imports': ['HView', 'HButton', 'HFooter']
   }],
+  mainPath: '0/0',
   UiNodes: [{
     name: 'HApp',
+    path: '0/',
     nodeData: {
       props: {
         width: '100%',
@@ -24,6 +26,7 @@ const PreviewData: ProjectData = {
     },
     children: [{
       name: 'HView',
+      path: '0/0',
       nodeData: {
         props: {
           width: '100%',
@@ -34,6 +37,7 @@ const PreviewData: ProjectData = {
       },
       children: [{
         name: 'HButton',
+        path: '0/0/0',
         nodeData: {
           style: {
             color: 'white'
@@ -49,6 +53,7 @@ const PreviewData: ProjectData = {
         }
       }, {
         name: 'HButton',
+        path: '0/0/1',
         nodeData: {
           style: {
             color: 'white'
@@ -64,6 +69,7 @@ const PreviewData: ProjectData = {
         }
       }, {
         name: 'HPromoCode',
+        path: '0/0/2',
         nodeData: {
           style: {
             color: 'white'
@@ -79,6 +85,7 @@ const PreviewData: ProjectData = {
       }]
     }, {
       name: 'HFooter',
+      path: '0/1',
       nodeData: {
         props: {
           width: '100%',

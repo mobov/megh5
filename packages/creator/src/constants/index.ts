@@ -15,5 +15,3 @@ export interface ProjectData {
   dependencies: any
   UiNodes: UiNode []
 }
-
-

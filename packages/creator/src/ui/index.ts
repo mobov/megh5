@@ -1,17 +1,12 @@
-import { UiModule } from '@megh5/ui/types/core/constants'
+import Vue  from 'vue'
+import { HApp, HView, HButton, HFooter, HPromoCode } from '@megh5/ui'
+import Store from '@/store'
+const megh5UiConfig = require('@megh5/ui/megh5.config.json')
 
-const ConfigData: UiModule [] = []
+Store.commit('SET_UI_MODULE', megh5UiConfig)
 
-export function registerUiConfig(uiComp: UiModule | UiModule []) {
-  if (uiComp instanceof Array) {
-    uiComp.forEach(item => {
-      ConfigData.push(item)
-    })
-  } else {
-    ConfigData.push(uiComp)
-  }
-}
-
-export function getUiConfig() {
-  return ConfigData
-}
+Vue.component(HApp.name, HApp)
+Vue.component(HView.name, HView)
+Vue.component(HButton.name, HButton)
+Vue.component(HFooter.name, HFooter)
+Vue.component(HPromoCode.name, HPromoCode)

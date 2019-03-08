@@ -26,21 +26,20 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
-import { getUiConfig } from '@/ui'
+import { State, Mutation, Getter } from 'vuex-class'
+import Store, { StateProject, StateScreen, GetterPageData } from '@/store'
 import { ProjectData } from '@/constants'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
 
-const uiConfig = getUiConfig()
-
 function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
   const result: VNode[] = []
   if (PNode !== undefined) {
     for (let node of PNode) {
       // props
-      const nodeModule = deepCopy(uiConfig.find(item => item.name === node.name))
+      const nodeModule = deepCopy(Store.state.UiModules.find(item => item.name === node.name))
 
       node.nodeData = merge(nodeModule.nodeData, node.nodeData)
       const elementData: VNodeData = {
@@ -64,39 +63,27 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
   return result
 }
 
-export interface PreviewerObject {
-  height: number,
-  width: number,
-  scrollHeight: number
-}
-
 @Component({
   components: { Element }
 })
 export default class Previewer extends Vue {
-  @Prop({ type: Object, default: () => {} })
-  value!: ProjectData
+  @Getter PageData!: GetterPageData
 
-  @Provide()
-  Previewer: PreviewerObject = {
-    height: 736,
-    width: 320,
-    scrollHeight: 736
-  }
+  @State Screen!: StateScreen
 
-  get screenStyles (): any {
+  get screenStyles () {
     return {
-      width: `${this.Previewer.width}px`,
-      height: `${this.Previewer.height}px`
+      width: `${this.Screen.width}px`,
+      height: `${this.Screen.height}px`
     }
   }
 
   RContent (h: CreateElement): VNode[] {
-    return compiler(h, deepCopy(this.value.UiNodes))
+    return compiler(h, deepCopy(this.PageData))
   }
 
   mounted () {
-    this.Previewer.scrollHeight = (this.$refs.$screen as any).scrollHeight
+    this.Screen.scrollHeight = (this.$refs.$screen as HTMLElement).scrollHeight
   }
 
   render (h: CreateElement) {

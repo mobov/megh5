@@ -11,14 +11,16 @@
     "@megh5/ui": "^0.0.1",
     "@megmore/es-helper": "^0.0.30",
     "@megmore/scss-helper": "^0.0.4",
-    "@megmore/vui": "^0.0.2",
+    "@megmore/vui": "^0.0.5",
+    "@types/lodash": "^4.14.122",
     "color": "^3.1.0",
     "lodash": "^4.17.11",
     "vue": "^2.6.7",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.3.0",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-class": "^0.3.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

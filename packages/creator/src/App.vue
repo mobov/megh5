@@ -1,11 +1,18 @@
+<style>
+  .app {
+    user-select: none;
+  }
+</style>
 <template>
-  <MApp>
-    <MView rightSize="500px" fillHeader="left">
+  <MApp class="app">
+    <MView rightSize="500px"
+           fillHeader="left"
+           :rightIndex="5">
       <MAppBar slot="header"
                size="100%"
                color="default"
                variety="flat"
-               :elevation="2">
+               :elevation="0">
         <MFlexFiller />
         <MButton icon="menu"
                  @click="showRight = !showRight"
@@ -14,27 +21,32 @@
                  :elevation="0"
                  shape="circle"></MButton>
       </MAppBar>
-      <MFlex style="height: 100%" class="m-elevation-2" v-if="showRight" slot="right">
-        <Menu></Menu>
-      </MFlex>
+      <SidePanel class="m-elevation-2" v-if="showRight" slot="right"></SidePanel>
       <MFlex full justify="center" align="center" style="height: 100%">
-        <Previewer v-model="PreviewData"></Previewer>
+        <Previewer />
       </MFlex>
     </MView>
   </MApp>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
+import { State, Mutation } from 'vuex-class'
+import { MutationSetProject } from '@/store'
 import Previewer from '@/components/previewer.vue'
 import Menu from '@/components/menu.vue'
 import PreviewData from './pageMock'
+import SidePanel from '@/components/side-panel.vue'
 
 @Component({
-  components: { Previewer, Menu }
+  components: { SidePanel, Previewer, Menu }
 })
 export default class App extends Vue {
-  PreviewData = PreviewData
+  @Mutation SET_PROJECT!: MutationSetProject
 
   showRight = true
+
+  created () {
+    this.SET_PROJECT(PreviewData)
+  }
 }
 </script>

@@ -14,6 +14,13 @@
     }
   }
 
+  .element-axis {
+    width: 1px;
+    height: 100vh;
+    position: absolute;
+    background-color: $--element-handler-color;
+  }
+
   .element-handler-t,
   .element-handler-b,
   .element-handler-l,
@@ -97,24 +104,37 @@
 </style>
 
 <template>
-  <div class="element" :style="styles" @mousedown.stop="isMove = true">
+  <div class="element" :style="styles"
+       @mousedown.stop="isMove = true"
+       @mouseover="isActive = true"
+       @mouseout="isActive = false">
     <slot></slot>
-    <div class="element-handler-t" v-if="enableSizeY" @mousedown.stop="isSizeT = true"></div>
-    <div class="element-handler-b" v-if="enableSizeY" @mousedown.stop="isSizeB = true"></div>
-    <div class="element-handler-l" v-if="enableSizeX" @mousedown.stop="isSizeL = true"></div>
-    <div class="element-handler-r" v-if="enableSizeX" @mousedown.stop="isSizeR = true"></div>
-    <div class="element-handler-tl" v-if="enableSizeX && enableSizeY" @mousedown.stop="isSizeT = true; isSizeL = true"></div>
-    <div class="element-handler-tr" v-if="enableSizeX && enableSizeY" @mousedown.stop="isSizeT = true; isSizeR = true"></div>
-    <div class="element-handler-bl" v-if="enableSizeX && enableSizeY" @mousedown.stop="isSizeB = true; isSizeL = true"></div>
-    <div class="element-handler-br" v-if="enableSizeX && enableSizeY" @mousedown.stop="isSizeB = true; isSizeR = true"></div>
+    <!--<div class="element-axis"></div>-->
+    <div class="element-handler-t" v-if="enableSizeY"
+         @mousedown.stop="isSizeT = true"></div>
+    <div class="element-handler-b" v-if="enableSizeY"
+         @mousedown.stop="isSizeB = true"></div>
+    <div class="element-handler-l" v-if="enableSizeX"
+         @mousedown.stop="isSizeL = true"></div>
+    <div class="element-handler-r" v-if="enableSizeX"
+         @mousedown.stop="isSizeR = true"></div>
+    <div class="element-handler-tl" v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeT = true; isSizeL = true"></div>
+    <div class="element-handler-tr" v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeT = true; isSizeR = true"></div>
+    <div class="element-handler-bl" v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeB = true; isSizeL = true"></div>
+    <div class="element-handler-br" v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeB = true; isSizeR = true"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { VNode } from 'vue'
+import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { State } from 'vuex-class'
+import { StateScreen } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
-import { PreviewerObject } from './previewer.vue'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode } from '@megh5/ui/types/core/constants'
 import MegH5 from '@megh5/ui'
@@ -129,13 +149,9 @@ export default class Element extends Vue {
   @Prop({ type: String, default: 'xy' })
   sizeMode!: uiMode
 
-  @Inject({ default: () => ({
-    height: 736,
-    width: 320,
-    scrollHeight: 736
-  }) })
-  Previewer: PreviewerObject
+  @State Screen!: StateScreen
 
+  isActive = false
   isMove = false
   isSizeL = false
   isSizeR = false
@@ -146,6 +162,10 @@ export default class Element extends Vue {
   moveY: number = 0
   sizeX: number = 0
   sizeY: number = 0
+
+  // get scrollHeight (): number {
+  //   return (document.querySelector('.previewer-screen-main') as HTMLElement).scrollHeight
+  // }
 
   get left (): string | number {
     const { enableMoveX, compProps, moveX } = this
@@ -214,26 +234,25 @@ export default class Element extends Vue {
     return this.moveMode.indexOf('y') !== -1
   }
   get heightLimit (): number {
-    return this.Previewer.scrollHeight - this.moveY
+    return this.scrollHeight - this.moveY
   }
   get widthLimit (): number {
-    return this.Previewer.width - this.moveX
+    return this.Screen.width - this.moveX
   }
   get topLimit (): number {
     return 0
   }
-  get bottomLimit (): number {
-    return this.Previewer.scrollHeight - this.sizeY
-  }
+  // get bottomLimit (): number {
+  //   return this.scrollHeight - this.sizeY
+  // }
   get leftLimit (): number {
     return 0
   }
   get rightLimit (): number {
-    return this.Previewer.width - this.sizeX
+    return this.Screen.width - this.sizeX
   }
 
   init () {
-    console.log(this.compProps)
     this.moveX = this.compProps.x
     this.moveY = this.compProps.y
     this.sizeX = this.compProps.width
@@ -267,13 +286,19 @@ export default class Element extends Vue {
     const { topLimit, bottomLimit } = this
     const moveY = this.moveY as number + val
 
-    if (moveY >= topLimit && moveY <= bottomLimit) {
-      this.moveY = moveY
-    } else if (moveY < topLimit) {
+    if (moveY < topLimit) {
       this.moveY = topLimit
-    } else if (moveY > bottomLimit) {
-      this.moveY = bottomLimit
+    } else {
+      this.moveY = moveY
     }
+
+    // if (moveY >= topLimit && moveY <= bottomLimit) {
+    //   this.moveY = moveY
+    // } else if (moveY < topLimit) {
+    //   this.moveY = topLimit
+    // } else if (moveY > bottomLimit) {
+    //   this.moveY = bottomLimit
+    // }
   }
   handleSizeX (val: number, direction: 'L' | 'R') {
     const { leftLimit, widthLimit } = this
@@ -291,8 +316,7 @@ export default class Element extends Vue {
   handleSizeY (val: number, direction: 'T' | 'B') {
     const { topLimit, heightLimit } = this
     const sizeY = this.sizeY as number + (direction === 'T' ? -val : val)
-    console.log(topLimit)
-    console.log(heightLimit)
+
     if (direction === 'T') {
       const moveY = this.moveY as number + val
       if (moveY >= topLimit) {

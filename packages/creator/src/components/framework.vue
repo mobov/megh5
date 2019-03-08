@@ -17,36 +17,23 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { StateProject, StateUiModules, GetterPageData, MutationSetPageData } from '@/store'
+import { GetterPageData, MutationSetPageData } from '@/store'
 
 @Component
 export default class Menu extends Vue {
-  @State Project!: StateProject
-
   @Getter PageData!: GetterPageData
-
-  @State UiModules!: StateUiModules
 
   @Mutation SET_PAGE_DATA!: MutationSetPageData
 
   handleItemClick (name: string) {
-    console.log(this.Project)
-    console.log(this.PageData)
-    console.log(this.UiModules)
-    this.SET_PAGE_DATA([])
+    // console.log(name)
+    // this.UPDATE_UI_NODES()
   }
 
   RMenuItem () {
     const { handleItemClick } = this
     const result = []
 
-    this.UiModules.forEach(list => {
-      result.push(
-        <div class="menu-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
-          {list.title}
-        </div>
-      )
-    })
     return result
   }
 
@@ -54,7 +41,7 @@ export default class Menu extends Vue {
     const { RMenuItem } = this
 
     return (
-      <div class="menu">
+      <div class="framework">
         {RMenuItem()}
       </div>
     )
