@@ -6,7 +6,7 @@
     user-select: none;
     z-index: 1;
     box-sizing: border-box;
-    cursor: move;
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: auto;
@@ -202,6 +202,10 @@ export default class Element extends Vue {
     genSize(styles, 'height', height)
     genPosX(styles, x, true)
     genPosY(styles, y, true)
+
+    if (this.moveMode !== 'none') {
+      styles['cursor'] = 'move'
+    }
 
     return styles
   }
