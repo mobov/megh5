@@ -10,10 +10,10 @@
     position: relative;
     width: 100%;
     height: auto;
-    a,
-    .m-button {
-      pointer-events: none;
-    }
+    /*a,*/
+    /*.m-button {*/
+      /*pointer-events: none;*/
+    /*}*/
   }
 
   .element-axis {
@@ -105,6 +105,7 @@
   }
   .element-edit-box {
     position: absolute;
+    z-index: 2;
   }
 </style>
 
