@@ -29,7 +29,7 @@ import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import Store, { StateProject, StateScreen, GetterPageData } from '@/store'
 import { ProjectData } from '@/constants'
-import { UiNode } from '@megh5/ui/types/core/constants'
+import { UiNode, UiModule } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
@@ -42,21 +42,30 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
       const nodeModule = deepCopy(Store.state.UiModules.find(item => item.name === node.name))
 
       node.nodeData = merge(nodeModule.nodeData, node.nodeData)
-      const elementData: VNodeData = {
-        props: nodeModule.uiConfig
-      }
-      // slot
-      if (node.nodeData.slot) {
-        elementData.slot = node.nodeData.slot
-        delete node.nodeData.slot
-      }
 
-      result.push(h(
-        'Element',
-        elementData,
-        [h(node.name, node.nodeData, node.children ? compiler(h, node.children) : [])]
-      ))
-      // result.push(h(node.name, node.nodeData, node.children ? compiler(h, node.children) : []))
+      if (nodeModule.uiConfig.disabled) {
+        result.push(h(node.name, node.nodeData, node.children ? compiler(h, node.children) : []))
+      } else {
+        const elementData: VNodeData = {
+          props: {
+            nodePath: node.path,
+            // compProps: node.nodeData.props,
+            ...node.nodeData.props,
+            ...nodeModule.uiConfig
+          }
+        }
+        // slot
+        if (node.nodeData.slot) {
+          elementData.slot = node.nodeData.slot
+          delete node.nodeData.slot
+        }
+
+        result.push(h(
+          'Element',
+          elementData,
+          [h(node.name, node.nodeData, node.children ? compiler(h, node.children) : [])]
+        ))
+      }
     }
   }
 

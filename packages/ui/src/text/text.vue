@@ -33,6 +33,9 @@ export default class HText extends Vue {
   @Prop({ type: [Number, String], default: 0 })
   y!: string | number
 
+  @Prop({ type: Number, default: 0 })
+  ellipsis!: number
+
   @Prop({ type: String, default: '按钮' })
   text!: string
 

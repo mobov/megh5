@@ -1,5 +1,5 @@
 // import { CreateElement, VNodeData, VNode } from 'vue'
-// import { UiNode } from '@megh5/ui/types/core/constants'
+import { UiNode } from '@megh5/ui/types/core/constants'
 // import { deepCopy } from '@megmore/es-helper'
 //
 //
@@ -24,3 +24,24 @@
 //
 //   return result
 // }
+
+export function getPathNode (path: string, rootNode: UiNode[]): UiNode {
+  const pathData = path.split('/')
+  let result: UiNode = {
+    name: '',
+    path: '',
+    nodeData: {
+      props: {}
+    },
+    children: rootNode
+  }
+  pathData.forEach(tempIndex => {
+    // @ts-ignore
+    result = result.children![tempIndex]
+  })
+
+  console.log(path)
+  console.log(result)
+
+  return result
+}

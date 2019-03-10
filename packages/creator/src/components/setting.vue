@@ -23,8 +23,6 @@ import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
 
-
-
 @Component
 export default class Setting extends Vue {
   RMenuItem () {

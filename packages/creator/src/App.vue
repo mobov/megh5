@@ -23,7 +23,8 @@
       </MAppBar>
       <SidePanel class="m-elevation-2" v-if="showRight" slot="right"></SidePanel>
       <MFlex full justify="center" align="center" style="height: 100%">
-        <Previewer />
+        <Previewer mode="edit"/>
+        <Previewer mode="preview"/>
       </MFlex>
     </MView>
   </MApp>

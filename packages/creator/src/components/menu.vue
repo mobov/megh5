@@ -38,7 +38,7 @@ export default class Menu extends Vue {
 
   RMenuItem () {
     const { handleItemClick } = this
-    const result = []
+    const result: any = []
 
     this.UiModules.forEach(list => {
       result.push(

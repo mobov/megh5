@@ -6,11 +6,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { ProjectData } from '@/constants'
 import BUTTON_BG from '@/assets/btn.png'
-import { UiNode, UiModule } from '@megh5/ui/types/core/constants'
+import { UiNode, UiModule, UiNodeData } from '@megh5/ui/types/core/constants'
+import { getPathNode } from '@/utils'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
 
 Vue.use(Vuex)
+
+export interface UiNodeOpts {
+  path: string
+  nodeData: UiNodeData
+}
 
 export type StateProject = ProjectData
 
@@ -34,6 +40,10 @@ export interface MutationSetPageData {
 
 export interface MutationSetUiModule {
   (val: UiModule | UiModule[]): {}
+}
+
+export interface MutationSetPageNode {
+  (val: UiNodeOpts): {}
 }
 
 export interface ActionInitProject {
@@ -69,8 +79,17 @@ const store = new Vuex.Store<State>({
       state.Project = val
     },
     SET_PAGE_DATA (state, val: UiNode[]) {
-      const Nodes = deepCopy(val)
-      merge(state.Project.UiNodes, Nodes)
+      // const Nodes = deepCopy(val)
+      console.log(val)
+      merge(state.Project.UiNodes, val)
+    },
+    SET_PAGE_NODE (state, val: UiNodeOpts) {
+      const $target = getPathNode(val.path, state.Project.UiNodes)
+      // console.log($target)
+      // console.log(val)
+      merge($target, val)
+      // Vue.set()
+      // merge(state.Project.UiNodes, val)
     },
     ADD_PAGE_NODE (state, val: UiNode[]) {
       const Nodes = deepCopy(val)

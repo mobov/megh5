@@ -35,10 +35,23 @@ export interface UiNode {
     nodeData: UiNodeData;
     children?: UiNode[];
 }
+export interface UiNodeProps {
+    float?: boolean;
+    height?: string | number;
+    width?: string | number;
+    x?: string | number;
+    y?: string | number;
+    block?: boolean;
+    fontSize?: string | number;
+    bgSrc?: string;
+    bgActiveSrc?: string;
+    text?: string;
+}
 export interface UiModule extends UiNode {
     title: string;
     cover: string;
     uiConfig: {
+        disabled?: boolean;
         moveMode: uiMode;
         sizeMode: uiMode;
     };

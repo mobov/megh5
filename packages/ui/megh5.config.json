@@ -3,6 +3,7 @@
   "title": "框架",
   "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
   "uiConfig": {
+    "disabled": true,
     "moveMode": "none",
     "sizeMode": "none"
   },
@@ -16,8 +17,7 @@
       "width": "100%",
       "height": "100%",
       "x": 0,
-      "y": 0,
-      "bgSrc": ""
+      "y": 0
     },
     "event": {
       "click": ""
@@ -28,6 +28,7 @@
   "title": "视图",
   "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
   "uiConfig": {
+    "disabled": true,
     "moveMode": "none",
     "sizeMode": "none"
   },
@@ -100,6 +101,7 @@
   "title": "页脚",
   "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
   "uiConfig": {
+    "disabled": true,
     "moveMode": "none",
     "sizeMode": "none"
   },
