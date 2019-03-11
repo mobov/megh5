@@ -3,8 +3,12 @@ import App from './App.vue'
 import store from './store'
 import './ui'
 import Megmore from '@megmore/vui'
-
 Vue.use(Megmore)
+
+import 'vuetify/dist/vuetify.min.css'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 

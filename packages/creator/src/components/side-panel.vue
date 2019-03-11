@@ -1,6 +1,11 @@
-<style>
+<style lang="scss">
   .side-panel {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    >*:nth-child(1) {
+      flex-grow: 1
+    }
   }
   .side-panel-nav__item {
     width: 100px;
@@ -16,17 +21,18 @@
         配置
       </MButton>
     </MAppBar>
-    <Menu />
+    <SettingTree />
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import Menu from '@/components/menu.vue'
-import Setting from '@/components/setting.vue'
+import SettingTree from '@/components/setting-tree.vue'
 
 type navType = 'menu' | 'setting'
+
 @Component({
-  components: { Menu, Setting }
+  components: { Menu, SettingTree }
 })
 export default class SidePanel extends Vue {
   handleNav (index: navType) {

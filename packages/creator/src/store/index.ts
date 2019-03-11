@@ -1,7 +1,3 @@
-/**
- * store应用状态机
- * Created by nocoolyoyo on 2018/2/19.
- */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ProjectData } from '@/constants'
@@ -28,6 +24,10 @@ export type StateScreen = {
 
 export type StateUiModules = UiModule[]
 
+export type StateSetting = {
+  active: string
+}
+
 export type GetterPageData = UiNode[]
 
 export interface MutationSetProject {
@@ -46,6 +46,10 @@ export interface MutationSetPageNode {
   (val: UiNodeOpts): {}
 }
 
+export interface MutationSetSettingActive {
+  (val: string): {}
+}
+
 export interface ActionInitProject {
   (val: ProjectData): Promise<ProjectData>
 }
@@ -54,6 +58,7 @@ interface State {
   Project: StateProject
   Screen: StateScreen
   UiModules: StateUiModules
+  Setting: StateSetting
 }
 
 const store = new Vuex.Store<State>({
@@ -69,6 +74,9 @@ const store = new Vuex.Store<State>({
       height: 736,
       width: 320,
       scrollHeight: 736
+    },
+    Setting: {
+      active: ''
     }
   },
   getters: {
@@ -79,21 +87,30 @@ const store = new Vuex.Store<State>({
       state.Project = val
     },
     SET_PAGE_DATA (state, val: UiNode[]) {
-      // const Nodes = deepCopy(val)
-      console.log(val)
       merge(state.Project.UiNodes, val)
     },
     SET_PAGE_NODE (state, val: UiNodeOpts) {
       const $target = getPathNode(val.path, state.Project.UiNodes)
-      // console.log($target)
-      // console.log(val)
+      // Reflect.ownKeys(val.nodeData.props).forEach(prop => {
+      //   if (['x', 'y', 'height', 'width'].includes(prop)) {
+      //     val[prop] = Number()
+      //   }
+      //
+      // })
       merge($target, val)
-      // Vue.set()
-      // merge(state.Project.UiNodes, val)
+    },
+    SET_SETTING_ACTIVE (state, val: string) {
+      if (state.Setting.active !== val) {
+        state.Setting.active = val
+      }
     },
     ADD_PAGE_NODE (state, val: UiNode[]) {
       const Nodes = deepCopy(val)
       merge(state.Project.UiNodes, Nodes)
+    },
+    DEL_PAGE_NODE (state, val: UiNodeOpts) {
+      let $target = getPathNode(val.path, state.Project.UiNodes)
+      // delete $target
     },
     SET_UI_MODULE (state, val: UiModule | UiModule[] ) {
       if (val instanceof Array) {

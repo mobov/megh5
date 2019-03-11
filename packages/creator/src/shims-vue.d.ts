@@ -5,6 +5,7 @@ declare module 'vue/types/options' {
     Previewer?: any
   }
   interface ComponentOptions<V extends Vue> {
+    value?: any
     // base
     width?: string | number
     height?: string | number

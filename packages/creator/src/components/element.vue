@@ -26,7 +26,11 @@
   .element-handler-t,
   .element-handler-b,
   .element-handler-l,
-  .element-handler-r,
+  .element-handler-r {
+   // background-color: $--element-handler-color;
+    position: absolute;
+    z-index: 2;
+  }
   .element-handler-tl,
   .element-handler-tr,
   .element-handler-bl,
@@ -38,7 +42,7 @@
 
   .element-handler-t,
   .element-handler-b {
-    height: 3px;
+    height: 4px;
     width: 100%;
     left: 0;
     cursor: ns-resize;
@@ -46,26 +50,26 @@
 
   .element-handler-l,
   .element-handler-r {
-    width: 3px;
+    width: 4px;
     height: 100%;
     top: 0;
     cursor: ew-resize;
   }
 
   .element-handler-t {
-    top: 0;
+    top: -2px;
   }
 
   .element-handler-b {
-    bottom: 0
+    bottom: -2px;
   }
 
   .element-handler-l {
-    left: 0
+    left: -2px;
   }
 
   .element-handler-r {
-    right: 0
+    right: -2px;
   }
 
   .element-handler-tl,
@@ -81,40 +85,44 @@
   }
 
   .element-handler-tl {
-    left: -3px;
-    top: -3px;
+    left: -5px;
+    top: -5px;
     cursor: nw-resize;
   }
 
   .element-handler-tr {
-    right: -3px;
-    top: -3px;
+    right: -5px;
+    top: -5px;
     cursor: ne-resize;
   }
 
   .element-handler-bl {
-    left: -3px;
-    bottom: -3px;
+    left: -5px;
+    bottom: -5px;
     cursor: sw-resize;
   }
 
   .element-handler-br {
-    right: -3px;
-    bottom: -3px;
+    right: -5px;
+    bottom: -5px;
     cursor: se-resize;
   }
   .element-edit-box {
+    box-sizing: border-box;
     position: absolute;
     z-index: 2;
+    cursor: move;
+    border: 3px solid  $--element-handler-color;
   }
 </style>
 
 <template>
-  <div class="element" :style="styles">
+  <div class="element" :style="styles" @mousedown.stop="handleActive">
     <slot></slot>
     <!--<div class="element-axis"></div>-->
+    <!--    @mousedown.stop="isMove = true"-->
     <div class="element-edit-box"
-         @mousedown.stop="isMove = true"
+         v-show="isActive"
          :style="editBoxStyles">
       <div class="element-handler-t" v-if="enableSizeY"
            @mousedown.stop="isSizeT = true"></div>
@@ -124,13 +132,17 @@
            @mousedown.stop="isSizeL = true"></div>
       <div class="element-handler-r" v-if="enableSizeX"
            @mousedown.stop="isSizeR = true"></div>
-      <div class="element-handler-tl" v-if="enableSizeX && enableSizeY"
+      <div class="element-handler-tl"
+           v-if="enableSizeX && enableSizeY"
            @mousedown.stop="isSizeT = true; isSizeL = true"></div>
-      <div class="element-handler-tr" v-if="enableSizeX && enableSizeY"
+      <div class="element-handler-tr"
+           v-if="enableSizeX && enableSizeY"
            @mousedown.stop="isSizeT = true; isSizeR = true"></div>
-      <div class="element-handler-bl" v-if="enableSizeX && enableSizeY"
+      <div class="element-handler-bl"
+           v-if="enableSizeX && enableSizeY"
            @mousedown.stop="isSizeB = true; isSizeL = true"></div>
-      <div class="element-handler-br" v-if="enableSizeX && enableSizeY"
+      <div class="element-handler-br"
+           v-if="enableSizeX && enableSizeY"
            @mousedown.stop="isSizeB = true; isSizeR = true"></div>
     </div>
   </div>
@@ -140,7 +152,7 @@
 import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode } from '@/store'
+import { StateScreen, MutationSetPageNode, StateSetting, MutationSetSettingActive } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, UiNodeProps } from '@megh5/ui/types/core/constants'
@@ -181,9 +193,10 @@ export default class Element extends Vue {
   y!: number
 
   @State Screen!: StateScreen
+  @State Setting!: StateSetting
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
+  @Mutation SET_SETTING_ACTIVE!: MutationSetSettingActive
 
-  isActive = false
   isMove = false
   isSizeL = false
   isSizeR = false
@@ -195,6 +208,10 @@ export default class Element extends Vue {
   sizeX: number = this.width
   sizeY: number = this.height
 
+  get isActive (): boolean {
+    return this.Setting.active === this.nodePath
+  }
+
   get editBoxStyles (): any {
     const { width, height, x, y } = this
     const styles = {}
@@ -203,10 +220,6 @@ export default class Element extends Vue {
     genSize(styles, 'height', height)
     genPosX(styles, x, true)
     genPosY(styles, y, true)
-
-    if (this.moveMode !== 'none') {
-      styles['cursor'] = 'move'
-    }
 
     return styles
   }
@@ -266,6 +279,10 @@ export default class Element extends Vue {
         }
       }
     })
+  }
+  handleActive () {
+    this.isMove = true
+    this.SET_SETTING_ACTIVE(this.nodePath)
   }
   handleMoveX (val: number) {
     if (!this.enableMoveX) { return }

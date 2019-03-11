@@ -32,6 +32,13 @@
     "moveMode": "none",
     "sizeMode": "none"
   },
+  "uiPickType": {
+    "height": "text",
+    "width": "text",
+    "x": "text",
+    "y": "text",
+    "bgSrc": "text"
+  },
   "nodeData": {
     "props": {
       "height": "100%",
