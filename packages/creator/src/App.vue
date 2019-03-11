@@ -10,7 +10,7 @@
 <template>
   <v-app>
     <MApp class="app">
-      <MView rightSize="500px"
+      <MView rightSize="700px"
              fillHeader="left"
              :rightIndex="5">
         <MAppBar slot="header"
@@ -28,7 +28,7 @@
         </MAppBar>
         <SidePanel class="m-elevation-2" v-if="showRight" slot="right"></SidePanel>
         <MFlex full justify="center" align="center" style="height: 100%">
-          <Previewer mode="preview"/>
+          <Previewer @click.stop mode="preview"/>
         </MFlex>
       </MView>
     </MApp>

@@ -22,6 +22,15 @@ export type StateScreen = {
   scrollHeight: number
 }
 
+export type StateActivePanel = 'library' | 'setting' | 'editor'
+
+export enum ActivePanels {
+  library = 0,
+  setting = 1,
+  editor = 2
+}
+
+
 export type StateUiModules = UiModule[]
 
 export type StateSetting = {
@@ -50,6 +59,10 @@ export interface MutationSetSettingActive {
   (val: string): {}
 }
 
+export interface MutationSetActivePanel {
+  (val: StateActivePanel): {}
+}
+
 export interface ActionInitProject {
   (val: ProjectData): Promise<ProjectData>
 }
@@ -59,6 +72,7 @@ interface State {
   Screen: StateScreen
   UiModules: StateUiModules
   Setting: StateSetting
+  activePanel: StateActivePanel
 }
 
 const store = new Vuex.Store<State>({
@@ -75,6 +89,7 @@ const store = new Vuex.Store<State>({
       width: 320,
       scrollHeight: 736
     },
+    activePanel: 'library',
     Setting: {
       active: ''
     }
@@ -112,13 +127,16 @@ const store = new Vuex.Store<State>({
       let $target = getPathNode(val.path, state.Project.UiNodes)
       // delete $target
     },
-    SET_UI_MODULE (state, val: UiModule | UiModule[] ) {
+    SET_UI_MODULE (state, val: UiModule | UiModule[]) {
       if (val instanceof Array) {
         state.UiModules = state.UiModules.concat(val)
       } else {
         state.UiModules.push(val)
       }
     },
+    SET_ACTIVE_PANEL (state, val: StateActivePanel) {
+      state.activePanel = val
+    }
   },
   actions: {
     async initProject ({ commit }, val: ProjectData): Promise<ProjectData> {
