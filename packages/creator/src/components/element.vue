@@ -1,6 +1,6 @@
 <style lang='scss'>
   @import "~@megmore/scss-helper/import";
-
+  $--element-active-color: #ffd0a3;
   $--element-handler-color: #03a9f4;
   .element {
     user-select: none;
@@ -14,6 +14,9 @@
     /*.m-button {*/
       /*pointer-events: none;*/
     /*}*/
+    &.--active {
+      background-color: $--element-active-color;
+    }
   }
 
   .element-axis {
@@ -117,7 +120,7 @@
 </style>
 
 <template>
-  <div class="element" :style="styles" @mousedown.stop="handleActive">
+  <div class="element" :class="{'--active': isActive}" @mousedown.stop="handleActive">
     <slot></slot>
     <!--<div class="element-axis"></div>-->
     <!--    @mousedown.stop="isMove = true"-->
@@ -152,7 +155,7 @@
 import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode, StateSetting, MutationSetSettingActive } from '@/store'
+import { StateScreen, MutationSetPageNode, MutationSetActivePath } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, UiNodeProps } from '@megh5/ui/types/core/constants'
@@ -162,7 +165,7 @@ const { genPosY, genSize, genPosX } = MegH5.Utils
 
 @Component
 export default class Element extends Vue {
-  @Prop({ type: String, default: '' })
+  @Prop({ type: String, default: '0' })
   nodePath!: string
 
   @Prop({ type: String, default: 'xy' })
@@ -193,9 +196,9 @@ export default class Element extends Vue {
   y!: number
 
   @State Screen!: StateScreen
-  @State Setting!: StateSetting
+  @State activePath!: string
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
-  @Mutation SET_SETTING_ACTIVE!: MutationSetSettingActive
+  @Mutation SET_ACTIVE_PATH!: MutationSetActivePath
 
   isMove = false
   isSizeL = false
@@ -209,7 +212,7 @@ export default class Element extends Vue {
   sizeY: number = this.height
 
   get isActive (): boolean {
-    return this.Setting.active === this.nodePath
+    return this.activePath === this.nodePath
   }
 
   get editBoxStyles (): any {
@@ -223,11 +226,7 @@ export default class Element extends Vue {
 
     return styles
   }
-  get styles (): any {
-    const styles = {}
 
-    return styles
-  }
   get parentNode (): HTMLElement {
     return (this.$parent.$el || this.$parent) as HTMLElement
   }
@@ -282,7 +281,7 @@ export default class Element extends Vue {
   }
   handleActive () {
     this.isMove = true
-    this.SET_SETTING_ACTIVE(this.nodePath)
+    this.SET_ACTIVE_PATH(this.nodePath)
   }
   handleMoveX (val: number) {
     if (!this.enableMoveX) { return }

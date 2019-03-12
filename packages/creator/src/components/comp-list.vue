@@ -1,16 +1,16 @@
 <style lang='scss'>
   @import "~@megmore/scss-helper/import";
-  .setting-list {
+  .comp-list {
     width: 100%;
     display: flex;
-    .setting-list-header {
+    .comp-list-header {
       width: inherit;
       cursor: pointer;
     }
-    .setting-list-main {
+    .comp-list-main {
       width: inherit;
     }
-    .setting-list__sort-handler {
+    .comp-list__sort-handler {
       cursor: move;
     }
   }
@@ -20,13 +20,13 @@
   }
 </style>
 <template>
-  <MFlex class="setting-list" direction="column" justify="stretch">
-    <MFlex v-m-ripple class="setting-list-header m-hr-b m-p-md" align="center">
+  <MFlex class="comp-list" direction="column" justify="stretch">
+    <MFlex v-m-ripple class="comp-list-header m-hr-b m-p-md" align="center">
       {{value.name}}
       <MFlexFiller />
-      <MIcon class="setting-list__sort-handler" name="menu" />
+      <MIcon class="comp-list__sort-handler" name="menu" />
     </MFlex>
-    <MFlex class="setting-list-main m-hr-b m-p-md">
+    <MFlex class="comp-list-main m-hr-b m-p-md">
       <!--<div :key="field" v-for="(data, field) in value.nodeData.props">-->
         <!--<MInput :label="field" :value="data"/>-->
       <!--</div>-->
@@ -38,8 +38,8 @@
           required
         ></v-text-field>
         <v-img
-          :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-          :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+          :src="`https://picsum.photos/500/300`"
+          :lazy-src="`https://picsum.photos/10/6`"
           aspect-ratio="1"
           class="grey lighten-2"
         />
@@ -56,7 +56,7 @@ import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, UiNodeProps } from '@megh5/ui/types/core/constants'
 
 @Component()
-export default class SettingList extends Vue {
+export default class CompList extends Vue {
   @Prop({ type: Object, default: () => {} })
   value!: UiNode
 

@@ -1,13 +1,10 @@
 <style lang='scss'>
   @import "~@megmore/scss-helper/import";
-  .setting-tree {
+  .comp-tree {
     width: 100%;
     height: 100%;
     @include scroller();
     @include slim-scroll-bar();
-    .setting-tree-scroller {
-
-    }
   }
 </style>
 <script lang="tsx">
@@ -19,12 +16,12 @@ import { ProjectData } from '@/constants'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
-import SettingList from './setting-list.vue'
+import CompList from './comp-list.vue'
 
 @Component({
-  components: { SettingList }
+  components: { CompList }
 })
-export default class SettingTree extends Vue {
+export default class CompTree extends Vue {
   @Getter PageData!: GetterPageData
 
   RContent (nodes: UiNode[]) {
@@ -32,8 +29,8 @@ export default class SettingTree extends Vue {
     const result: VNode[] = []
     for (let node of nodes) {
       result.push(
-        <div class="setting-tree-list">
-          <SettingList value={node} />
+        <div class="comp-tree-list">
+          <CompList value={node} />
           {node.children ? RContent(node.children) : undefined }
         </div>
       )
@@ -46,8 +43,8 @@ export default class SettingTree extends Vue {
     const { RContent, PageData } = this
 
     return (
-      <div class="setting-tree">
-        <div class="setting-tree-scroller">
+      <div class="comp-tree">
+        <div class="comp-tree-scroller">
           {RContent(PageData)}
         </div>
       </div>

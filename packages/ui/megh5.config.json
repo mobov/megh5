@@ -108,7 +108,6 @@
   "title": "页脚",
   "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
   "uiConfig": {
-    "disabled": true,
     "moveMode": "none",
     "sizeMode": "none"
   },

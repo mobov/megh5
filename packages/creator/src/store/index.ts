@@ -22,20 +22,16 @@ export type StateScreen = {
   scrollHeight: number
 }
 
-export type StateActivePanel = 'library' | 'setting' | 'editor'
+export type StateActivePanel = 'library' | 'setting' | 'tree' | 'editor'
 
 export enum ActivePanels {
   library = 0,
   setting = 1,
-  editor = 2
+  tree = 2,
+  editor = 3
 }
-
 
 export type StateUiModules = UiModule[]
-
-export type StateSetting = {
-  active: string
-}
 
 export type GetterPageData = UiNode[]
 
@@ -55,12 +51,12 @@ export interface MutationSetPageNode {
   (val: UiNodeOpts): {}
 }
 
-export interface MutationSetSettingActive {
+export interface MutationSetActivePath {
   (val: string): {}
 }
 
 export interface MutationSetActivePanel {
-  (val: StateActivePanel): {}
+  (val: ActivePanels): {}
 }
 
 export interface ActionInitProject {
@@ -71,8 +67,8 @@ interface State {
   Project: StateProject
   Screen: StateScreen
   UiModules: StateUiModules
-  Setting: StateSetting
   activePanel: StateActivePanel
+  activePath: string,
 }
 
 const store = new Vuex.Store<State>({
@@ -90,12 +86,11 @@ const store = new Vuex.Store<State>({
       scrollHeight: 736
     },
     activePanel: 'library',
-    Setting: {
-      active: ''
-    }
+    activePath: '0'
   },
   getters: {
-    PageData: (state): GetterPageData => state.Project.UiNodes
+    PageData: (state): GetterPageData => state.Project.UiNodes,
+    ActiveNode: (state): UiNode => getPathNode(state.activePath, state.Project.UiNodes)
   },
   mutations: {
     SET_PROJECT (state, val: ProjectData) {
@@ -114,11 +109,6 @@ const store = new Vuex.Store<State>({
       // })
       merge($target, val)
     },
-    SET_SETTING_ACTIVE (state, val: string) {
-      if (state.Setting.active !== val) {
-        state.Setting.active = val
-      }
-    },
     ADD_PAGE_NODE (state, val: UiNode[]) {
       const Nodes = deepCopy(val)
       merge(state.Project.UiNodes, Nodes)
@@ -134,8 +124,17 @@ const store = new Vuex.Store<State>({
         state.UiModules.push(val)
       }
     },
-    SET_ACTIVE_PANEL (state, val: StateActivePanel) {
-      state.activePanel = val
+    SET_ACTIVE_PATH (state, val: string) {
+      if (state.activePath !== val) {
+        state.activePath = val
+      }
+    },
+    SET_ACTIVE_PANEL (state, val: ActivePanels) {
+      if (typeof val === 'number') {
+        state.activePanel = ActivePanels[val] as StateActivePanel
+      } else {
+        state.activePanel = val
+      }
     }
   },
   actions: {

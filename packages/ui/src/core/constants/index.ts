@@ -40,6 +40,11 @@ export interface UiNodeData extends VNodeData {
 export interface UiNode {
   name: string
   path: string
+  uiConfig?: {
+    disabled?: boolean
+    moveMode: uiMode
+    sizeMode: uiMode
+  }
   nodeData: UiNodeData
   children?: UiNode []
 }
@@ -60,11 +65,6 @@ export interface UiNodeProps {
 export interface UiModule extends UiNode {
   title: string
   cover: string
-  uiConfig: {
-    disabled?: boolean
-    moveMode: uiMode
-    sizeMode: uiMode
-  }
 }
 
 export interface ProjectData {
