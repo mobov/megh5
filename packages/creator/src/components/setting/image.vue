@@ -5,12 +5,14 @@
   }
 </style>
 <template>
-  <div class="setting-image">
-    <!--<v-text-field-->
-      <!--:value="value.text"-->
-      <!--@input="handleValueChange('text', arguments[0])"-->
-      <!--label="链接文案"-->
-      <!--required></v-text-field>-->
+  <div class="setting-image m-pb-md">
+    <div class="setting-label">{{label}}</div>
+    <v-img :src="value"
+           height="200px"
+           width="300px"
+      aspect-ratio="1"
+      class="grey lighten-2"
+    />
   </div>
 </template>
 <script lang="tsx">
