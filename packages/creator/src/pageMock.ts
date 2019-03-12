@@ -32,7 +32,10 @@ const PreviewData: ProjectData = {
           width: '100%',
           height: '100%',
           x: 0,
-          y: 0
+          y: 0,
+          fontColor: '#000000',
+          bgColor: 'transparent',
+          bgImg: ''
         }
       },
       children: [{
@@ -84,7 +87,10 @@ const PreviewData: ProjectData = {
             width: 300,
             height: 50,
             x: 0,
-            y: 0
+            y: 0,
+            fontColor: '#000000',
+            bgColor: 'transparent',
+            bgImg: ''
           }
         }
       }]

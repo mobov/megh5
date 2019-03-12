@@ -18,7 +18,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
-import { genBgImg, genSize, genPosX, genPosY } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genColor } from '../core/utils'
 
 @Component
 export default class HView extends Vue {
@@ -37,13 +37,21 @@ export default class HView extends Vue {
   @Prop({ type: [Number, String], default: 0 })
   y!: string | number
 
+  @Prop({ type: String, default: '#000000' })
+  fontColor: string
+
+  @Prop({ type: String, default: 'transparent' })
+  bgColor: string
+
   @Prop({ type: String, default: '' })
   bgImg: ImageData
 
   get styles (): any {
-    const { bgSrc, height, width, x, y } = this
+    const { bgSrc, height, width, x, y, fontColor, bgColor } = this
     const styles = {}
 
+    genColor(styles, 'color', fontColor)
+    genColor(styles, 'background-color', bgColor)
     genBgImg(styles, bgSrc)
     genSize(styles, 'height', height)
     genSize(styles, 'width', width)

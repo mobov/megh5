@@ -58,6 +58,10 @@
                 "type": "size",
                 "text": "Y轴位移"
             },
+            "fontColor": {
+                "type": "color",
+                "text": "字体颜色"
+            },
             "bgColor": {
                 "type": "color",
                 "text": "背景颜色"
