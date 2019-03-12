@@ -78,12 +78,11 @@ export function genPosY (styles: any = {}, val: string | number | undefined, flo
  * @param styles
  * @param val
  */
-export function genBgImg (styles: any = {}, val: string | undefined ) {
+export function genBgImg (styles: any = {}, val: ImageData | string | undefined ) {
   if (val !== undefined) {
     styles['backgroundImage'] = `url(${val})`
   }
 }
-
 
 /**
  * 获取计算颜色样式值

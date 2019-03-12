@@ -158,7 +158,7 @@ import { State, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode, MutationSetActivePath } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
-import { uiMode, UiNode, UiNodeProps } from '@megh5/ui/types/core/constants'
+import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
 import MegH5 from '@megh5/ui'
 
 const { genPosY, genSize, genPosX } = MegH5.Utils
@@ -179,9 +179,6 @@ export default class Element extends Vue {
 
   @Prop({ type: Number, default: 15 })
   minWidth!: number
-
-  @Prop({ type: Object, default: () => {} })
-  compProps!: UiNodeProps
 
   @Prop({ type: [Number, String] })
   height!: number

@@ -17,13 +17,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genPosX, genPosY } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genColor } from '../core/utils'
 
 @Component
 export default class HButton extends Vue {
-  @Prop({ type: Boolean, default: false })
-  float: boolean
-
   @Prop({ type: [Number, String], default: 50 })
   height!: string | number
 
@@ -43,10 +40,13 @@ export default class HButton extends Vue {
   fontSize: string | number
 
   @Prop({ type: String, default: '' })
-  bgSrc: string
+  bgImg: string
 
-  @Prop({ type: String, default: '' })
-  bgActiveSrc: string
+  @Prop({ type: String, default: 'transparent' })
+  bgColor: string
+
+  // @Prop({ type: String, default: '' })
+  // bgActiveImg: string
 
   @Prop({ type: String, default: '按钮' })
   text!: string
@@ -55,14 +55,15 @@ export default class HButton extends Vue {
   onClick (e: Event) { }
 
   get styles (): any {
-    const { height, width, x, y, float, bgSrc } = this
+    const { height, width, x, y, bgImg, bgColor } = this
     const styles = {}
 
-    genBgImg(styles, bgSrc)
+    genColor(styles, 'background-color', bgColor)
+    genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
     genSize(styles, 'width', width)
-    genPosX(styles, x, float)
-    genPosY(styles, y, float)
+    genPosX(styles, x)
+    genPosY(styles, y)
 
     return styles
   }

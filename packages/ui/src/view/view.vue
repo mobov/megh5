@@ -37,7 +37,8 @@ export default class HView extends Vue {
   @Prop({ type: [Number, String], default: 0 })
   y!: string | number
 
-  bgSrc: string
+  @Prop({ type: String, default: '' })
+  bgImg: ImageData
 
   get styles (): any {
     const { bgSrc, height, width, x, y } = this

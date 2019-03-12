@@ -16,6 +16,13 @@ export enum UiMode {
 
 export type uiMode = 'x' | 'y' | 'xy' | 'none'
 
+export interface PropTypeLink {
+  text: string
+  href: URL
+}
+
+export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color'
+
 export interface UiNodeData extends VNodeData {
   props: {
     // 基础参数
@@ -26,14 +33,13 @@ export interface UiNodeData extends VNodeData {
     height?: number | string
     width?: number | string
     // 组件拓展参数
-    bgSrc?: string
+    bgImg?: string
     text?: string
     logo?: string,
-    termsText?: string,
-    termsLink?: string,
-    policyText?: string,
-    policyLink?: string,
+    termsLink?: PropTypeLink,
+    policyLink?: PropTypeLink,
     copyright?: string
+    [field: string]: any
   }
 }
 
@@ -49,22 +55,26 @@ export interface UiNode {
   children?: UiNode []
 }
 
-export interface UiNodeProps {
-  float?: boolean
-  height?: string | number
-  width?: string | number
-  x?: string | number
-  y?: string | number
-  block?: boolean
-  fontSize?: string | number
-  bgSrc?: string
-  bgActiveSrc?: string
-  text?: string
+interface SettingTypeOpts {
+   type: settingType
+   text: string
 }
 
 export interface UiModule extends UiNode {
   title: string
   cover: string
+  nodeConfig?: {
+    width: SettingTypeOpts
+    height: SettingTypeOpts
+    x: SettingTypeOpts
+    y: SettingTypeOpts
+    bgColor: SettingTypeOpts
+    logo: SettingTypeOpts
+    termsLink: SettingTypeOpts
+    policyLink: SettingTypeOpts
+    copyright: SettingTypeOpts
+    [field: string]: SettingTypeOpts
+  },
 }
 
 export interface ProjectData {
@@ -74,4 +84,3 @@ export interface ProjectData {
   mainPath: string,
   UiNodes: UiNode []
 }
-

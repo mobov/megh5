@@ -21,7 +21,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
-import { genSize } from '../core/utils'
+import { genSize, genColor } from '../core/utils'
 
 @Component
 export default class HApp extends Vue {
@@ -31,12 +31,16 @@ export default class HApp extends Vue {
   @Prop({ type: [Number, String], default: '100%' })
   width!: string | number
 
+  @Prop({ type: String, default: 'transparent' })
+  bgColor!: string
+
   get styles (): any {
-    const { height, width } = this
+    const { height, width, bgColor } = this
     const styles = {}
 
     genSize(styles, 'height', height)
     genSize(styles, 'width', width)
+    genColor(styles, 'background-color', bgColor)
 
     return styles
   }

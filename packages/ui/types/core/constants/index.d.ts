@@ -11,6 +11,11 @@ export declare enum UiMode {
     none = "none"
 }
 export declare type uiMode = 'x' | 'y' | 'xy' | 'none';
+export interface PropTypeLink {
+    text: string;
+    href: URL;
+}
+export declare type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color';
 export interface UiNodeData extends VNodeData {
     props: {
         float?: boolean;
@@ -19,14 +24,13 @@ export interface UiNodeData extends VNodeData {
         y?: number | string;
         height?: number | string;
         width?: number | string;
-        bgSrc?: string;
+        bgImg?: string;
         text?: string;
         logo?: string;
-        termsText?: string;
-        termsLink?: string;
-        policyText?: string;
-        policyLink?: string;
+        termsLink?: PropTypeLink;
+        policyLink?: PropTypeLink;
         copyright?: string;
+        [field: string]: any;
     };
 }
 export interface UiNode {
@@ -40,21 +44,25 @@ export interface UiNode {
     nodeData: UiNodeData;
     children?: UiNode[];
 }
-export interface UiNodeProps {
-    float?: boolean;
-    height?: string | number;
-    width?: string | number;
-    x?: string | number;
-    y?: string | number;
-    block?: boolean;
-    fontSize?: string | number;
-    bgSrc?: string;
-    bgActiveSrc?: string;
-    text?: string;
+interface SettingTypeOpts {
+    type: settingType;
+    text: string;
 }
 export interface UiModule extends UiNode {
     title: string;
     cover: string;
+    nodeConfig?: {
+        width: SettingTypeOpts;
+        height: SettingTypeOpts;
+        x: SettingTypeOpts;
+        y: SettingTypeOpts;
+        bgColor: SettingTypeOpts;
+        logo: SettingTypeOpts;
+        termsLink: SettingTypeOpts;
+        policyLink: SettingTypeOpts;
+        copyright: SettingTypeOpts;
+        [field: string]: SettingTypeOpts;
+    };
 }
 export interface ProjectData {
     name: string;
@@ -63,3 +71,4 @@ export interface ProjectData {
     mainPath: string;
     UiNodes: UiNode[];
 }
+export {};

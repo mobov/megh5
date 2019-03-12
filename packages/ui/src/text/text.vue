@@ -4,8 +4,7 @@
   }
 </style>
 <template>
-  <div class="h-text" :style="styles"
-       @click="onClick">
+  <div class="h-text" :style="styles" @click="onClick">
     {{text}}
   </div>
 </template>

@@ -39,7 +39,7 @@ export declare function genPosY(styles: any, val: string | number | undefined, f
  * @param styles
  * @param val
  */
-export declare function genBgImg(styles: any, val: string | undefined): void;
+export declare function genBgImg(styles: any, val: ImageData | string | undefined): void;
 /**
  * 获取计算颜色样式值
  * @param styles

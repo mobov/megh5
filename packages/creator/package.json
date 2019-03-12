@@ -17,6 +17,7 @@
     "lodash": "^4.17.11",
     "vue": "^2.6.7",
     "vue-class-component": "^7.0.1",
+    "vue-color": "^2.7.0",
     "vue-property-decorator": "^7.3.0",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.19.1",

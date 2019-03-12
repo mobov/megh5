@@ -38,7 +38,7 @@
     <div class="h-footer-main">
       <img class="h-footer__logo" ondragstart="return false" :src="logo" alt="" />
       <span class="h-footer__policy">
-        <a :href="termsLink">{{termsText}}</a> / <a :href="policyLink">{{policyText}}</a>
+        <a :href="termsLink.href">{{termsLink.text}}</a> / <a :href="policyLink.href">{{policyLink.text}}</a>
       </span>
     </div>
     <div class="h-footer__copyright">
@@ -48,7 +48,8 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize } from '../core/utils'
+import { genBgImg, genSize, genColor } from '../core/utils'
+import { PropTypeLink } from '../core/constants'
 
 @Component
 export default class HFooter extends Vue {
@@ -56,31 +57,26 @@ export default class HFooter extends Vue {
   height!: string | number
 
   @Prop({ type: String, default: '' })
-  bgSrc: string
+  bgImg: ImageData
 
   @Prop({ type: String })
-  logo: string
+  logo: ImageData
 
-  @Prop({ type: String, default: 'Terms Of Service' })
-  termsText: string
+  @Prop({ type: Object, default: () => ({ text: 'Terms Of Service', href: '' }) })
+  termsLink: PropTypeLink
 
-  @Prop({ type: String, default: '' })
-  termsLink: string
-
-  @Prop({ type: String, default: 'Privacy Policy' })
-  policyText: string
-
-  @Prop({ type: String, default: '' })
-  policyLink: string
+  @Prop({ type: Object, default: () => ({ text: 'Privacy Policy', href: '' }) })
+  policyLink: PropTypeLink
 
   @Prop({ type: String, default: 'Copyright 2019 * Limited All right reserved' })
   copyright: string
 
   get styles (): any {
-    const { height, bgSrc } = this
+    const { height, bgImg } = this
     const styles = {}
 
-    genBgImg(styles, bgSrc)
+    genBgImg(styles, bgImg)
+    genSize(styles, 'height', height)
     genSize(styles, 'height', height)
 
     return styles

@@ -53,7 +53,7 @@ import { State, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
-import { uiMode, UiNode, UiNodeProps } from '@megh5/ui/types/core/constants'
+import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
 
 @Component()
 export default class CompList extends Vue {

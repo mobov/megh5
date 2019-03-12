@@ -13,5 +13,8 @@ export interface ProjectData {
   name: string
   version: string
   dependencies: any
+  mainPath: string,
   UiNodes: UiNode []
 }
+
+export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' |  'color'

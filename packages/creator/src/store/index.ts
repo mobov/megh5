@@ -14,8 +14,6 @@ export interface UiNodeOpts {
   nodeData: UiNodeData
 }
 
-export type StateProject = ProjectData
-
 export type StateScreen = {
   height: number
   width: number
@@ -64,18 +62,23 @@ export interface ActionInitProject {
 }
 
 interface State {
-  Project: StateProject
+  Project: ProjectData
   Screen: StateScreen
   UiModules: StateUiModules
   activePanel: StateActivePanel
   activePath: string,
 }
 
+// interface  UiModuleGetter {
+//   (name: string): UiModule |  undefined
+// }
+
 const store = new Vuex.Store<State>({
   state: {
     Project: {
       name: 'demo',
       version: '0.0.1',
+      mainPath: '0',
       dependencies: [],
       UiNodes: []
     },
@@ -90,7 +93,8 @@ const store = new Vuex.Store<State>({
   },
   getters: {
     PageData: (state): GetterPageData => state.Project.UiNodes,
-    ActiveNode: (state): UiNode => getPathNode(state.activePath, state.Project.UiNodes)
+    ActiveNode: (state): UiNode => getPathNode(state.activePath, state.Project.UiNodes),
+    // UiModule: (state): UiModuleGetter => (name) => state.UiModules.find(item => item.name === name)
   },
   mutations: {
     SET_PROJECT (state, val: ProjectData) {
