@@ -39,16 +39,14 @@ const PreviewData: ProjectData = {
         name: 'HButton',
         path: '0/0/0',
         nodeData: {
-          style: {
-            color: 'white'
-          },
           props: {
             width: 100,
             height: 50,
             x: 0,
             y: 0,
             text: '哈哈哈',
-            bgColor: 'transparent',
+            fontColor: '#ffffff',
+            bgColor: '#000000',
             bgImg: ''
           }
         }
@@ -56,15 +54,13 @@ const PreviewData: ProjectData = {
         name: 'HButton',
         path: '0/0/1',
         nodeData: {
-          style: {
-            color: 'white'
-          },
           props: {
             width: 100,
             height: 50,
             x: 10,
             y: 0,
             text: '嗯嗯呢',
+            fontColor: '#ffffff',
             bgColor: 'transparent',
             bgImg: BUTTON_BG
           }
@@ -73,9 +69,6 @@ const PreviewData: ProjectData = {
         name: 'HPromoCode',
         path: '0/0/2',
         nodeData: {
-          style: {
-            color: 'white'
-          },
           props: {
             width: 300,
             height: 50,
@@ -87,9 +80,6 @@ const PreviewData: ProjectData = {
         name: 'HView',
         path: '0/0/3',
         nodeData: {
-          style: {
-            color: 'white'
-          },
           props: {
             width: 300,
             height: 50,
@@ -117,9 +107,6 @@ const PreviewData: ProjectData = {
             href: 'http://www.onemt.com/abroadgame/outer/policy',
           },
           copyright: 'Copyright 2019 onemt Limited All right reserved'
-        },
-        style: {
-          color: 'white'
         },
         slot: 'footer'
       }

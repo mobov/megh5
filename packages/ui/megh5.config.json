@@ -109,6 +109,10 @@
                 "type": "text",
                 "text": "按钮文案"
             },
+            "fontColor": {
+                "type": "color",
+                "text": "字体颜色"
+            },
             "bgColor": {
                 "type": "color",
                 "text": "背景颜色"
@@ -125,7 +129,8 @@
                 "x": 50,
                 "y": 100,
                 "bgImg": "",
-                "bgColor": "transparent",
+                "fontColor": "#ffffff",
+                "bgColor": "#000000",
                 "text": "按钮"
             },
             "event": {

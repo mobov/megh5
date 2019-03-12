@@ -18,6 +18,14 @@
       cursor: move;
     }
   }
+  .setting-label {
+    color: #919191;
+    margin-bottom: 10px;
+  }
+  .setting-label {
+    color: #919191;
+    margin-bottom: 10px;
+  }
 </style>
 <template>
   <div class="comp-setting">
@@ -26,19 +34,6 @@
       <MFlexFiller />
     </MFlex>
     <div class="comp-setting-main m-hr-b m-p-md">
-      <!--<div :key="field" v-for="(data, field) in ActiveNode.nodeData.props">-->
-        <!--<v-text-field-->
-          <!--:value="ActiveNode.nodeData.props[field]"-->
-          <!--@input="handleValueChange(field, arguments[0])"-->
-          <!--:label="field"-->
-          <!--required></v-text-field>-->
-        <!--<v-img-->
-          <!--:src="`https://picsum.photos/500/300`"-->
-          <!--:lazy-src="`https://picsum.photos/10/6`"-->
-          <!--aspect-ratio="1"-->
-          <!--class="grey lighten-2"-->
-        <!--/>-->
-      <!--</div>-->
       <component :key="field"
                  :field="field"
                  :label="uiModule.nodeConfig[field].text"

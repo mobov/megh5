@@ -1,15 +1,11 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
-  .setting-label {
-    color: #919191;
-    margin-bottom: 10px;
-  }
   .vc-sketch {
     box-shadow: var(--m-elevation-2) !important;
   }
 </style>
 <template>
-  <div class="setting-color">
+  <div class="setting-color m-pb-md">
     <div class="setting-label">{{label}}</div>
     <sketch :value="value" @input="handleValueChange"></sketch>
   </div>

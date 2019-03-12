@@ -42,7 +42,10 @@ export default class HButton extends Vue {
   @Prop({ type: String, default: '' })
   bgImg: string
 
-  @Prop({ type: String, default: 'transparent' })
+  @Prop({ type: String, default: '#ffffff' })
+  fontColor: string
+
+  @Prop({ type: String, default: '#000000' })
   bgColor: string
 
   // @Prop({ type: String, default: '' })
@@ -55,9 +58,10 @@ export default class HButton extends Vue {
   onClick (e: Event) { }
 
   get styles (): any {
-    const { height, width, x, y, bgImg, bgColor } = this
+    const { height, width, x, y, bgImg, bgColor, fontColor } = this
     const styles = {}
 
+    genColor(styles, 'color', fontColor)
     genColor(styles, 'background-color', bgColor)
     genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
