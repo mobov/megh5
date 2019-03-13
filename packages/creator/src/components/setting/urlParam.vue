@@ -17,9 +17,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
-import { getUrlParam } from '@megmore/es-helper'
 import { StateScreen, MutationSetPageNode } from 'src/store'
-import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component()
 export default class SettingUrlParam extends Vue {
@@ -39,10 +37,6 @@ export default class SettingUrlParam extends Vue {
     default: ''
   })
   value!: string
-
-  get viewValue () {
-    return getUrlParam(this.value) || this.value
-  }
 
   handleValueChange (value) {
     this.SET_PAGE_NODE({

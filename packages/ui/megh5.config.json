@@ -180,7 +180,7 @@
                 "text": "背景图片"
             },
             "label": {
-                "type": "i18n",
+                "type": "text",
                 "text": "按钮文案"
             },
             "code": {

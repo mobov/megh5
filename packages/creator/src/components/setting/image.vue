@@ -28,7 +28,9 @@
              height="200px"
              width="300px"
              class="m-elevation-2 grey lighten-2"/>
-      <input class="setting-image-backer" @change="handleValueChange" type="file">
+      <input class="setting-image-backer"
+             @change="handleValueChange"
+             type="file">
     </div>
   </div>
 </template>
@@ -57,16 +59,24 @@ export default class SettingImage extends Vue {
   })
   value!: string
 
-  handleValueChange (value) {
-    console.log(value)
-    // this.SET_PAGE_NODE({
-    //   path: this.nodePath,
-    //   nodeData: {
-    //     props: {
-    //       [this.field]: value
-    //     }
-    //   }
-    // })
+  handleValueChange (e) {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener('load', () => {
+      this.SET_PAGE_NODE({
+        path: this.nodePath,
+        nodeData: {
+          props: {
+            [this.field]: reader.result
+          }
+        }
+      })
+    }, false)
+
+    if (file) {
+      reader.readAsDataURL(file)
+    }
   }
 }
 </script>
