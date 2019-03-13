@@ -38,17 +38,17 @@
     <div class="h-footer-main">
       <img class="h-footer__logo" ondragstart="return false" :src="logo" alt="" />
       <span class="h-footer__policy">
-        <a :href="termsLink.href">{{termsLink.text}}</a> / <a :href="policyLink.href">{{policyLink.text}}</a>
+        <a :href="termsLink.href">{{viewTermsText}}</a> / <a :href="policyLink.href">{{viewPolicyText}}</a>
       </span>
     </div>
     <div class="h-footer__copyright">
-      {{copyright}}
+      {{viewCopyright}}
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genColor } from '../core/utils'
+import { genBgImg, genSize, getI18nValue } from '../core/utils'
 import { PropTypeLink } from '../core/constants'
 
 @Component
@@ -70,6 +70,18 @@ export default class HFooter extends Vue {
 
   @Prop({ type: String, default: 'Copyright 2019 * Limited All right reserved' })
   copyright: string
+
+  get viewTermsText () {
+    return getI18nValue(this, this.termsLink.text)
+  }
+
+  get viewPolicyText () {
+    return getI18nValue(this, this.policyLink.text)
+  }
+
+  get viewCopyright () {
+    return getI18nValue(this, this.copyright)
+  }
 
   get styles (): any {
     const { height, bgImg } = this

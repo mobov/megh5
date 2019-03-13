@@ -5,11 +5,11 @@
   }
 </style>
 <template>
-  <div class="setting-text">
+  <div class="setting-i18n">
     <v-text-field
-      :value="value.text"
-      @input="handleValueChange('text', arguments[0])"
-      label="链接文案"
+      :value="value"
+      @input="handleValueChange"
+      :label="label"
       required
     ></v-text-field>
   </div>
@@ -39,7 +39,7 @@ export default class SettingI18n extends Vue {
   })
   value!: string
 
-  handleValueChange (field, value) {
+  handleValueChange (value) {
     this.SET_PAGE_NODE({
       path: this.nodePath,
       nodeData: {

@@ -37,10 +37,7 @@
           :label="field"
           required
         ></v-text-field>
-        <v-img
-          :src="`https://picsum.photos/500/300`"
-          :lazy-src="`https://picsum.photos/10/6`"
-          aspect-ratio="1"
+        <v-img contain :src="`https://picsum.photos/500/300`" :lazy-src="`https://picsum.photos/10/6`"
           class="grey lighten-2"
         />
       </v-flex>

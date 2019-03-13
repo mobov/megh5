@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genPosX, genPosY, genColor } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genColor, getI18nValue } from '../core/utils'
 
 @Component
 export default class HButton extends Vue {
@@ -56,6 +56,10 @@ export default class HButton extends Vue {
 
   @Emit('click')
   onClick (e: Event) { }
+
+  get viewText () {
+    return getI18nValue(this, this.text)
+  }
 
   get styles (): any {
     const { height, width, x, y, bgImg, bgColor, fontColor } = this

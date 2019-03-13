@@ -1,15 +1,15 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
-  .setting-text {
+  .setting-urlParam {
 
   }
 </style>
 <template>
-  <div class="setting-text">
+  <div class="setting-urlParam">
     <v-text-field
-      :value="value.text"
-      @input="handleValueChange('text', arguments[0])"
-      label="链接文案"
+      :value="value"
+      @input="handleValueChange"
+      :label="label"
       required
     ></v-text-field>
   </div>
@@ -17,6 +17,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
+import { getUrlParam } from '@megmore/es-helper'
 import { StateScreen, MutationSetPageNode } from 'src/store'
 import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
@@ -39,7 +40,11 @@ export default class SettingUrlParam extends Vue {
   })
   value!: string
 
-  handleValueChange (field, value) {
+  get viewValue () {
+    return getUrlParam(this.value) || this.value
+  }
+
+  handleValueChange (value) {
     this.SET_PAGE_NODE({
       path: this.nodePath,
       nodeData: {

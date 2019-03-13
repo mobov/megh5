@@ -1,18 +1,35 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
   .setting-image {
-
+    cursor: pointer;
+  }
+  .setting-image-main {
+    position: relative;
+    height: 200px;
+    width: 300px;
+  }
+  .setting-image-backer {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    height: 200px;
+    width: 300px;
+    cursor: pointer;
   }
 </style>
 <template>
   <div class="setting-image m-pb-md">
     <div class="setting-label">{{label}}</div>
-    <v-img :src="value"
-           height="200px"
-           width="300px"
-      aspect-ratio="1"
-      class="grey lighten-2"
-    />
+    <div class="setting-image-main">
+      <v-img :src="value"
+             contain
+             height="200px"
+             width="300px"
+             class="m-elevation-2 grey lighten-2"/>
+      <input class="setting-image-backer" @change="handleValueChange" type="file">
+    </div>
   </div>
 </template>
 <script lang="tsx">
@@ -40,15 +57,16 @@ export default class SettingImage extends Vue {
   })
   value!: string
 
-  handleValueChange (field, value) {
-    this.SET_PAGE_NODE({
-      path: this.nodePath,
-      nodeData: {
-        props: {
-          [this.field]: value
-        }
-      }
-    })
+  handleValueChange (value) {
+    console.log(value)
+    // this.SET_PAGE_NODE({
+    //   path: this.nodePath,
+    //   nodeData: {
+    //     props: {
+    //       [this.field]: value
+    //     }
+    //   }
+    // })
   }
 }
 </script>

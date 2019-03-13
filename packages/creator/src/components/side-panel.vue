@@ -46,7 +46,7 @@
     <!--</div>-->
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Mixins, Watch } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
 import Library from '@/components/menu.vue'
 import CompSetting from '@/components/comp-setting.vue'
@@ -59,7 +59,14 @@ import { StateActivePanel, MutationSetActivePanel, ActivePanels } from '@/store'
 export default class SidePanel extends Vue {
   @State activePanel: StateActivePanel
 
+  @State activePath: string
+
   @Mutation SET_ACTIVE_PANEL: MutationSetActivePanel
+
+  @Watch('activePath')
+  handleCompActive () {
+    this.SET_ACTIVE_PANEL(ActivePanels['setting'])
+  }
 
   get active () {
     return ActivePanels[this.activePanel]

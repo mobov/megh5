@@ -5,12 +5,12 @@
 </style>
 <template>
   <div class="h-text" :style="styles" @click="onClick">
-    {{text}}
+    {{viewText}}
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genSize } from '../core/utils'
+import { genSize, getI18nValue } from '../core/utils'
 
 @Component
 export default class HText extends Vue {
@@ -37,6 +37,10 @@ export default class HText extends Vue {
 
   @Prop({ type: String, default: '按钮' })
   text!: string
+
+  get viewText () {
+    return getI18nValue(this, this.text)
+  }
 
   get styles (): any {
     const { height, width, fontSize } = this
