@@ -17,23 +17,21 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { StateProject, StateUiModules, GetterPageData, MutationSetPageData } from '@/store'
+import { ProjectData } from '@/constants'
+import { StateUiModules, GetterPageData, MutationAddPageNode } from '@/store'
 
 @Component
 export default class Menu extends Vue {
-  @State Project!: StateProject
+  @State Project!: ProjectData
 
   @Getter PageData!: GetterPageData
 
   @State UiModules!: StateUiModules
 
-  @Mutation SET_PAGE_DATA!: MutationSetPageData
+  @Mutation ADD_PAGE_NODE!: MutationAddPageNode
 
   handleItemClick (name: string) {
-    console.log(this.Project)
-    console.log(this.PageData)
-    console.log(this.UiModules)
-    this.SET_PAGE_DATA([])
+    this.ADD_PAGE_NODE({ name })
   }
 
   RMenuItem () {

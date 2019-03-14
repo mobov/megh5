@@ -13,7 +13,7 @@ export interface ProjectData {
   name: string
   version: string
   dependencies: any
-  mainPath: string,
+  mainUid: string,
   UiNodes: UiNode []
 }
 

@@ -51,7 +51,7 @@ export default class SettingImage extends Vue {
   field!: string
 
   @Prop({ type: String })
-  nodePath!: string
+  nodeUid!: string
 
   @Prop({
     type: String,
@@ -65,7 +65,7 @@ export default class SettingImage extends Vue {
 
     reader.addEventListener('load', () => {
       this.SET_PAGE_NODE({
-        path: this.nodePath,
+        uid: this.nodeUid,
         nodeData: {
           props: {
             [this.field]: reader.result

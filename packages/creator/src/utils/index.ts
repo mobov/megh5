@@ -1,18 +1,12 @@
+import { findNode } from '@megmore/es-helper'
 import { UiNode } from '@megh5/ui/types/core/constants'
 
-export function getPathNode (path: string, rootNode: UiNode[]): UiNode {
-  const pathData = path.split('/')
-  let result: UiNode = {
-    name: '',
-    path: '',
-    nodeData: {
-      props: {}
-    },
-    children: rootNode
-  }
-  pathData.forEach(tempIndex => {
-    // @ts-ignore
-    result = result.children![tempIndex]
+export function getPathNode (uid: string, rootNode: UiNode[]): UiNode {
+  const result = findNode({
+    data: rootNode,
+    field: 'uid',
+    key: uid,
+    childField: 'children'
   })
 
   return result

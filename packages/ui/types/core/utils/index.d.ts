@@ -47,4 +47,10 @@ export declare function genBgImg(styles: any, val: ImageData | string | undefine
  * @param val
  */
 export declare function genColor(styles: any, property: string, val: string | undefined): void;
+/**
+ * 获取翻译值
+ * @param $vue
+ * @param value
+ */
+export declare function getI18nValue($vue: any, value: any): any;
 export {};

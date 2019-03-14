@@ -8,6 +8,7 @@
     position: relative;
     .h-app-main {
       flex-grow: 1;
+      position: relative;
     }
   }
 </style>

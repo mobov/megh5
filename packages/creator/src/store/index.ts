@@ -5,13 +5,20 @@ import BUTTON_BG from '@/assets/btn.png'
 import { UiNode, UiModule, UiNodeData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
 import { deepCopy } from '@megmore/es-helper'
+import { ulid } from 'ulid'
 import { merge } from 'lodash'
 
 Vue.use(Vuex)
 
 export interface UiNodeOpts {
-  path: string
+  uid: string
   nodeData: UiNodeData
+}
+
+export interface AddUiNodeOpts {
+  name: string
+  pid?: string
+  nodeData?: UiNodeData
 }
 
 export type StateScreen = {
@@ -49,7 +56,15 @@ export interface MutationSetPageNode {
   (val: UiNodeOpts): {}
 }
 
-export interface MutationSetActivePath {
+export interface MutationAddPageNode {
+  (val: AddUiNodeOpts): {}
+}
+
+export interface MutationSetActiveUid {
+  (val: string): {}
+}
+
+export interface MutationDelActiveUid {
   (val: string): {}
 }
 
@@ -66,19 +81,15 @@ interface State {
   Screen: StateScreen
   UiModules: StateUiModules
   activePanel: StateActivePanel
-  activePath: string,
+  activeUid: string,
 }
-
-// interface  UiModuleGetter {
-//   (name: string): UiModule |  undefined
-// }
 
 const store = new Vuex.Store<State>({
   state: {
     Project: {
       name: 'demo',
       version: '0.0.1',
-      mainPath: '0',
+      mainUid: '0',
       dependencies: [],
       UiNodes: []
     },
@@ -89,12 +100,11 @@ const store = new Vuex.Store<State>({
       scrollHeight: 736
     },
     activePanel: 'library',
-    activePath: '0'
+    activeUid: '0'
   },
   getters: {
     PageData: (state): GetterPageData => state.Project.UiNodes,
-    ActiveNode: (state): UiNode => getPathNode(state.activePath, state.Project.UiNodes),
-    // UiModule: (state): UiModuleGetter => (name) => state.UiModules.find(item => item.name === name)
+    ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes)
   },
   mutations: {
     SET_PROJECT (state, val: ProjectData) {
@@ -104,22 +114,31 @@ const store = new Vuex.Store<State>({
       merge(state.Project.UiNodes, val)
     },
     SET_PAGE_NODE (state, val: UiNodeOpts) {
-      const $target = getPathNode(val.path, state.Project.UiNodes)
-      // Reflect.ownKeys(val.nodeData.props).forEach(prop => {
-      //   if (['x', 'y', 'height', 'width'].includes(prop)) {
-      //     val[prop] = Number()
-      //   }
-      //
-      // })
+      const $target = getPathNode(val.uid, state.Project.UiNodes)
       merge($target, val)
     },
-    ADD_PAGE_NODE (state, val: UiNode[]) {
-      const Nodes = deepCopy(val)
-      merge(state.Project.UiNodes, Nodes)
+    ADD_PAGE_NODE (state, val: AddUiNodeOpts) {
+      const nodeModule = deepCopy(state.UiModules.find(item => item.name === val.name)) as UiModule
+      const tempNode: UiNode = {
+        name: val.name,
+        uid: ulid(),
+        pid: state.Project.mainUid,
+        nodeData: { ...nodeModule.nodeData },
+        children: []
+      }
+      merge(tempNode, val)
+
+      const $target = getPathNode(tempNode.pid, state.Project.UiNodes)
+      Vue.set($target.children, $target.children.length, tempNode)
+      console.log(state.Project.UiNodes)
+      // state.activeUid = val.uid
     },
-    DEL_PAGE_NODE (state, val: UiNodeOpts) {
-      let $target = getPathNode(val.path, state.Project.UiNodes)
-      // delete $target
+    DEL_PAGE_NODE (state, val: string) {
+      const $target = getPathNode(val, state.Project.UiNodes)
+      const $parent = getPathNode($target.pid, state.Project.UiNodes)
+      const index = $parent.children.findIndex($node => $node.uid === $target.uid)
+      Vue.delete($parent.children, index)
+      state.activeUid = state.Project.mainUid
     },
     SET_UI_MODULE (state, val: UiModule | UiModule[]) {
       if (val instanceof Array) {
@@ -129,8 +148,8 @@ const store = new Vuex.Store<State>({
       }
     },
     SET_ACTIVE_PATH (state, val: string) {
-      if (state.activePath !== val) {
-        state.activePath = val
+      if (state.activeUid !== val) {
+        state.activeUid = val
       }
     },
     SET_ACTIVE_PANEL (state, val: ActivePanels) {

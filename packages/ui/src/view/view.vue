@@ -7,16 +7,11 @@
     align-items: stretch;
     flex-direction: column;
     position: relative;
-    min-height: 100%;
-    min-width: 100%;
+    /*min-height: 100%;*/
+    /*min-width: 100%;*/
   }
 </style>
-<template>
-  <div class="h-view" :style="styles">
-    <slot></slot>
-  </div>
-</template>
-<script lang="ts">
+<script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
 import { genBgImg, genSize, genPosX, genPosY, genColor } from '../core/utils'
 
@@ -25,10 +20,10 @@ export default class HView extends Vue {
   @Prop({ type: Boolean, default: false })
   float: boolean
 
-  @Prop({ type: [Number, String], default: '100%' })
+  @Prop({ type: [Number, String], default: 100 })
   height!: string | number
 
-  @Prop({ type: [Number, String], default: '100%' })
+  @Prop({ type: [Number, String], default: 100 })
   width!: string | number
 
   @Prop({ type: [Number, String], default: 0 })
@@ -46,19 +41,46 @@ export default class HView extends Vue {
   @Prop({ type: String, default: '' })
   bgImg: ImageData
 
+  @Prop({ type: String, default: '' })
+  bgImg: ImageData
+
+  existSlot = false
+
+  get viewHeight () {
+    const { existSlot } = this
+    // return existSlot ?
+  }
+
+  get viewWidth () {
+
+  }
+
   get styles (): any {
-    const { bgSrc, height, width, x, y, fontColor, bgColor } = this
+    const { bgImg, height, width, x, y, fontColor, bgColor } = this
     const styles = {}
 
     genColor(styles, 'color', fontColor)
     genColor(styles, 'background-color', bgColor)
-    genBgImg(styles, bgSrc)
+    genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
     genSize(styles, 'width', width)
     genPosX(styles, x)
     genPosY(styles, y)
 
     return styles
+  }
+
+  render () {
+    const { styles, $slots } = this
+
+    this.existSlot = $slots.default !== undefined
+
+    return (
+      <div class="h-view"
+           style={styles}>
+        {$slots.default}
+      </div>
+    )
   }
 }
 </script>

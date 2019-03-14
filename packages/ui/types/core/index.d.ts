@@ -1,3 +1,4 @@
 import * as Utils from './utils';
 import * as Constants from './constants';
-export { Utils, Constants };
+import * as Store from './store';
+export { Utils, Constants, Store };

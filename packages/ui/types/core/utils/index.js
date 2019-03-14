@@ -83,4 +83,17 @@ export function genColor(styles = {}, property, val) {
         styles[property] = val;
     }
 }
+/**
+ * 获取翻译值
+ * @param $vue
+ * @param value
+ */
+export function getI18nValue($vue, value) {
+    if ($vue.$t) {
+        return $vue.$t(value);
+    }
+    else {
+        return value;
+    }
+}
 //# sourceMappingURL=index.js.map

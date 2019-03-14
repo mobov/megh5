@@ -47,7 +47,7 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
       } else {
         const elementData: VNodeData = {
           props: {
-            nodePath: node.path,
+            nodeUid: node.uid,
             ...node.nodeData.props,
             ...nodeModule.uiConfig
           }

@@ -32,7 +32,7 @@ export default class SettingLink extends Vue {
   field!: string
 
   @Prop({ type: String })
-  nodePath!: string
+  nodeUid!: string
 
   @Prop({
     type: Object,
@@ -45,7 +45,7 @@ export default class SettingLink extends Vue {
 
   handleValueChange (field, value) {
     this.SET_PAGE_NODE({
-      path: this.nodePath,
+      uid: this.nodeUid,
       nodeData: {
         props: {
           [this.field]: {

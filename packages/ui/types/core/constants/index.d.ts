@@ -13,7 +13,7 @@ export declare enum UiMode {
 export declare type uiMode = 'x' | 'y' | 'xy' | 'none';
 export interface PropTypeLink {
     text: string;
-    href: URL;
+    href: string;
 }
 export declare type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color';
 export interface UiNodeData extends VNodeData {
@@ -35,14 +35,15 @@ export interface UiNodeData extends VNodeData {
 }
 export interface UiNode {
     name: string;
-    path: string;
+    uid: string;
+    pid: string;
     uiConfig?: {
         disabled?: boolean;
         moveMode: uiMode;
         sizeMode: uiMode;
     };
     nodeData: UiNodeData;
-    children?: UiNode[];
+    children: UiNode[];
 }
 interface SettingTypeOpts {
     type: settingType;
@@ -68,7 +69,7 @@ export interface ProjectData {
     name: string;
     version: string;
     dependencies: any;
-    mainPath: string;
+    mainUid: string;
     UiNodes: UiNode[];
 }
 export {};

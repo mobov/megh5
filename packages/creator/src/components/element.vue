@@ -155,18 +155,18 @@
 import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode, MutationSetActivePath } from '@/store'
+import { StateScreen, MutationSetPageNode, MutationSetActiveUid } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
-import MegH5 from '@megh5/ui'
+import { Utils } from '@megh5/ui'
 
-const { genPosY, genSize, genPosX } = MegH5.Utils
+const { genPosY, genSize, genPosX } = Utils
 
 @Component
 export default class Element extends Vue {
   @Prop({ type: String, default: '0' })
-  nodePath!: string
+  nodeUid!: string
 
   @Prop({ type: String, default: 'xy' })
   moveMode!: uiMode
@@ -193,9 +193,9 @@ export default class Element extends Vue {
   y!: number
 
   @State Screen!: StateScreen
-  @State activePath!: string
+  @State activeUid!: string
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
-  @Mutation SET_ACTIVE_PATH!: MutationSetActivePath
+  @Mutation SET_ACTIVE_PATH!: MutationSetActiveUid
 
   isMove = false
   isSizeL = false
@@ -209,7 +209,7 @@ export default class Element extends Vue {
   sizeY: number = this.height
 
   get isActive (): boolean {
-    return this.activePath === this.nodePath
+    return this.activeUid === this.nodeUid
   }
 
   get editBoxStyles (): any {
@@ -265,7 +265,7 @@ export default class Element extends Vue {
   }
   updateUi () {
     this.SET_PAGE_NODE({
-      path: this.nodePath,
+      uid: this.nodeUid,
       nodeData: {
         props: {
           x: this.moveX,
@@ -278,7 +278,7 @@ export default class Element extends Vue {
   }
   handleActive () {
     this.isMove = true
-    this.SET_ACTIVE_PATH(this.nodePath)
+    this.SET_ACTIVE_PATH(this.nodeUid)
   }
   handleMoveX (val: number) {
     if (!this.enableMoveX) { return }

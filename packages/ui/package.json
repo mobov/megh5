@@ -16,7 +16,7 @@
   "peerDependencies": {
     "vue": "^2.6.7",
     "@megh5/types": "0.0.1",
-    "@megmore/es-helper": "^0.0.30",
+    "@megmore/es-helper": "^0.0.31",
     "@megmore/scss-helper": "^0.0.4",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.3.0"
@@ -24,7 +24,7 @@
   "dependencies": {
     "vue": "^2.6.7",
     "@megh5/types": "0.0.1",
-    "@megmore/es-helper": "^0.0.30",
+    "@megmore/es-helper": "^0.0.31",
     "@megmore/scss-helper": "^0.0.4",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.3.0"

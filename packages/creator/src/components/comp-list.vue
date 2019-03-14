@@ -63,7 +63,7 @@ export default class CompList extends Vue {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({
-      path: this.value.path,
+      uid: this.value.uid,
       nodeData: {
         props: {
           [field]: value

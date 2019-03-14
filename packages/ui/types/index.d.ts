@@ -1,8 +1,17 @@
 import './core/styles/utils.scss';
-import * as Core from './core';
-declare const MegH5: {
-    Utils: typeof Core.Utils;
-    Constants: typeof Core.Constants;
+import { VueConstructor, Component } from 'vue';
+export declare type ComponentOrPack = Component & {
+    $_megmore_subcomponents?: Record<string, ComponentOrPack>;
 };
+export interface MegH5UseOptions {
+    components?: Record<string, ComponentOrPack>;
+}
+export interface MegH5Plugin {
+    installed: boolean;
+    install: (Vue: VueConstructor, opts: MegH5UseOptions) => void;
+    version: string;
+}
+declare const MegH5: MegH5Plugin;
 export * from './entries';
+export * from './core';
 export default MegH5;

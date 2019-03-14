@@ -59,11 +59,11 @@ import { StateActivePanel, MutationSetActivePanel, ActivePanels } from '@/store'
 export default class SidePanel extends Vue {
   @State activePanel: StateActivePanel
 
-  @State activePath: string
+  @State activeUid: string
 
   @Mutation SET_ACTIVE_PANEL: MutationSetActivePanel
 
-  @Watch('activePath')
+  @Watch('activeUid')
   handleCompActive () {
     this.SET_ACTIVE_PANEL(ActivePanels['setting'])
   }

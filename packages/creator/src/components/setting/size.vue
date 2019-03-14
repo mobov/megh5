@@ -30,7 +30,7 @@ export default class SettingSize extends Vue {
   field!: string
 
   @Prop({ type: String })
-  nodePath!: string
+  nodeUid!: string
 
   @Prop({
     type: [String, Number],
@@ -42,7 +42,7 @@ export default class SettingSize extends Vue {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({
-      path: this.nodePath,
+      uid: this.nodeUid,
       nodeData: {
         props: {
           [this.field]: value

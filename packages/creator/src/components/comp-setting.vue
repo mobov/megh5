@@ -32,13 +32,14 @@
     <MFlex v-m-ripple class="comp-setting-header m-hr-b m-p-md" align="center">
       {{uiModule.title}}
       <MFlexFiller />
+      <v-btn color="error" small @click="handleDelete">删除</v-btn>
     </MFlex>
     <div class="comp-setting-main m-hr-b m-p-md">
       <component :key="field"
                  :field="field"
                  :label="uiModule.nodeConfig[field].text"
                  :value="ActiveNode.nodeData.props[field]"
-                 :nodePath="ActiveNode.path"
+                 :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.props"
                  :is="settingItem(field)"></component>
     </div>
@@ -47,15 +48,19 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode } from '@/store'
+import { StateScreen, MutationSetPageNode, MutationDelActiveUid } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
 @Component()
 export default class CompSetting extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
-  @Getter ActiveNode: UiNode
   @State UiModules: UiModule []
+
+  @Getter ActiveNode: UiNode
+
+  @Mutation SET_PAGE_NODE: MutationSetPageNode
+
+  @Mutation DEL_PAGE_NODE: MutationDelActiveUid
 
   get label () {
     return this.uiModule.nodeConfig[name].type
@@ -72,13 +77,17 @@ export default class CompSetting extends Vue {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({
-      path: this.ActiveNode.path,
+      uid: this.ActiveNode.uid,
       nodeData: {
         props: {
           [field]: value
         }
       }
     })
+  }
+
+  handleDelete () {
+    this.DEL_PAGE_NODE(this.ActiveNode.uid)
   }
 }
 </script>

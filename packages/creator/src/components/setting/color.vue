@@ -31,7 +31,7 @@ export default class SettingColor extends Vue {
   field!: string
 
   @Prop({ type: String })
-  nodePath!: string
+  nodeUid!: string
 
   @Prop({
     type: String,
@@ -42,7 +42,7 @@ export default class SettingColor extends Vue {
   handleValueChange (value) {
     const result = `rgba(${value.rgba.r}, ${value.rgba.g}, ${value.rgba.b}, ${value.rgba.a})`
     this.SET_PAGE_NODE({
-      path: this.nodePath,
+      uid: this.nodeUid,
       nodeData: {
         props: {
           [this.field]: result

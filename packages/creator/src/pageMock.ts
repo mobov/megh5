@@ -12,10 +12,11 @@ const PreviewData: ProjectData = {
     '@megmore/vui': '^0.0.2',
     'imports': ['HView', 'HButton', 'HFooter']
   }],
-  mainPath: '0/0',
+  mainUid: '0/0',
   UiNodes: [{
     name: 'HApp',
-    path: '0/',
+    uid: '0',
+    pid: '0',
     nodeData: {
       props: {
         width: '100%',
@@ -26,7 +27,8 @@ const PreviewData: ProjectData = {
     },
     children: [{
       name: 'HView',
-      path: '0/0',
+      uid: '0/0',
+      pid: '0',
       nodeData: {
         props: {
           width: '100%',
@@ -40,7 +42,8 @@ const PreviewData: ProjectData = {
       },
       children: [{
         name: 'HButton',
-        path: '0/0/0',
+        uid: '0/0/0',
+        pid: '0/0',
         nodeData: {
           props: {
             width: 100,
@@ -52,10 +55,12 @@ const PreviewData: ProjectData = {
             bgColor: '#000000',
             bgImg: ''
           }
-        }
+        },
+        children: []
       }, {
         name: 'HButton',
-        path: '0/0/1',
+        uid: '0/0/1',
+        pid: '0/0',
         nodeData: {
           props: {
             width: 100,
@@ -67,10 +72,12 @@ const PreviewData: ProjectData = {
             bgColor: 'transparent',
             bgImg: BUTTON_BG
           }
-        }
+        },
+        children: []
       }, {
         name: 'HPromoCode',
-        path: '0/0/2',
+        uid: '0/0/2',
+        pid: '0/0',
         nodeData: {
           props: {
             width: 300,
@@ -82,25 +89,13 @@ const PreviewData: ProjectData = {
             label: 'label',
             code: 'code'
           }
-        }
-      }, {
-        name: 'HView',
-        path: '0/0/3',
-        nodeData: {
-          props: {
-            width: 300,
-            height: 50,
-            x: 0,
-            y: 0,
-            fontColor: '#000000',
-            bgColor: 'transparent',
-            bgImg: ''
-          }
-        }
+        },
+        children: []
       }]
     }, {
       name: 'HFooter',
-      path: '0/1',
+      uid: '0/1',
+      pid: '0',
       nodeData: {
         props: {
           width: '100%',
@@ -119,7 +114,8 @@ const PreviewData: ProjectData = {
           copyright: 'Copyright 2019 onemt Limited All right reserved'
         },
         slot: 'footer'
-      }
+      },
+      children: []
     }]
   }]
 }
