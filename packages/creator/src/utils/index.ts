@@ -11,3 +11,14 @@ export function getPathNode (uid: string, rootNode: UiNode[]): UiNode {
 
   return result
 }
+
+export function getPathParentNode (uid: string, rootNode: UiNode[]): UiNode {
+  const result = findNode({
+    data: rootNode,
+    field: 'uid',
+    key: uid,
+    childField: 'children'
+  })
+
+  return result
+}

@@ -1,7 +1,7 @@
 [
     {
         "name": "HApp",
-        "title": "框架",
+        "title": "项目",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
             "disabled": true,
@@ -19,17 +19,12 @@
             },
             "bgColor": {
                 "type": "color",
-                "text": "背景颜色 "
+                "text": "背景颜色"
             }
         },
         "nodeData": {
             "props": {
-                "width": "100%",
-                "height": "100%",
                 "bgColor": "transparent"
-            },
-            "event": {
-                "click": ""
             }
         }
     },
@@ -73,10 +68,12 @@
         },
         "nodeData": {
             "props": {
-                "height": "100%",
-                "width": "100%",
+                "height": 320,
+                "width": 320,
                 "x": 0,
                 "y": 0,
+                "fontColor": "#000000",
+                "bgColor": "transparent",
                 "bgImg": ""
             },
             "event": {

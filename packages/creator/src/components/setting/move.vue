@@ -1,6 +1,6 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
-  .setting-size {
+  .setting-move {
     display: flex;
     align-items: center;
     .setting-size__input {
@@ -9,15 +9,17 @@
   }
 </style>
 <template>
-  <div class="setting-size">
+  <div class="setting-move">
     <v-text-field
-      class="setting-size__input"
+      class="setting-move__input"
       :value="value"
       @input="handleValueChange"
       :label="label"
       required
     ></v-text-field>
-    <v-btn color="primary" small @click="handleFullSize">铺满</v-btn>
+    <v-btn color="primary" small >靠左</v-btn>
+    <v-btn color="primary" small >居中</v-btn>
+    <v-btn color="primary" small >靠右</v-btn>
   </div>
 </template>
 <script lang="tsx">
@@ -55,10 +57,6 @@ export default class SettingSize extends Vue {
         }
       }
     })
-  }
-
-  handleFullSize () {
-
   }
 }
 </script>

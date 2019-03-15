@@ -22,6 +22,8 @@ import { StateUiModules, GetterPageData, MutationAddPageNode } from '@/store'
 
 @Component
 export default class Menu extends Vue {
+  @State activeUid!: string
+
   @State Project!: ProjectData
 
   @Getter PageData!: GetterPageData
@@ -31,7 +33,10 @@ export default class Menu extends Vue {
   @Mutation ADD_PAGE_NODE!: MutationAddPageNode
 
   handleItemClick (name: string) {
-    this.ADD_PAGE_NODE({ name })
+    this.ADD_PAGE_NODE({
+      pid: this.activeUid,
+      name
+    })
   }
 
   RMenuItem () {

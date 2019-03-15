@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
-import { genSize, genColor } from '../core/utils'
+import { genSize, genColor, genBgImg } from '../core/utils'
 
 @Component
 export default class HApp extends Vue {
@@ -35,13 +35,17 @@ export default class HApp extends Vue {
   @Prop({ type: String, default: 'transparent' })
   bgColor!: string
 
+  @Prop({ type: String, default: '' })
+  bgImg: ImageData
+
   get styles (): any {
-    const { height, width, bgColor } = this
+    const { height, width, bgColor, bgImg } = this
     const styles = {}
 
-    genSize(styles, 'height', height)
+    genSize(styles, 'min-height', height)
     genSize(styles, 'width', width)
     genColor(styles, 'background-color', bgColor)
+    genBgImg(styles, bgImg)
 
     return styles
   }

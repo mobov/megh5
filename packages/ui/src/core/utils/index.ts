@@ -79,8 +79,10 @@ export function genPosY (styles: any = {}, val: string | number | undefined, flo
  * @param val
  */
 export function genBgImg (styles: any = {}, val: ImageData | string | undefined ) {
-  if (val !== undefined) {
+  if (val !== undefined && val !== '') {
     styles['backgroundImage'] = `url(${val})`
+  } else {
+    styles['backgroundImage'] = 'unset'
   }
 }
 

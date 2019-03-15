@@ -2,7 +2,7 @@ import './core/styles/utils.scss';
 import * as components from './entries';
 const MegH5 = {
     installed: false,
-    install(Vue, opts) {
+    install(Vue, opts = {}) {
         if (MegH5.installed) {
             return;
         }

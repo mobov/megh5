@@ -14,7 +14,11 @@ export interface ProjectData {
   version: string
   dependencies: any
   mainUid: string,
-  UiNodes: UiNode []
+  UiNodes: UiNode [],
+  Device: {
+    width: number,
+    height: number
+  }
 }
 
 export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' |  'color'

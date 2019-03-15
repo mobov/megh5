@@ -83,5 +83,9 @@ export interface ProjectData {
   version: string
   dependencies: any
   mainUid: string,
-  UiNodes: UiNode []
+  UiNodes: UiNode [],
+  Device: {
+    width: number,
+    height: number
+  }
 }

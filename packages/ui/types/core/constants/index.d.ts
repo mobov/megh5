@@ -71,5 +71,9 @@ export interface ProjectData {
     dependencies: any;
     mainUid: string;
     UiNodes: UiNode[];
+    Device: {
+        width: number;
+        height: number;
+    };
 }
 export {};

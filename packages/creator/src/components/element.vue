@@ -8,14 +8,110 @@
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
-    width: 100%;
     height: auto;
+    width: auto;
+    transform: translate3d(0,0,0);
+    /*width: 100%;*/
+    /*height: auto;*/
+    /*overflow: hidden;*/
     /*a,*/
     /*.m-button {*/
       /*pointer-events: none;*/
     /*}*/
+    > *:first-child {
+      position: absolute;
+      z-index: 1;
+      margin-left: 0 !important;
+      margin-top: 0 !important;
+      width: 100%;
+      height: 100%;
+    }
     &.--active {
-      background-color: $--element-active-color;
+      z-index: 99;
+      >.element-handler-t,
+      >.element-handler-b,
+      >.element-handler-l,
+      >.element-handler-r {
+        background-color: $--element-handler-color;
+        position: absolute;
+        z-index: 2;
+      }
+      >.element-handler-tl,
+      >.element-handler-tr,
+      >.element-handler-bl,
+      >.element-handler-br {
+        background-color: $--element-handler-color;
+        position: absolute;
+        z-index: 3;
+      }
+
+      >.element-handler-t,
+      >.element-handler-b {
+        height: 4px;
+        width: 100%;
+        left: 0;
+        cursor: ns-resize;
+      }
+
+      >.element-handler-l,
+      >.element-handler-r {
+        width: 4px;
+        height: 100%;
+        top: 0;
+        cursor: ew-resize;
+      }
+
+      >.element-handler-t {
+        top: -2px;
+      }
+
+      >.element-handler-b {
+        bottom: -2px;
+      }
+
+      >.element-handler-l {
+        left: -2px;
+      }
+
+      >.element-handler-r {
+        right: -2px;
+      }
+
+      >.element-handler-tl,
+      >.element-handler-tr,
+      >.element-handler-bl,
+      >.element-handler-br {
+        width: 10px;
+        height: 10px;
+        font-size: 1px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        z-index: 3;
+      }
+
+      >.element-handler-tl {
+        left: -5px;
+        top: -5px;
+        cursor: nw-resize;
+      }
+
+      >.element-handler-tr {
+        right: -5px;
+        top: -5px;
+        cursor: ne-resize;
+      }
+
+      >.element-handler-bl {
+        left: -5px;
+        bottom: -5px;
+        cursor: sw-resize;
+      }
+
+      >.element-handler-br {
+        right: -5px;
+        bottom: -5px;
+        cursor: se-resize;
+      }
     }
   }
 
@@ -26,128 +122,42 @@
     background-color: $--element-handler-color;
   }
 
-  .element-handler-t,
-  .element-handler-b,
-  .element-handler-l,
-  .element-handler-r {
-   // background-color: $--element-handler-color;
-    position: absolute;
-    z-index: 2;
-  }
-  .element-handler-tl,
-  .element-handler-tr,
-  .element-handler-bl,
-  .element-handler-br {
-    background-color: $--element-handler-color;
-    position: absolute;
-    z-index: 2;
-  }
-
-  .element-handler-t,
-  .element-handler-b {
-    height: 4px;
-    width: 100%;
-    left: 0;
-    cursor: ns-resize;
-  }
-
-  .element-handler-l,
-  .element-handler-r {
-    width: 4px;
-    height: 100%;
-    top: 0;
-    cursor: ew-resize;
-  }
-
-  .element-handler-t {
-    top: -2px;
-  }
-
-  .element-handler-b {
-    bottom: -2px;
-  }
-
-  .element-handler-l {
-    left: -2px;
-  }
-
-  .element-handler-r {
-    right: -2px;
-  }
-
-  .element-handler-tl,
-  .element-handler-tr,
-  .element-handler-bl,
-  .element-handler-br {
-    width: 10px;
-    height: 10px;
-    font-size: 1px;
-    border-radius: 50%;
-    border: 1px solid #fff;
-    z-index: 3;
-  }
-
-  .element-handler-tl {
-    left: -5px;
-    top: -5px;
-    cursor: nw-resize;
-  }
-
-  .element-handler-tr {
-    right: -5px;
-    top: -5px;
-    cursor: ne-resize;
-  }
-
-  .element-handler-bl {
-    left: -5px;
-    bottom: -5px;
-    cursor: sw-resize;
-  }
-
-  .element-handler-br {
-    right: -5px;
-    bottom: -5px;
-    cursor: se-resize;
-  }
-  .element-edit-box {
+ /* .element-edit-box {
     box-sizing: border-box;
     position: absolute;
     z-index: 2;
     cursor: move;
     border: 3px solid  $--element-handler-color;
-  }
+  }*/
 </style>
 
 <template>
-  <div class="element" :class="{'--active': isActive}" @mousedown.stop="handleActive">
+  <div class="element" :style="editBoxStyles" :class="{'--active': isActive}" @mousedown.stop="handleActive">
     <slot></slot>
-    <!--<div class="element-axis"></div>-->
-    <!--    @mousedown.stop="isMove = true"-->
-    <div class="element-edit-box"
-         v-show="isActive"
-         :style="editBoxStyles">
-      <div class="element-handler-t" v-if="enableSizeY"
-           @mousedown.stop="isSizeT = true"></div>
-      <div class="element-handler-b" v-if="enableSizeY"
-           @mousedown.stop="isSizeB = true"></div>
-      <div class="element-handler-l" v-if="enableSizeX"
-           @mousedown.stop="isSizeL = true"></div>
-      <div class="element-handler-r" v-if="enableSizeX"
-           @mousedown.stop="isSizeR = true"></div>
-      <div class="element-handler-tl"
-           v-if="enableSizeX && enableSizeY"
-           @mousedown.stop="isSizeT = true; isSizeL = true"></div>
-      <div class="element-handler-tr"
-           v-if="enableSizeX && enableSizeY"
-           @mousedown.stop="isSizeT = true; isSizeR = true"></div>
-      <div class="element-handler-bl"
-           v-if="enableSizeX && enableSizeY"
-           @mousedown.stop="isSizeB = true; isSizeL = true"></div>
-      <div class="element-handler-br"
-           v-if="enableSizeX && enableSizeY"
-           @mousedown.stop="isSizeB = true; isSizeR = true"></div>
-    </div>
+    <div class="element-handler-t" style="cursor: pointer"></div>
+    <div class="element-handler-b" style="cursor: pointer"></div>
+    <div class="element-handler-l" style="cursor: pointer"></div>
+    <div class="element-handler-r" style="cursor: pointer"></div>
+    <div class="element-handler-t" v-if="enableSizeY"
+         @mousedown.stop="isSizeT = true"></div>
+    <div class="element-handler-b" v-if="enableSizeY"
+         @mousedown.stop="isSizeB = true"></div>
+    <div class="element-handler-l" v-if="enableSizeX"
+         @mousedown.stop="isSizeL = true"></div>
+    <div class="element-handler-r" v-if="enableSizeX"
+         @mousedown.stop="isSizeR = true"></div>
+    <div class="element-handler-tl"
+         v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeT = true; isSizeL = true"></div>
+    <div class="element-handler-tr"
+         v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeT = true; isSizeR = true"></div>
+    <div class="element-handler-bl"
+         v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeB = true; isSizeL = true"></div>
+    <div class="element-handler-br"
+         v-if="enableSizeX && enableSizeY"
+         @mousedown.stop="isSizeB = true; isSizeR = true"></div>
   </div>
 </template>
 
@@ -218,8 +228,8 @@ export default class Element extends Vue {
 
     genSize(styles, 'width', width)
     genSize(styles, 'height', height)
-    genPosX(styles, x, true)
-    genPosY(styles, y, true)
+    genPosX(styles, x)
+    genPosY(styles, y)
 
     return styles
   }

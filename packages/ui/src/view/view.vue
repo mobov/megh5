@@ -1,14 +1,18 @@
-<style>
+<style lang="scss">
   .h-view {
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: stretch;
-    flex-direction: column;
     position: relative;
-    /*min-height: 100%;*/
-    /*min-width: 100%;*/
+    flex-direction: column;
+    &.--direction-x  {
+      flex-direction: row;
+    }
+    &.--direction-y  {
+      flex-direction: column;
+    }
   }
 </style>
 <script lang="tsx">
@@ -19,6 +23,9 @@ import { genBgImg, genSize, genPosX, genPosY, genColor } from '../core/utils'
 export default class HView extends Vue {
   @Prop({ type: Boolean, default: false })
   float: boolean
+
+  @Prop({ type: String, default: 'y' })
+  direction: 'x' | 'y'
 
   @Prop({ type: [Number, String], default: 100 })
   height!: string | number
@@ -41,18 +48,12 @@ export default class HView extends Vue {
   @Prop({ type: String, default: '' })
   bgImg: ImageData
 
-  @Prop({ type: String, default: '' })
-  bgImg: ImageData
+  get classes () {
+    const { direction } = this
 
-  existSlot = false
-
-  get viewHeight () {
-    const { existSlot } = this
-    // return existSlot ?
-  }
-
-  get viewWidth () {
-
+    return {
+      [`--direction-${direction}`]: true
+    }
   }
 
   get styles (): any {
@@ -71,13 +72,12 @@ export default class HView extends Vue {
   }
 
   render () {
-    const { styles, $slots } = this
-
-    this.existSlot = $slots.default !== undefined
+    const { styles, $slots, classes } = this
 
     return (
-      <div class="h-view"
-           style={styles}>
+      <div staticClass="h-view"
+        class={classes}
+        style={styles}>
         {$slots.default}
       </div>
     )

@@ -119,19 +119,30 @@ const store = new Vuex.Store<State>({
     },
     ADD_PAGE_NODE (state, val: AddUiNodeOpts) {
       const nodeModule = deepCopy(state.UiModules.find(item => item.name === val.name)) as UiModule
+      let pid = val.pid
+      if (pid && pid !== state.Project.mainUid) {
+        const pNode = getPathNode(pid, state.Project.UiNodes)
+        console.log(pNode.name)
+        if (pNode.name === 'HView') {
+          pid = pNode.uid
+        } else {
+          pid = state.Project.mainUid
+        }
+      } else {
+        pid = state.Project.mainUid
+      }
+
       const tempNode: UiNode = {
         name: val.name,
         uid: ulid(),
-        pid: state.Project.mainUid,
+        pid: pid,
         nodeData: { ...nodeModule.nodeData },
         children: []
       }
-      merge(tempNode, val)
 
       const $target = getPathNode(tempNode.pid, state.Project.UiNodes)
       Vue.set($target.children, $target.children.length, tempNode)
-      console.log(state.Project.UiNodes)
-      // state.activeUid = val.uid
+      state.activeUid = tempNode.uid
     },
     DEL_PAGE_NODE (state, val: string) {
       const $target = getPathNode(val, state.Project.UiNodes)

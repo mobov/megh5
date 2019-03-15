@@ -27,7 +27,7 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import Store, { StateProject, StateScreen, GetterPageData } from '@/store'
+import Store, { StateScreen, GetterPageData } from '@/store'
 import { UiNode, UiModule } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
