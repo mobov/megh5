@@ -43,6 +43,12 @@ export default class SettingLink extends Vue {
   })
   value!: PropTypeLink
 
+  @Prop({
+    type: Object,
+    default: {}
+  })
+  nodeConfig!: any
+
   handleValueChange (field, value) {
     this.SET_PAGE_NODE({
       uid: this.nodeUid,

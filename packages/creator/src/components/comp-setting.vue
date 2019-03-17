@@ -37,8 +37,8 @@
     <div class="comp-setting-main m-hr-b m-p-md">
       <component :key="field"
                  :field="field"
-                 :label="uiModule.nodeConfig[field].text"
                  :value="ActiveNode.nodeData.props[field]"
+                 :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.props"
                  :is="settingItem(field)"></component>

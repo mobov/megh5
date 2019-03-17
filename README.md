@@ -1,6 +1,8 @@
 # megh5
 
-## Project setup
+<img align="center" width="100%" src="./preview.gif">
+<img align="center" width="100%" src="./preview2.jpg">
+ Project setup
 ```
 yarn install
 ```

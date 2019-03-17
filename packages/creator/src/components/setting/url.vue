@@ -25,9 +25,6 @@ export default class SettingUrl extends Vue {
   @Mutation SET_PAGE_NODE: MutationSetPageNode
 
   @Prop({ type: String })
-  label!: string
-
-  @Prop({ type: String })
   field!: string
 
   @Prop({ type: String })
@@ -38,6 +35,16 @@ export default class SettingUrl extends Vue {
     default: ''
   })
   value!: string
+
+  @Prop({
+    type: Object,
+    default: {}
+  })
+  nodeConfig!: any
+
+  get label () {
+    return this.nodeConfig.text
+  }
 
   handleValueChange (field, value) {
     this.SET_PAGE_NODE({

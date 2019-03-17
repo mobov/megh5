@@ -255,18 +255,15 @@ export default class Element extends Vue {
   get enableMoveY () {
     return this.moveMode.indexOf('y') !== -1
   }
-  // get heightLimit (): number {
-  //   return this.scrollHeight - this.moveY
-  // }
+  get heightLimit (): number {
+    return this.parentHeight - this.moveY
+  }
   get widthLimit (): number {
-    return this.Screen.width - this.moveX
+    return this.parentWidth - this.moveX
   }
   get topLimit (): number {
     return 0
   }
-  // get bottomLimit (): number {
-  //   return this.scrollHeight - this.sizeY
-  // }
   get leftLimit (): number {
     return 0
   }

@@ -32,9 +32,6 @@ export default class SettingSize extends Vue {
   @Mutation SET_PAGE_NODE: MutationSetPageNode
 
   @Prop({ type: String })
-  label!: string
-
-  @Prop({ type: String })
   field!: string
 
   @Prop({ type: String })
@@ -45,6 +42,16 @@ export default class SettingSize extends Vue {
     default: ''
   })
   value!: number| string
+
+  @Prop({
+    type: Object,
+    default: {}
+  })
+  nodeConfig!: any
+
+  get label () {
+    return this.nodeConfig.text
+  }
 
   handleValueChange (value) {
     value = isNaN(Number(value)) ? value : Number(value)

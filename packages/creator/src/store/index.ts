@@ -40,6 +40,11 @@ export type StateUiModules = UiModule[]
 
 export type GetterPageData = UiNode[]
 
+export interface GetterDevice {
+  height: number
+  width: number
+}
+
 export interface MutationSetProject {
   (val: ProjectData): {}
 }
@@ -91,7 +96,11 @@ const store = new Vuex.Store<State>({
       version: '0.0.1',
       mainUid: '0',
       dependencies: [],
-      UiNodes: []
+      UiNodes: [],
+      Device: {
+        height: 736,
+        width: 320,
+      }
     },
     UiModules: [],
     Screen: {
@@ -104,6 +113,7 @@ const store = new Vuex.Store<State>({
   },
   getters: {
     PageData: (state): GetterPageData => state.Project.UiNodes,
+    Device: (state): GetterDevice => state.Project.Device,
     ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes)
   },
   mutations: {

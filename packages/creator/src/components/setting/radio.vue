@@ -1,27 +1,34 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
-  .setting-text {
-
+  .setting-move {
+    display: flex;
+    align-items: center;
+    .setting-size__input {
+      width: 500px;
+    }
   }
 </style>
 <template>
-  <div class="setting-text">
-    <v-text-field
-      :value="value"
-      @input="handleValueChange"
-      :label="label"
-      required
-    ></v-text-field>
+  <div class="setting-radio">
+    <div class="setting-label">{{label}} {{value}}</div>
+    <v-radio-group :column="false" :value="value">
+      <v-radio v-for="selection in nodeConfig.extra"
+               :key="selection.value"
+               :value="selection.value"
+               @change="handleValueChange"
+               :label="selection.text"
+      ></v-radio>
+    </v-radio-group>
+
   </div>
 </template>
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode } from 'src/store'
-import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component()
-export default class SettingText extends Vue {
+export default class SettingSize extends Vue {
   @Mutation SET_PAGE_NODE: MutationSetPageNode
 
   @Prop({ type: String })

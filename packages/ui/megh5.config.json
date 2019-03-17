@@ -37,6 +37,17 @@
             "sizeMode": "xy"
         },
         "nodeConfig": {
+            "direction": {
+                "type": "radio",
+                "text": "布局方向",
+                "extra": [{
+                    "text": "X轴",
+                    "value": "x"
+                }, {
+                    "text": "Y轴",
+                    "value": "y"
+                }]
+            },
             "width": {
                 "type": "size",
                 "text": "宽"
@@ -74,10 +85,8 @@
                 "y": 0,
                 "fontColor": "#000000",
                 "bgColor": "transparent",
-                "bgImg": ""
-            },
-            "event": {
-                "click": ""
+                "bgImg": "",
+                "direction": "y"
             }
         }
     },
@@ -127,8 +136,8 @@
             "props": {
                 "height": 50,
                 "width": 100,
-                "x": 50,
-                "y": 100,
+                "x": 0,
+                "y": 0,
                 "bgImg": "",
                 "fontColor": "#ffffff",
                 "bgColor": "#000000",
@@ -260,7 +269,8 @@
                     "href": ""
                 },
                 "copyright": "Copyright 2019 * Limited All right reserved"
-            }
+            },
+            "slot":  "footer"
         }
     }
 ]

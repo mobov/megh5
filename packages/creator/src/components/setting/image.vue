@@ -45,9 +45,6 @@ export default class SettingImage extends Vue {
   @Mutation SET_PAGE_NODE: MutationSetPageNode
 
   @Prop({ type: String })
-  label!: string
-
-  @Prop({ type: String })
   field!: string
 
   @Prop({ type: String })
@@ -58,6 +55,16 @@ export default class SettingImage extends Vue {
     default: ''
   })
   value!: string
+
+  @Prop({
+    type: Object,
+    default: {}
+  })
+  nodeConfig!: any
+
+  get label () {
+    return this.nodeConfig.text
+  }
 
   handleValueChange (e) {
     const file = e.target.files[0]
