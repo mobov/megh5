@@ -1,3 +1,4 @@
+import { positionType } from '../constants';
 export declare const unit = "100vw / 100";
 interface screenSize {
     height: '100vh';
@@ -47,6 +48,18 @@ export declare function genBgImg(styles: any, val: ImageData | string | undefine
  * @param val
  */
 export declare function genColor(styles: any, property: string, val: string | undefined): void;
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export declare function genFloat(styles: any, val: boolean): void;
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export declare function genPosition(styles: any, val: positionType): void;
 /**
  * 获取翻译值
  * @param $vue

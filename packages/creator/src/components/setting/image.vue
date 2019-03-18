@@ -48,6 +48,9 @@ export default class SettingImage extends Vue {
   field!: string
 
   @Prop({ type: String })
+  fieldPath!: 'props' | 'style'
+
+  @Prop({ type: String })
   nodeUid!: string
 
   @Prop({
@@ -74,7 +77,7 @@ export default class SettingImage extends Vue {
       this.SET_PAGE_NODE({
         uid: this.nodeUid,
         nodeData: {
-          props: {
+          [this.fieldPath]: {
             [this.field]: reader.result
           }
         }

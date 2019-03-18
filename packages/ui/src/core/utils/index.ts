@@ -1,3 +1,4 @@
+import { positionType } from '../constants'
 
 export const unit =  '100vw / 100'
 
@@ -97,6 +98,68 @@ export function genColor (styles: any = {}, property: string, val: string | unde
     styles[property] = val
   }
 }
+
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export function genFloat (styles: any = {}, val: boolean): void {
+  if (val !== undefined) {
+    styles['position'] = val ? 'absolute' : 'relative'
+  }
+}
+
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export function genPosition (styles: any = {}, val: positionType): void {
+  if (val !== undefined) {
+    styles['position'] = val
+  }
+}
+
+/**
+ * 计算文字溢出。。。
+ * @param styles
+ * @param val
+ */
+export function genEllipsis (styles: any = {}, val: number): void {
+  if (val !== undefined) {
+    if (val === 0) {
+      Object.assign(styles, {
+        'overflow': 'auto',
+        'text-overflow': 'normal',
+        'white-space': 'normal',
+        'word-break': 'normal',
+        'display': 'block',
+      })
+    } else if (val === 1) {
+      Object.assign(styles, {
+        'overflow': 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap',
+        'word-break': 'normal',
+        'display': '-webkit-box',
+      })
+    } else {
+      Object.assign(styles, {
+        'word-break': 'break-all',
+        'text-overflow': 'clip',
+        'display': '-webkit-box',
+        'overflow': 'hidden',
+        'word-wrap': 'break-word',
+        'white-space': 'normal !important',
+        '-webkit-line-clamp': val,
+        '-webkit-box-orient': 'vertical'
+      })
+    }
+  }
+}
+
+
 
 /**
  * 获取翻译值

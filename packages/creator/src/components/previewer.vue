@@ -50,6 +50,9 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
             nodeUid: node.uid,
             ...node.nodeData.props,
             ...nodeModule.uiConfig
+          },
+          style: {
+            ...node.nodeData.style
           }
         }
         // slot

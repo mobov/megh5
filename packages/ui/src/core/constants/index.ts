@@ -23,11 +23,12 @@ export interface PropTypeLink {
 
 export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color'
 
+export type positionType = 'relative' | 'absolute' | 'fixed'
+
 export interface UiNodeData extends VNodeData {
-  props: {
+  props?: {
     // 基础参数
-    float?: boolean
-    floatIndex?: number
+    position?: positionType
     x?: number | string
     y?: number | string
     height?: number | string
@@ -39,6 +40,9 @@ export interface UiNodeData extends VNodeData {
     termsLink?: PropTypeLink,
     policyLink?: PropTypeLink,
     copyright?: string
+    [field: string]: any
+  }
+  style?: {
     [field: string]: any
   }
 }
@@ -59,6 +63,7 @@ export interface UiNode {
 interface SettingTypeOpts {
    type: settingType
    text: string
+   extra?: any
 }
 
 export interface UiModule extends UiNode {

@@ -10,7 +10,7 @@
 </style>
 <template>
   <div class="setting-radio">
-    <div class="setting-label">{{label}} {{value}}</div>
+    <div class="setting-label">{{label}}</div>
     <v-radio-group :column="false" :value="value">
       <v-radio v-for="selection in nodeConfig.extra"
                :key="selection.value"
@@ -35,6 +35,9 @@ export default class SettingSize extends Vue {
   field!: string
 
   @Prop({ type: String })
+  fieldPath!: 'props' | 'style'
+
+  @Prop({ type: String })
   nodeUid!: string
 
   @Prop({
@@ -57,7 +60,7 @@ export default class SettingSize extends Vue {
     this.SET_PAGE_NODE({
       uid: this.nodeUid,
       nodeData: {
-        props: {
+        [this.fieldPath]: {
           [this.field]: value
         }
       }

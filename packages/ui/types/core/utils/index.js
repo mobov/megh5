@@ -68,8 +68,11 @@ export function genPosY(styles = {}, val, float = false) {
  * @param val
  */
 export function genBgImg(styles = {}, val) {
-    if (val !== undefined) {
+    if (val !== undefined && val !== '') {
         styles['backgroundImage'] = `url(${val})`;
+    }
+    else {
+        styles['backgroundImage'] = 'unset';
     }
 }
 /**
@@ -81,6 +84,26 @@ export function genBgImg(styles = {}, val) {
 export function genColor(styles = {}, property, val) {
     if (val !== undefined) {
         styles[property] = val;
+    }
+}
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export function genFloat(styles = {}, val) {
+    if (val !== undefined) {
+        styles['position'] = val ? 'absolute' : 'relative';
+    }
+}
+/**
+ * 计算浮动
+ * @param styles
+ * @param val
+ */
+export function genPosition(styles = {}, val) {
+    if (val !== undefined) {
+        styles['position'] = val;
     }
 }
 /**

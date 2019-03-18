@@ -1,7 +1,7 @@
 import './core/styles/utils.scss';
 import { VueConstructor, Component } from 'vue';
 export declare type ComponentOrPack = Component & {
-    $_megmore_subcomponents?: Record<string, ComponentOrPack>;
+    $subcomponents?: Record<string, ComponentOrPack>;
 };
 export interface MegH5UseOptions {
     components?: Record<string, ComponentOrPack>;

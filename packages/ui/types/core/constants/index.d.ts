@@ -16,10 +16,10 @@ export interface PropTypeLink {
     href: string;
 }
 export declare type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color';
+export declare type positionType = 'relative' | 'absolute' | 'fixed';
 export interface UiNodeData extends VNodeData {
-    props: {
-        float?: boolean;
-        floatIndex?: number;
+    props?: {
+        position?: positionType;
         x?: number | string;
         y?: number | string;
         height?: number | string;
@@ -30,6 +30,9 @@ export interface UiNodeData extends VNodeData {
         termsLink?: PropTypeLink;
         policyLink?: PropTypeLink;
         copyright?: string;
+        [field: string]: any;
+    };
+    style?: {
         [field: string]: any;
     };
 }
@@ -48,6 +51,7 @@ export interface UiNode {
 interface SettingTypeOpts {
     type: settingType;
     text: string;
+    extra?: any;
 }
 export interface UiModule extends UiNode {
     title: string;

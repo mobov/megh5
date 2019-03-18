@@ -17,10 +17,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genPosX, genPosY, genColor, getI18nValue } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genPosition, getI18nValue } from '../core/utils'
+import { positionType } from '../core/constants'
 
 @Component
 export default class HButton extends Vue {
+  @Prop({ type: String, default: 'relative' })
+  position: positionType
+
   @Prop({ type: [Number, String], default: 50 })
   height!: string | number
 
@@ -33,23 +37,8 @@ export default class HButton extends Vue {
   @Prop({ type: [Number, String], default: 0 })
   y!: string | number
 
-  @Prop({ type: Boolean })
-  block: boolean
-
-  @Prop({ type: [String, Number], default: '12px' })
-  fontSize: string | number
-
   @Prop({ type: String, default: '' })
   bgImg: string
-
-  @Prop({ type: String, default: '#ffffff' })
-  fontColor: string
-
-  @Prop({ type: String, default: '#000000' })
-  bgColor: string
-
-  // @Prop({ type: String, default: '' })
-  // bgActiveImg: string
 
   @Prop({ type: String, default: '按钮' })
   text!: string
@@ -61,17 +50,20 @@ export default class HButton extends Vue {
     return getI18nValue(this, this.text)
   }
 
+  get float (): boolean {
+    return this.position !== 'relative'
+  }
+
   get styles (): any {
-    const { height, width, x, y, bgImg, bgColor, fontColor } = this
+    const { height, width, x, y, bgImg, position, float } = this
     const styles = {}
 
-    genColor(styles, 'color', fontColor)
-    genColor(styles, 'background-color', bgColor)
+    genPosition(styles, position)
     genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
     genSize(styles, 'width', width)
-    genPosX(styles, x)
-    genPosY(styles, y)
+    genPosX(styles, x, float)
+    genPosY(styles, y, float)
 
     return styles
   }

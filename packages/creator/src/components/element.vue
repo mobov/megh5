@@ -23,6 +23,8 @@
       z-index: 1;
       margin-left: 0 !important;
       margin-top: 0 !important;
+      left: 0 !important;
+      top: 0 !important;
       width: 100%;
       height: 100%;
     }
@@ -132,7 +134,7 @@
 </style>
 
 <template>
-  <div class="element" :style="editBoxStyles" :class="{'--active': isActive}" @mousedown.stop="handleActive">
+  <div class="element" :style="styles" :class="{'--active': isActive}" @mousedown.stop="handleActive">
     <slot></slot>
     <div class="element-handler-t" style="cursor: pointer"></div>
     <div class="element-handler-b" style="cursor: pointer"></div>
@@ -168,10 +170,10 @@ import { State, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode, MutationSetActiveUid } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
-import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
+import { uiMode, UiNode, positionType } from '@megh5/ui/types/core/constants'
 import { Utils } from '@megh5/ui'
 
-const { genPosY, genSize, genPosX } = Utils
+const { genPosY, genSize, genPosX, genPosition } = Utils
 
 @Component
 export default class Element extends Vue {
@@ -189,6 +191,9 @@ export default class Element extends Vue {
 
   @Prop({ type: Number, default: 15 })
   minWidth!: number
+
+  @Prop({ type: String, default: 'relative' })
+  position!: positionType
 
   @Prop({ type: [Number, String] })
   height!: number
@@ -222,14 +227,19 @@ export default class Element extends Vue {
     return this.activeUid === this.nodeUid
   }
 
-  get editBoxStyles (): any {
-    const { width, height, x, y } = this
+  get float (): boolean {
+    return this.position !== 'relative'
+  }
+
+  get styles (): any {
+    const { width, height, x, y, position, float } = this
     const styles = {}
 
+    genPosition(styles, position)
     genSize(styles, 'width', width)
     genSize(styles, 'height', height)
-    genPosX(styles, x)
-    genPosY(styles, y)
+    genPosX(styles, x, float)
+    genPosY(styles, y, float)
 
     return styles
   }
@@ -279,7 +289,8 @@ export default class Element extends Vue {
           y: this.moveY,
           height: this.sizeY,
           width: this.sizeX
-        }
+        },
+        style: {}
       }
     })
   }
@@ -291,14 +302,18 @@ export default class Element extends Vue {
     if (!this.enableMoveX) { return }
     const { leftLimit, rightLimit } = this
     let moveX = this.moveX + val
-
-    if (moveX >= leftLimit && moveX <= rightLimit) {
+    if (this.float) {
       this.moveX = moveX
-    } else if (moveX < leftLimit) {
-      this.moveX = leftLimit
-    } else if (moveX > rightLimit) {
-      this.moveX = rightLimit
+    } else {
+      if (moveX >= leftLimit && moveX <= rightLimit) {
+        this.moveX = moveX
+      } else if (moveX < leftLimit) {
+        this.moveX = leftLimit
+      } else if (moveX > rightLimit) {
+        this.moveX = rightLimit
+      }
     }
+
     this.updateUi()
   }
   handleMoveY (val: number) {
@@ -306,11 +321,16 @@ export default class Element extends Vue {
     const { topLimit } = this
     const moveY = this.moveY + val
 
-    if (moveY < topLimit) {
-      this.moveY = topLimit
-    } else {
+    if (this.float) {
       this.moveY = moveY
+    } else {
+      if (moveY < topLimit) {
+        this.moveY = topLimit
+      } else {
+        this.moveY = moveY
+      }
     }
+
     this.updateUi()
     // if (moveY >= topLimit && moveY <= bottomLimit) {
     //   this.moveY = moveY

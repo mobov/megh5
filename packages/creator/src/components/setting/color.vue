@@ -28,6 +28,9 @@ export default class SettingColor extends Vue {
   field!: string
 
   @Prop({ type: String })
+  fieldPath!: 'props' | 'style'
+
+  @Prop({ type: String })
   nodeUid!: string
 
   @Prop({
@@ -51,7 +54,7 @@ export default class SettingColor extends Vue {
     this.SET_PAGE_NODE({
       uid: this.nodeUid,
       nodeData: {
-        props: {
+        [this.fieldPath]: {
           [this.field]: result
         }
       }

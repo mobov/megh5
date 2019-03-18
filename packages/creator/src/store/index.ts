@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ProjectData } from '@/constants'
-import BUTTON_BG from '@/assets/btn.png'
+import BaseModuleConfig from '../base.module.config'
 import { UiNode, UiModule, UiNodeData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
 import { deepCopy } from '@megmore/es-helper'
@@ -12,7 +12,7 @@ Vue.use(Vuex)
 
 export interface UiNodeOpts {
   uid: string
-  nodeData: UiNodeData
+  nodeData?: UiNodeData
 }
 
 export interface AddUiNodeOpts {
@@ -163,10 +163,13 @@ const store = new Vuex.Store<State>({
     },
     SET_UI_MODULE (state, val: UiModule | UiModule[]) {
       if (val instanceof Array) {
-        state.UiModules = state.UiModules.concat(val)
+        const result = val.map(item => merge(item, BaseModuleConfig))
+        state.UiModules = state.UiModules.concat(result)
       } else {
-        state.UiModules.push(val)
+        const result = merge(val, BaseModuleConfig)
+        state.UiModules.push(result)
       }
+      console.log(state.UiModules)
     },
     SET_ACTIVE_PATH (state, val: string) {
       if (state.activeUid !== val) {

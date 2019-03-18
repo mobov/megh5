@@ -8,21 +8,11 @@
             "moveMode": "none",
             "sizeMode": "none"
         },
-        "nodeConfig": {
-            "width": {
-                "type": "size",
-                "text": "宽"
-            },
-            "height": {
-                "type": "size",
-                "text": "高"
-            },
-            "bgColor": {
-                "type": "color",
-                "text": "背景颜色"
-            }
-        },
+        "nodeConfig": {},
         "nodeData": {
+            "style": {
+                "backgroundColor": "transparent"
+            },
             "props": {
                 "bgColor": "transparent"
             }
@@ -36,57 +26,60 @@
             "moveMode": "xy",
             "sizeMode": "xy"
         },
-        "nodeConfig": {
-            "direction": {
-                "type": "radio",
-                "text": "布局方向",
-                "extra": [{
-                    "text": "X轴",
-                    "value": "x"
-                }, {
-                    "text": "Y轴",
-                    "value": "y"
-                }]
-            },
-            "width": {
-                "type": "size",
-                "text": "宽"
-            },
-            "height": {
-                "type": "size",
-                "text": "高"
-            },
-            "x": {
-                "type": "size",
-                "text": "X轴位移"
-            },
-            "y": {
-                "type": "size",
-                "text": "Y轴位移"
-            },
-            "fontColor": {
-                "type": "color",
-                "text": "字体颜色"
-            },
-            "bgColor": {
-                "type": "color",
-                "text": "背景颜色"
-            },
-            "bgImg": {
-                "type": "image",
-                "text": "背景图片"
-            }
-        },
+        "nodeConfig": {},
         "nodeData": {
+            "style": {
+                "color": "#000000",
+                "backgroundColor": "transparent"
+            },
             "props": {
+                "position": "relative",
                 "height": 320,
                 "width": 320,
                 "x": 0,
                 "y": 0,
-                "fontColor": "#000000",
-                "bgColor": "transparent",
                 "bgImg": "",
                 "direction": "y"
+            }
+        }
+    },
+    {
+        "name": "HText",
+        "title": "文字",
+        "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
+        "uiConfig": {
+            "moveMode": "xy",
+            "sizeMode": "xy"
+        },
+        "nodeConfig": {
+            "text": {
+                "type": "text",
+                "text": "内容"
+            },
+            "ellipsis": {
+                "type": "text",
+                "text": "行上限"
+            }
+        },
+        "nodeData": {
+            "style": {
+                "textAlign": "left",
+                "color": "#000000",
+                "backgroundColor": "transparent"
+            },
+            "props": {
+                "position": "relative",
+                "height": 50,
+                "width": 320,
+                "fontSize": 12,
+                "x": 0,
+                "y": 0,
+                "ellipsis": 0,
+                "bgImg": "",
+                "text": "文案"
+            },
+            "event": {
+                "click": ""
             }
         }
     },
@@ -99,48 +92,23 @@
             "sizeMode": "xy"
         },
         "nodeConfig": {
-            "width": {
-                "type": "size",
-                "text": "宽"
-            },
-            "height": {
-                "type": "size",
-                "text": "高"
-            },
-            "x": {
-                "type": "size",
-                "text": "X轴位移"
-            },
-            "y": {
-                "type": "size",
-                "text": "Y轴位移"
-            },
             "text": {
                 "type": "text",
                 "text": "按钮文案"
-            },
-            "fontColor": {
-                "type": "color",
-                "text": "字体颜色"
-            },
-            "bgColor": {
-                "type": "color",
-                "text": "背景颜色"
-            },
-            "bgImg": {
-                "type": "image",
-                "text": "背景图片"
             }
         },
         "nodeData": {
+            "style": {
+                "color": "#ffffff",
+                "backgroundColor": "#000000"
+            },
             "props": {
+                "position": "relative",
                 "height": 50,
                 "width": 100,
                 "x": 0,
                 "y": 0,
                 "bgImg": "",
-                "fontColor": "#ffffff",
-                "bgColor": "#000000",
                 "text": "按钮"
             },
             "event": {
@@ -157,37 +125,13 @@
             "sizeMode": "none"
         },
         "nodeConfig": {
-            "width": {
-                "type": "size",
-                "text": "宽"
-            },
-            "height": {
-                "type": "size",
-                "text": "高"
-            },
-            "x": {
-                "type": "size",
-                "text": "X轴位移"
-            },
-            "y": {
-                "type": "size",
-                "text": "Y轴位移"
-            },
-            "bgColor": {
-                "type": "color",
-                "text": "背景颜色"
-            },
             "gift": {
                 "type": "image",
                 "text": "礼物图片"
             },
-            "bgImg": {
-                "type": "image",
-                "text": "背景图片"
-            },
             "label": {
                 "type": "text",
-                "text": "按钮文案"
+                "text": "label文案"
             },
             "code": {
                 "type": "urlParam",
@@ -195,9 +139,14 @@
             }
         },
         "nodeData": {
+            "style": {
+                "color": "#ffffff",
+                "backgroundColor": "#000000"
+            },
             "props": {
+                "position": "relative",
                 "height": 50,
-                "width": "100%",
+                "width": 320,
                 "x": 0,
                 "y": 0,
                 "gift": "data:image/png;base64,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",
@@ -216,26 +165,6 @@
             "sizeMode": "none"
         },
         "nodeConfig": {
-            "width": {
-                "type": "size",
-                "text": "宽"
-            },
-            "height": {
-                "type": "size",
-                "text": "高"
-            },
-            "x": {
-                "type": "size",
-                "text": "X轴位移"
-            },
-            "y": {
-                "type": "size",
-                "text": "Y轴位移"
-            },
-            "bgColor": {
-                "type": "color",
-                "text": "背景颜色"
-            },
             "logo": {
                 "type": "image",
                 "text": "Logo"
@@ -254,6 +183,10 @@
             }
         },
         "nodeData": {
+            "style": {
+                "color": "#ffffff",
+                "backgroundColor": "#000000"
+            },
             "props": {
                 "height": 100,
                 "width": "100%",

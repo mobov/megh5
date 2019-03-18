@@ -89,7 +89,6 @@ export default class HFooter extends Vue {
 
     genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
-    genSize(styles, 'height', height)
 
     return styles
   }

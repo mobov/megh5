@@ -1,4 +1,3 @@
-import BUTTON_BG from './assets/btn.png'
 import { ProjectData } from '@megh5/ui/types/core/constants'
 
 const PreviewData: ProjectData = {
@@ -22,6 +21,7 @@ const PreviewData: ProjectData = {
     uid: '0',
     pid: '0',
     nodeData: {
+      style: {},
       props: {
         width: '100%',
         height: '100%',
@@ -34,6 +34,7 @@ const PreviewData: ProjectData = {
       uid: '0/1',
       pid: '0',
       nodeData: {
+        style: {},
         props: {
           width: 320,
           height: 100,

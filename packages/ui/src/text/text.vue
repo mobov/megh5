@@ -1,21 +1,24 @@
-<style scoped>
+<style lang="scss" scoped>
+  @import "~@megmore/scss-helper/import";
+
   .h-text {
     display: block;
   }
 </style>
 <template>
-  <div class="h-text" :style="styles" @click="onClick">
+  <div class="h-text" :style="styles">
     {{viewText}}
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genSize, getI18nValue } from '../core/utils'
+import { genSize, genEllipsis, getI18nValue, genPosition, genPosX, genPosY } from '../core/utils'
+import { positionType } from '../core/constants'
 
 @Component
 export default class HText extends Vue {
-  @Prop({ type: Boolean, default: false })
-  float: boolean
+  @Prop({ type: String, default: 'relative' })
+  position: positionType
 
   @Prop({ type: [Number, String], default: 50 })
   height!: string | number
@@ -23,7 +26,7 @@ export default class HText extends Vue {
   @Prop({ type: [Number, String], default: 100 })
   width!: string | number
 
-  @Prop({ type: [Number, String], default: 100 })
+  @Prop({ type: [Number, String], default: 12 })
   fontSize!: string | number
 
   @Prop({ type: [Number, String], default: 0 })
@@ -35,20 +38,28 @@ export default class HText extends Vue {
   @Prop({ type: Number, default: 0 })
   ellipsis!: number
 
-  @Prop({ type: String, default: '按钮' })
+  @Prop({ type: String, default: '内容' })
   text!: string
 
   get viewText () {
     return getI18nValue(this, this.text)
   }
 
+  get float (): boolean {
+    return this.position !== 'relative'
+  }
+
   get styles (): any {
-    const { height, width, fontSize } = this
+    const { height, width, ellipsis, fontSize, position, x, y, float } = this
     const styles = {}
 
+    genPosition(styles, position)
+    genEllipsis(styles, ellipsis)
     genSize(styles, 'width', width)
     genSize(styles, 'height', height)
     genSize(styles, 'fontSize', fontSize)
+    genPosX(styles, x, float)
+    genPosY(styles, y, float)
 
     return styles
   }
