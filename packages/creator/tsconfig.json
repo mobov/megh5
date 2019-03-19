@@ -24,6 +24,9 @@
       "scripthost"
     ]
   },
+  "exclude": [
+    "src/project/files/*"
+  ],
   "include": [
       "src/**/*.ts",
       "src/**/*.tsx",

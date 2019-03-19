@@ -27,8 +27,8 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import Store, { StateScreen, GetterPageData } from '@/store'
-import { UiNode, UiModule } from '@megh5/ui/types/core/constants'
+import Store, { GetterPageData } from '@/store'
+import { UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'
@@ -79,22 +79,18 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
 export default class Previewer extends Vue {
   @Getter PageData!: GetterPageData
 
-  @State Screen!: StateScreen
+  @State Project!: ProjectData
 
   get screenStyles () {
     return {
-      width: `${this.Screen.width}px`,
-      height: `${this.Screen.height}px`
+      width: `${this.Project.Device.width}px`,
+      height: `${this.Project.Device.height}px`
     }
   }
 
   RContent (h: CreateElement): VNode[] {
     return compiler(h, deepCopy(this.PageData))
   }
-  //
-  // mounted () {
-  //   this.Screen.scrollHeight = (this.$refs.$screen as HTMLElement).scrollHeight
-  // }
 
   render (h: CreateElement) {
     const { RContent, screenStyles } = this
