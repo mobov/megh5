@@ -167,10 +167,10 @@
 import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode, MutationSetActiveUid } from '@/store'
+import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
-import { uiMode, UiNode, positionType } from '@megh5/ui/types/core/constants'
+import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
 import { Utils } from '@megh5/ui'
 
 const { genPosY, genSize, genPosX, genPosition } = Utils
@@ -207,7 +207,6 @@ export default class Element extends Vue {
   @Prop({ type: [Number, String] })
   y!: number
 
-  @State Screen!: StateScreen
   @State activeUid!: string
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
   @Mutation SET_ACTIVE_PATH!: MutationSetActiveUid
@@ -227,6 +226,9 @@ export default class Element extends Vue {
     return this.activeUid === this.nodeUid
   }
 
+  get isMainChildren (): boolean {
+    return this.parentNode.classList.contains('h-app-main')
+  }
   get float (): boolean {
     return this.position !== 'relative'
   }
@@ -278,7 +280,10 @@ export default class Element extends Vue {
     return 0
   }
   get rightLimit (): number {
-    return this.Screen.width - this.sizeX
+    return this.parentWidth - this.sizeX
+  }
+  get bottomLimit (): number {
+    return this.parentHeight - this.sizeY
   }
   updateUi () {
     this.SET_PAGE_NODE({
@@ -302,32 +307,55 @@ export default class Element extends Vue {
     if (!this.enableMoveX) { return }
     const { leftLimit, rightLimit } = this
     let moveX = this.moveX + val
-    if (this.float) {
+    // if (this.float) {
+    //   this.moveX = moveX
+    // } else {
+    //   if (moveX >= leftLimit && moveX <= rightLimit) {
+    //     this.moveX = moveX
+    //   } else if (moveX < leftLimit) {
+    //     this.moveX = leftLimit
+    //   } else if (moveX > rightLimit) {
+    //     this.moveX = rightLimit
+    //   }
+    // }
+
+    if (moveX >= leftLimit && moveX <= rightLimit) {
       this.moveX = moveX
-    } else {
-      if (moveX >= leftLimit && moveX <= rightLimit) {
-        this.moveX = moveX
-      } else if (moveX < leftLimit) {
-        this.moveX = leftLimit
-      } else if (moveX > rightLimit) {
-        this.moveX = rightLimit
-      }
+    } else if (moveX < leftLimit) {
+      this.moveX = leftLimit
+    } else if (moveX > rightLimit) {
+      this.moveX = rightLimit
     }
 
     this.updateUi()
   }
   handleMoveY (val: number) {
     if (!this.enableMoveY) { return }
-    const { topLimit } = this
+    const { isMainChildren, topLimit, bottomLimit } = this
     const moveY = this.moveY + val
 
-    if (this.float) {
-      this.moveY = moveY
-    } else {
+    // if (this.float) {
+    //   this.moveY = moveY
+    // } else {
+    //   if (moveY < topLimit) {
+    //     this.moveY = topLimit
+    //   } else {
+    //     this.moveY = moveY
+    //   }
+    // }
+    if (isMainChildren) {
       if (moveY < topLimit) {
         this.moveY = topLimit
       } else {
         this.moveY = moveY
+      }
+    } else {
+      if (moveY >= topLimit && moveY <= bottomLimit) {
+        this.moveY = moveY
+      } else if (moveY < topLimit) {
+        this.moveY = topLimit
+      } else if (moveY > bottomLimit) {
+        this.moveY = bottomLimit
       }
     }
 

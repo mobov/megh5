@@ -169,18 +169,19 @@ const pReg = /\$p{.+?}/g
  */
 export function getStrValue ($vue: any, value: string) {
   let result = value
-
-  if ($vue && $vue.$t) {
-    const tArrs = value.match(tReg)
-    if (tArrs) {
-      tArrs.forEach(item => {
-        const param = item.substr(3, item.length - 4)
-        result = result.replace(item, $vue.$t(param))
-      })
-    }
-  }
-
+  const tArrs = value.match(tReg)
   const pArrs = value.match(pReg)
+
+  if (tArrs) {
+    tArrs.forEach(item => {
+      const param = item.substr(3, item.length - 4)
+      if ($vue && $vue.$t) {
+        result = result.replace(item, $vue.$t(param))
+      } else {
+        result = result.replace(item, param)
+      }
+    })
+  }
 
   if (pArrs) {
     pArrs.forEach(item => {
