@@ -29,6 +29,7 @@
         "nodeConfig": {},
         "nodeData": {
             "style": {
+                "zIndex": 1,
                 "color": "#000000",
                 "backgroundColor": "transparent"
             },
@@ -69,6 +70,7 @@
             "style": {
                 "textAlign": "left",
                 "lineHeight": 1,
+                "zIndex": 1,
                 "color": "#000000",
                 "backgroundColor": "transparent"
             },
@@ -104,6 +106,7 @@
         },
         "nodeData": {
             "style": {
+                "zIndex": 1,
                 "color": "#ffffff",
                 "backgroundColor": "#000000"
             },
@@ -145,6 +148,7 @@
         },
         "nodeData": {
             "style": {
+                "zIndex": 1,
                 "color": "#ffffff",
                 "backgroundColor": "#000000"
             },
@@ -189,12 +193,13 @@
         },
         "nodeData": {
             "style": {
+                "zIndex": 1,
                 "color": "#ffffff",
                 "backgroundColor": "#000000"
             },
             "props": {
                 "height": 100,
-                "width": "100%",
+                "width": 320,
                 "x": 0,
                 "y": 0,
                 "logo": "",

@@ -4,7 +4,6 @@
   $--element-handler-color: #03a9f4;
   .element {
     user-select: none;
-    z-index: 1;
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
@@ -20,7 +19,7 @@
     /*}*/
     > *:first-child {
       position: absolute;
-      z-index: 1;
+      z-index: 1 !important;
       margin-left: 0 !important;
       margin-top: 0 !important;
       left: 0 !important;
@@ -168,7 +167,7 @@ import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
 import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
-import { NoCache } from '../utils/decorators'
+import { NoCache } from '@/utils/decorators'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
@@ -208,6 +207,9 @@ export default class Element extends Vue {
   @Prop({ type: [Number, String] })
   y!: number
 
+  @Prop({ type: Number })
+  zIndex!: number
+
   @State activeUid!: string
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
   @Mutation SET_ACTIVE_PATH!: MutationSetActiveUid
@@ -235,8 +237,10 @@ export default class Element extends Vue {
   }
 
   get styles (): any {
-    const { width, height, x, y, position, float } = this
-    const styles = {}
+    const { width, height, x, y, position, float, zIndex } = this
+    const styles = {
+      zIndex
+    }
 
     genPosition(styles, position)
     genSize(styles, 'width', width)
@@ -320,24 +324,16 @@ export default class Element extends Vue {
     if (!this.enableMoveX) { return }
     const { leftLimit, rightLimit } = this
     let moveX = this.moveX + val
-    // if (this.float) {
-    //   this.moveX = moveX
-    // } else {
-    //   if (moveX >= leftLimit && moveX <= rightLimit) {
-    //     this.moveX = moveX
-    //   } else if (moveX < leftLimit) {
-    //     this.moveX = leftLimit
-    //   } else if (moveX > rightLimit) {
-    //     this.moveX = rightLimit
-    //   }
-    // }
-
-    if (moveX >= leftLimit && moveX <= rightLimit) {
+    if (this.float) {
       this.moveX = moveX
-    } else if (moveX < leftLimit) {
-      this.moveX = leftLimit
-    } else if (moveX > rightLimit) {
-      this.moveX = rightLimit
+    } else {
+      if (moveX >= leftLimit && moveX <= rightLimit) {
+        this.moveX = moveX
+      } else if (moveX < leftLimit) {
+        this.moveX = leftLimit
+      } else if (moveX > rightLimit) {
+        this.moveX = rightLimit
+      }
     }
 
     this.updateUi()
@@ -347,16 +343,9 @@ export default class Element extends Vue {
     const { isMainChildren, topLimit, bottomLimit } = this
     const moveY = this.moveY + val
 
-    // if (this.float) {
-    //   this.moveY = moveY
-    // } else {
-    //   if (moveY < topLimit) {
-    //     this.moveY = topLimit
-    //   } else {
-    //     this.moveY = moveY
-    //   }
-    // }
-    if (isMainChildren) {
+    if (this.float) {
+      this.moveY = moveY
+    } else if (isMainChildren) {
       if (moveY < topLimit) {
         this.moveY = topLimit
       } else {

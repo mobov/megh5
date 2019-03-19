@@ -15,6 +15,8 @@
       class="setting-size__input"
       :value="value"
       type="number"
+      :min="min"
+      :max="max"
       @input="handleValueChange"
       :label="label"
       required
@@ -55,10 +57,18 @@ export default class SettingSize extends Vue {
     return this.nodeConfig.text
   }
   get min () {
-    return this.nodeConfig.extra.min
+    let min = -9999
+    if (this.nodeConfig.extra && this.nodeConfig.extra.min) {
+      min = this.nodeConfig.extra.min
+    }
+    return min
   }
   get max () {
-    return this.nodeConfig.extra.max
+    let max = 9999
+    if (this.nodeConfig.extra && this.nodeConfig.extra.max) {
+      max = this.nodeConfig.extra.max
+    }
+    return max
   }
 
   handleValueChange (value) {
