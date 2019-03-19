@@ -46,7 +46,7 @@
       <component :key="field"
                  :field="field"
                  fieldPath="style"
-                 :value="ActiveNode.nodeData.props[field]"
+                 :value="ActiveNode.nodeData.style[field]"
                  :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.style"
