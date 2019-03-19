@@ -1,3 +1,4 @@
+import { getUrlParam } from '@megmore/es-helper'
 import { positionType } from '../constants'
 
 export const unit =  '100vw / 100'
@@ -159,17 +160,34 @@ export function genEllipsis (styles: any = {}, val: number): void {
   }
 }
 
-
-
+const tReg = /\$t{.+?}/g
+const pReg = /\$p{.+?}/g
 /**
- * 获取翻译值
+ * 获取转换后的字符串值，$t{key}表示翻译值，$p{key}表示url值
  * @param $vue
  * @param value
  */
-export function getI18nValue ($vue, value) {
-  if ($vue.$t) {
-    return $vue.$t(value)
-  } else {
-    return value
+export function getStrValue ($vue: any, value: string) {
+  let result = value
+
+  if ($vue && $vue.$t) {
+    const tArrs = value.match(tReg)
+    if (tArrs) {
+      tArrs.forEach(item => {
+        const param = item.substr(3, item.length - 4)
+        result = result.replace(item, $vue.$t(param))
+      })
+    }
   }
+
+  const pArrs = value.match(pReg)
+
+  if (pArrs) {
+    pArrs.forEach(item => {
+      const param = item.substr(3, item.length - 4)
+      result = result.replace(item, getUrlParam(param) || param)
+    })
+  }
+
+  return result
 }

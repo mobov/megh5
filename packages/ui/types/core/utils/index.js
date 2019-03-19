@@ -111,7 +111,7 @@ export function genPosition(styles = {}, val) {
  * @param $vue
  * @param value
  */
-export function getI18nValue($vue, value) {
+export function getStrValue($vue, value) {
     if ($vue.$t) {
         return $vue.$t(value);
     }

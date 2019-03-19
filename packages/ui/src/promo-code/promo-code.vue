@@ -46,7 +46,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genPosX, genPosY, genSize, getI18nValue, genPosition } from '../core/utils'
+import { genBgImg, genPosX, genPosY, genSize, getStrValue, genPosition } from '../core/utils'
 import { positionType } from '../core/constants'
 import { getUrlParam } from '@megmore/es-helper'
 
@@ -89,7 +89,7 @@ export default class HPromoCode extends Vue {
   bgImg: ImageData
 
   get viewLabel () {
-    return getI18nValue(this, this.label)
+    return getStrValue(this, this.label)
   }
 
   get viewCode () {

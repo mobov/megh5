@@ -48,7 +48,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, getI18nValue } from '../core/utils'
+import { genBgImg, genSize, getStrValue } from '../core/utils'
 import { PropTypeLink } from '../core/constants'
 
 @Component
@@ -72,15 +72,15 @@ export default class HFooter extends Vue {
   copyright: string
 
   get viewTermsText () {
-    return getI18nValue(this, this.termsLink.text)
+    return getStrValue(this, this.termsLink.text)
   }
 
   get viewPolicyText () {
-    return getI18nValue(this, this.policyLink.text)
+    return getStrValue(this, this.policyLink.text)
   }
 
   get viewCopyright () {
-    return getI18nValue(this, this.copyright)
+    return getStrValue(this, this.copyright)
   }
 
   get styles (): any {

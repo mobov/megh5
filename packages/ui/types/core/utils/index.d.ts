@@ -65,5 +65,5 @@ export declare function genPosition(styles: any, val: positionType): void;
  * @param $vue
  * @param value
  */
-export declare function getI18nValue($vue: any, value: any): any;
+export declare function getStrValue($vue: any, value: any): any;
 export {};

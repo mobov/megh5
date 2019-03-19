@@ -2,9 +2,10 @@
   @import "../../../../../node_modules/@megmore/scss-helper/import";
   .setting-size {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     .setting-size__input {
-      width: 500px;
+      max-width: 50px;
+      margin-right: 10px;
     }
   }
 </style>
@@ -13,11 +14,19 @@
     <v-text-field
       class="setting-size__input"
       :value="value"
+      type="number"
       @input="handleValueChange"
       :label="label"
       required
     ></v-text-field>
-    <v-btn color="primary" small @click="handleFullSize">铺满</v-btn>
+    <v-slider
+      :value="value"
+      :min="min"
+      :max="max"
+      @input="handleValueChange"
+      thumb-label
+    ></v-slider>
+    <!--<v-btn color="primary" small @click="handleFullSize">铺满</v-btn>-->
   </div>
 </template>
 <script lang="tsx">
@@ -39,10 +48,9 @@ export default class SettingSize extends Vue {
   nodeUid!: string
 
   @Prop({
-    type: [String, Number],
-    default: ''
+    type: Number
   })
-  value!: number| string
+  value!: number
 
   @Prop({
     type: Object,
@@ -52,6 +60,12 @@ export default class SettingSize extends Vue {
 
   get label () {
     return this.nodeConfig.text
+  }
+  get min () {
+    return this.nodeConfig.extra.min
+  }
+  get max () {
+    return this.nodeConfig.extra.max
   }
 
   handleValueChange (value) {

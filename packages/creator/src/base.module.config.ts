@@ -24,23 +24,43 @@ export default {
         },
         'width': {
             'type': 'size',
-            'text': '宽'
+            'text': '宽',
+            'extra': {
+                'min': 1,
+                'max': 320
+            }
         },
         'height': {
             'type': 'size',
-            'text': '高'
+            'text': '高',
+            'extra': {
+                'min': 1,
+                'max': 3600
+            }
         },
         'x': {
             'type': 'size',
-            'text': 'X轴位移'
+            'text': 'X轴位移',
+            'extra': {
+                'min': 0,
+                'max': 320
+            }
         },
         'y': {
             'type': 'size',
-            'text': 'Y轴位移'
+            'text': 'Y轴位移',
+            'extra': {
+                'min': 0,
+                'max': 3600
+            }
         },
         'fontSize': {
             'type': 'size',
-            'text': '字体大小'
+            'text': '字体大小',
+            'extra': {
+                'min': 12,
+                'max': 72
+            }
         },
         'textAlign': {
             'type': 'radio',

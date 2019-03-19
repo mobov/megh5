@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genPosX, genPosY, genPosition, getI18nValue } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genPosition, getStrValue } from '../core/utils'
 import { positionType } from '../core/constants'
 
 @Component
@@ -47,7 +47,7 @@ export default class HButton extends Vue {
   onClick (e: Event) { }
 
   get viewText () {
-    return getI18nValue(this, this.text)
+    return getStrValue(this, this.text)
   }
 
   get float (): boolean {

@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genSize, genEllipsis, getI18nValue, genPosition, genPosX, genPosY } from '../core/utils'
+import { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'
 import { positionType } from '../core/constants'
 
 @Component
@@ -42,7 +42,7 @@ export default class HText extends Vue {
   text!: string
 
   get viewText () {
-    return getI18nValue(this, this.text)
+    return getStrValue(this, this.text)
   }
 
   get float (): boolean {
