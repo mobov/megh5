@@ -22,7 +22,7 @@ import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component()
 export default class SettingUrl extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Prop({ type: String })
   field!: string
@@ -46,7 +46,7 @@ export default class SettingUrl extends Vue {
     return this.nodeConfig.text
   }
 
-  handleValueChange (field, value) {
+  handleValueChange (field: string, value: string) {
     this.SET_PAGE_NODE({
       uid: this.nodeUid,
       nodeData: {

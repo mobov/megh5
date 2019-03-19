@@ -59,7 +59,7 @@ export default class CompList extends Vue {
 
   @Mutation SET_PAGE_NODE: MutationSetPageNode
 
-  handleValueChange (field, value) {
+  handleValueChange (field: string, value: any) {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({

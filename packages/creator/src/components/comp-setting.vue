@@ -67,9 +67,9 @@ export default class CompSetting extends Vue {
 
   @Getter ActiveNode: UiNode
 
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
-  @Mutation DEL_PAGE_NODE: MutationDelActiveUid
+  @Mutation DEL_PAGE_NODE!: MutationDelActiveUid
 
   get uiModule (): UiModule {
     console.log(this.ActiveNode)
@@ -81,7 +81,7 @@ export default class CompSetting extends Vue {
     return require(`@/components/setting/${this.uiModule.nodeConfig[name].type}.vue`).default
   }
 
-  handleValueChange (field, value) {
+  handleValueChange (field: string, value: any) {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({

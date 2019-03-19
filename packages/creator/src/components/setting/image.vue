@@ -42,7 +42,7 @@ import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component()
 export default class SettingImage extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Prop({ type: String })
   field!: string
@@ -69,7 +69,7 @@ export default class SettingImage extends Vue {
     return this.nodeConfig.text
   }
 
-  handleValueChange (e) {
+  handleValueChange (e: any) {
     const file = e.target.files[0]
     const reader = new FileReader()
 

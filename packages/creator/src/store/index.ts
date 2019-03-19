@@ -99,7 +99,7 @@ const store = new Vuex.Store<State>({
       UiNodes: [],
       Device: {
         height: 736,
-        width: 320,
+        width: 320
       }
     },
     UiModules: [],

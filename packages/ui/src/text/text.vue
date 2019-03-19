@@ -2,7 +2,7 @@
   @import "~@megmore/scss-helper/import";
 
   .h-text {
-    display: block;
+    background-repeat: no-repeat;
   }
 </style>
 <template>
@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'
+import { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'
 import { positionType } from '../core/constants'
 
 @Component
@@ -41,11 +41,6 @@ export default class HText extends Vue {
   @Prop({ type: String, default: '内容' })
   text!: string
 
-  @Prop({
-    type: String
-  })
-  bgImg: ImageData
-
   get viewText () {
     return getStrValue(this, this.text)
   }
@@ -65,7 +60,6 @@ export default class HText extends Vue {
     genSize(styles, 'fontSize', fontSize)
     genPosX(styles, x, float)
     genPosY(styles, y, float)
-    genBgImg(styles, bgImg)
 
     return styles
   }

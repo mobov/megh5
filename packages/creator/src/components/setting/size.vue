@@ -1,10 +1,10 @@
 <style lang='scss'>
   @import "../../../../../node_modules/@megmore/scss-helper/import";
   .setting-size {
-    display: flex;
+    display: inline-flex;
     align-items: flex-end;
     .setting-size__input {
-      max-width: 50px;
+      max-width: 150px;
       margin-right: 10px;
     }
   }
@@ -19,13 +19,6 @@
       :label="label"
       required
     ></v-text-field>
-    <v-slider
-      :value="value"
-      :min="min"
-      :max="max"
-      @input="handleValueChange"
-      thumb-label
-    ></v-slider>
     <!--<v-btn color="primary" small @click="handleFullSize">铺满</v-btn>-->
   </div>
 </template>
@@ -36,7 +29,7 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component()
 export default class SettingSize extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Prop({ type: String })
   field!: string

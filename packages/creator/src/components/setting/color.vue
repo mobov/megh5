@@ -22,7 +22,7 @@ import { Sketch } from 'vue-color'
   }
 })
 export default class SettingColor extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Prop({ type: String })
   field!: string
@@ -49,7 +49,7 @@ export default class SettingColor extends Vue {
     return this.nodeConfig.text
   }
 
-  handleValueChange (value) {
+  handleValueChange (value: any) {
     const result = `rgba(${value.rgba.r}, ${value.rgba.g}, ${value.rgba.b}, ${value.rgba.a})`
     this.SET_PAGE_NODE({
       uid: this.nodeUid,

@@ -29,7 +29,7 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component()
 export default class SettingSize extends Vue {
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Prop({ type: String })
   field!: string
@@ -53,7 +53,7 @@ export default class SettingSize extends Vue {
     return this.nodeConfig.text
   }
 
-  handleValueChange (value) {
+  handleValueChange (value: any) {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({

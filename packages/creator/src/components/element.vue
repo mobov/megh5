@@ -168,6 +168,7 @@ import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
 import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
+import { NoCache } from '../utils/decorators'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
@@ -249,9 +250,13 @@ export default class Element extends Vue {
   get parentNode (): HTMLElement {
     return (this.$parent.$el || this.$parent) as HTMLElement
   }
+
+  @NoCache
   get parentWidth () {
     return this.parentNode.clientWidth
   }
+
+  @NoCache
   get parentHeight () {
     return this.parentNode.clientHeight
   }
@@ -267,9 +272,13 @@ export default class Element extends Vue {
   get enableMoveY () {
     return this.moveMode.indexOf('y') !== -1
   }
+
+  @NoCache
   get heightLimit (): number {
     return this.parentHeight - this.moveY
   }
+
+  @NoCache
   get widthLimit (): number {
     return this.parentWidth - this.moveX
   }
@@ -279,9 +288,13 @@ export default class Element extends Vue {
   get leftLimit (): number {
     return 0
   }
+
+  @NoCache
   get rightLimit (): number {
     return this.parentWidth - this.sizeX
   }
+
+  @NoCache
   get bottomLimit (): number {
     return this.parentHeight - this.sizeY
   }
