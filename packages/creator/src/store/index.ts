@@ -83,7 +83,6 @@ export interface ActionInitProject {
 
 interface State {
   Project: ProjectData
-  Screen: StateScreen
   UiModules: StateUiModules
   activePanel: StateActivePanel
   activeUid: string,
@@ -103,11 +102,6 @@ const store = new Vuex.Store<State>({
       }
     },
     UiModules: [],
-    Screen: {
-      height: 736,
-      width: 320,
-      scrollHeight: 736
-    },
     activePanel: 'library',
     activeUid: '0'
   },
@@ -132,7 +126,7 @@ const store = new Vuex.Store<State>({
       let pid = val.pid
       if (pid && pid !== state.Project.mainUid) {
         const pNode = getPathNode(pid, state.Project.UiNodes)
-        console.log(pNode.name)
+
         if (pNode.name === 'HView') {
           pid = pNode.uid
         } else {

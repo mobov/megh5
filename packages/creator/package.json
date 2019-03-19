@@ -12,6 +12,7 @@
     "@megmore/es-helper": "^0.0.31",
     "@megmore/scss-helper": "^0.0.4",
     "@megmore/vui": "^0.0.5",
+    "@types/jszip": "^3.1.5",
     "@types/lodash": "^4.14.122",
     "color": "^3.1.0",
     "jszip": "^3.2.0",

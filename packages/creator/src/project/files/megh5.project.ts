@@ -1,16 +1,9 @@
 import { ProjectData } from '@megh5/ui/types/core/constants'
 
 const PreviewData: ProjectData = {
-  name: 'testproject',
+  name: 'megh5-project',
   version: '0.0.1',
-  dependencies: [{
-    '@megmore/es-helper': '^0.0.24'
-  }, {
-    '@megmore/scss-helper': '^0.0.4'
-  }, {
-    '@megmore/vui': '^0.0.2',
-    'imports': ['HView', 'HButton', 'HFooter']
-  }],
+  dependencies: [],
   mainUid: '0',
   Device: {
     width: 320,
