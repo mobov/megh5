@@ -32,6 +32,9 @@ export default class Menu extends Vue {
 
   @Mutation ADD_PAGE_NODE!: MutationAddPageNode
 
+  get MenuLists () {
+    return this.UiModules.filter(item => !item.uiConfig.disabled)
+  }
   handleItemClick (name: string) {
     this.ADD_PAGE_NODE({
       pid: this.activeUid,
@@ -43,7 +46,7 @@ export default class Menu extends Vue {
     const { handleItemClick } = this
     const result: any = []
 
-    this.UiModules.forEach(list => {
+    this.MenuLists.forEach(list => {
       result.push(
         <div class="menu-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
           {list.title}

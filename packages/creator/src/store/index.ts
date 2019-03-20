@@ -15,6 +15,10 @@ export interface UiNodeOpts {
   nodeData?: UiNodeData
 }
 
+export interface KV {
+  [field: string]: any
+}
+
 export interface AddUiNodeOpts {
   name: string
   pid?: string
@@ -47,6 +51,10 @@ export interface GetterDevice {
 
 export interface MutationSetProject {
   (val: ProjectData): {}
+}
+
+export interface MutationSetProjectData {
+  (val: KV): {}
 }
 
 export interface MutationSetPageData {
@@ -112,7 +120,11 @@ const store = new Vuex.Store<State>({
   },
   mutations: {
     SET_PROJECT (state, val: ProjectData) {
-      state.Project = val
+      state.Project = deepCopy(val)
+    },
+    SET_PROJECT_DATA (state, val: KV) {
+      const data = deepCopy(val)
+      merge(state.Project, data)
     },
     SET_PAGE_DATA (state, val: UiNode[]) {
       merge(state.Project.UiNodes, val)
@@ -163,9 +175,8 @@ const store = new Vuex.Store<State>({
         const result = merge(val, BaseModuleConfig)
         state.UiModules.push(result)
       }
-      console.log(state.UiModules)
     },
-    SET_ACTIVE_PATH (state, val: string) {
+    SET_ACTIVE_UID (state, val: string) {
       if (state.activeUid !== val) {
         state.activeUid = val
       }
