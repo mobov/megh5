@@ -61,9 +61,15 @@ export declare function genFloat(styles: any, val: boolean): void;
  */
 export declare function genPosition(styles: any, val: positionType): void;
 /**
- * 获取翻译值
+ * 计算文字溢出。。。
+ * @param styles
+ * @param val
+ */
+export declare function genEllipsis(styles: any, val: number): void;
+/**
+ * 获取转换后的字符串值，$t{key}表示翻译值，$p{key}表示url值
  * @param $vue
  * @param value
  */
-export declare function getStrValue($vue: any, value: any): any;
+export declare function getStrValue($vue: any, value: string): string;
 export {};

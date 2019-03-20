@@ -130,7 +130,7 @@
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
             "moveMode": "xy",
-            "sizeMode": "none"
+            "sizeMode": "xy"
         },
         "nodeConfig": {
             "gift": {
@@ -142,7 +142,7 @@
                 "text": "label文案"
             },
             "code": {
-                "type": "urlParam",
+                "type": "text",
                 "text": "code参数"
             }
         },
@@ -150,7 +150,7 @@
             "style": {
                 "zIndex": 1,
                 "color": "#ffffff",
-                "backgroundColor": "#000000"
+                "backgroundColor": "transparent"
             },
             "props": {
                 "position": "relative",

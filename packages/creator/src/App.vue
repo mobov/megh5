@@ -59,6 +59,7 @@ export default class App extends Vue {
   }
 
   handleExport () {
+    console.log(JSON.stringify(this.Project, null, 2))
     exportProject(this.Project)
   }
 }

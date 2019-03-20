@@ -25,28 +25,11 @@
     </v-tabs>
     <div class="side-panel-main">
       <Library v-show="active === 0" />
-      <div v-show="active === 1" >
-        <ProjectSetting v-if="mainActive" />
-        <CompSetting v-else />
-      </div>
+      <ProjectSetting v-show="active === 1 && mainActive" />
+      <CompSetting v-show="active === 1 && !mainActive" />
       <CompTree v-show="active === 2" />
     </div>
   </div>
-    <!--<MAppBar class="side-panel-nav" :elevation="0" color="primary">-->
-      <!--<MButton class="side-panel-nav__item m-mr-md" :elevation="0" color="primary" @click="handleNav('library')">-->
-        <!--组件库-->
-      <!--</MButton>-->
-      <!--<MButton class="side-panel-nav__item m-mr-md" :elevation="0" color="primary" @click="handleNav('setting')">-->
-        <!--组件配置-->
-      <!--</MButton>-->
-      <!--<MButton class="side-panel-nav__item m-mr-md" :elevation="0" color="primary" @click="handleNav('editor')">-->
-        <!--编辑器-->
-      <!--</MButton>-->
-    <!--</MAppBar>-->
-    <!--<div class="side-panel-content">-->
-      <!--<Library v-if="activePanel === 'library'" />-->
-      <!--<SettingTree v-else-if="activePanel === 'setting'" />-->
-    <!--</div>-->
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins, Watch } from 'vue-property-decorator'

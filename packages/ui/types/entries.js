@@ -4,5 +4,5 @@ export { default as HView } from './view';
 export { default as HFooter } from './footer';
 export { default as HPromoCode } from './promo-code';
 // export { default as HImage } from './image'
-// export { default as Text } from './text'
+export { default as Text } from './text';
 //# sourceMappingURL=entries.js.map
