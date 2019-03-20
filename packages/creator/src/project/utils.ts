@@ -1,11 +1,20 @@
-import { UiNode } from '@megh5/ui/types/core/constants'
+import { UiNode, KV } from '@megh5/ui/types/core/constants'
 import JSZip from 'jszip'
-import { deepCopy } from '@megmore/es-helper'
 import md5 from 'blueimp-md5'
 const base64Reg = /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*?)\s*$/i
 
+const base64TypeMap: KV = {
+  'jpeg': 'image/jpeg',
+  'jpg': 'image/jpeg',
+  'png': 'image/png'
+}
+function getBase64Header (fileName: string): string {
+  const fileSuffix = fileName.split('.')[1]
 
-function dataURLtoBlob(dataurl: string) {
+  return `data:${base64TypeMap[fileSuffix]};base64,`
+}
+
+function dataURLtoBlob (dataurl: string) {
   // @ts-ignore
   let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
@@ -36,6 +45,33 @@ export function handleExportNodeAssets (nodeData: UiNode[], Zip: typeof JSZip) {
 
     handleExportNodeAssets(data.children, Zip)
   })
+}
+
+const assetsReg = /@\/assets\//
+export async function handleImportNodeAssets (nodeData: UiNode[], Zip: typeof JSZip): Promise<void> {
+  const promises: Promise<any> [] = []
+  const format = (nodeData: UiNode[], Zip: typeof JSZip) => {
+    nodeData.forEach(data => {
+      if (data.nodeData.props) {
+        const Props = data.nodeData.props
+        Reflect.ownKeys(Props).forEach((propKey: any) => {
+          if (assetsReg.test(Props[propKey])) {
+            let fileName = Props[propKey].replace(assetsReg, '')
+            promises.push(
+              Zip.file(`src/assets/${fileName}`).async('base64').then(res=> {
+                Props[propKey] = `${getBase64Header(fileName)}${res}`
+              })
+            )
+          }
+        })
+      }
+
+      format(data.children, Zip)
+    })
+  }
+  format(nodeData, Zip)
+
+  await Promise.all(promises)
 }
 
 

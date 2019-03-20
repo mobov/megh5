@@ -15,6 +15,9 @@ export interface PropTypeLink {
     text: string;
     href: string;
 }
+export interface KV {
+    [field: string]: any;
+}
 export declare type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color';
 export declare type positionType = 'relative' | 'absolute' | 'fixed';
 export interface UiNodeData extends VNodeData {
