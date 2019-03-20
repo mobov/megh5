@@ -27,7 +27,7 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import Store, { GetterPageData } from '@/store'
+import Store, { GetterPageData, MutationSetActiveUid } from '@/store'
 import { UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
 import { deepCopy } from '@megmore/es-helper'
@@ -81,6 +81,8 @@ export default class Previewer extends Vue {
 
   @State Project!: ProjectData
 
+  @Mutation SET_ACTIVE_UID !: MutationSetActiveUid
+
   get screenStyles () {
     return {
       width: `${this.Project.Device.width}px`,
@@ -93,13 +95,13 @@ export default class Previewer extends Vue {
   }
 
   render (h: CreateElement) {
-    const { RContent, screenStyles } = this
+    const { RContent, screenStyles, SET_ACTIVE_UID, Project } = this
 
     return (
-      <div class="previewer">
+      <div class="previewer" onClick={() => { SET_ACTIVE_UID(Project.mainUid) }}>
         <div class="previewer-mobile">
           <figure class="previewer-screen" style={screenStyles}>
-            <div ref="$screen" class="previewer-screen-main">
+            <div ref="$screen" class="previewer-screen-main" onClick={(e) => { e.stopPropagation() }}>
               {RContent(h)}
             </div>
           </figure>

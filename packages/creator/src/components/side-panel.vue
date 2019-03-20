@@ -19,13 +19,16 @@
   <div class="side-panel" >
     <v-tabs :value="active" @change="handleNav" color="purple darken-3" dark slider-color="deep-orange">
       <v-tab ripple>组件库</v-tab>
-      <v-tab ripple>组件配置</v-tab>
+      <v-tab ripple>配置</v-tab>
       <v-tab ripple>组件树</v-tab>
       <v-tab ripple>编辑器</v-tab>
     </v-tabs>
     <div class="side-panel-main">
       <Library v-show="active === 0" />
-      <CompSetting v-show="active === 1" />
+      <div v-show="active === 1" >
+        <ProjectSetting v-if="mainActive" />
+        <CompSetting v-else />
+      </div>
       <CompTree v-show="active === 2" />
     </div>
   </div>
@@ -50,13 +53,17 @@ import { Vue, Component, Prop, Emit, Mixins, Watch } from 'vue-property-decorato
 import { State, Mutation } from 'vuex-class'
 import Library from '@/components/menu.vue'
 import CompSetting from '@/components/comp-setting.vue'
+import ProjectSetting from '@/components/project-setting.vue'
 import CompTree from '@/components/comp-tree.vue'
 import { StateActivePanel, MutationSetActivePanel, ActivePanels } from '@/store'
+import { uiMode, UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 
 @Component({
-  components: { Library, CompTree, CompSetting }
+  components: { Library, CompTree, CompSetting, ProjectSetting }
 })
 export default class SidePanel extends Vue {
+  @State Project: ProjectData
+
   @State activePanel: StateActivePanel
 
   @State activeUid: string
@@ -66,6 +73,10 @@ export default class SidePanel extends Vue {
   @Watch('activeUid')
   handleCompActive () {
     this.SET_ACTIVE_PANEL(ActivePanels['setting'])
+  }
+
+  get mainActive () {
+    return this.Project.mainUid === this.activeUid
   }
 
   get active () {

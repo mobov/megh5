@@ -212,7 +212,7 @@ export default class Element extends Vue {
 
   @State activeUid!: string
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
-  @Mutation SET_ACTIVE_PATH!: MutationSetActiveUid
+  @Mutation SET_ACTIVE_UID!: MutationSetActiveUid
 
   isMove = false
   isSizeL = false
@@ -318,7 +318,7 @@ export default class Element extends Vue {
   }
   handleActive () {
     this.isMove = true
-    this.SET_ACTIVE_PATH(this.nodeUid)
+    this.SET_ACTIVE_UID(this.nodeUid)
   }
   handleMoveX (val: number) {
     if (!this.enableMoveX) { return }
