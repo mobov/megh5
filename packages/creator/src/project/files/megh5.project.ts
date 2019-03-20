@@ -1,6 +1,6 @@
 import { ProjectData } from '@megh5/ui/types/core/constants'
 
-const PreviewData: ProjectData = {
+const Project: ProjectData = {
   name: 'megh5-project',
   version: '0.0.1',
   dependencies: [],
@@ -51,4 +51,4 @@ const PreviewData: ProjectData = {
   }]
 }
 
-export default PreviewData
+export default Project

@@ -28,7 +28,7 @@
       height: 100%;
     }
     &.--active {
-      z-index: 99;
+      z-index: 99 !important;
       >.element-handler-t,
       >.element-handler-b,
       >.element-handler-l,

@@ -83,12 +83,17 @@ export interface UiModule extends UiNode {
   },
 }
 
+export const ProjectProtocol = 'megh5:'
+
 export interface ProjectData {
   name: string
   version: string
   dependencies: any
   mainUid: string,
   UiNodes: UiNode [],
+  Assets: {
+    [name: string]: string
+  },
   Device: {
     width: number,
     height: number

@@ -1,3 +1,4 @@
+import { getUrlParam } from '@megmore/es-helper';
 export const unit = '100vw / 100';
 /**
  *
@@ -107,16 +108,72 @@ export function genPosition(styles = {}, val) {
     }
 }
 /**
- * 获取翻译值
+ * 计算文字溢出。。。
+ * @param styles
+ * @param val
+ */
+export function genEllipsis(styles = {}, val) {
+    if (val !== undefined) {
+        if (val === 0) {
+            Object.assign(styles, {
+                'overflow': 'auto',
+                'text-overflow': 'normal',
+                'white-space': 'normal',
+                'word-break': 'normal',
+                'display': 'block',
+            });
+        }
+        else if (val === 1) {
+            Object.assign(styles, {
+                'overflow': 'hidden',
+                'text-overflow': 'ellipsis',
+                'white-space': 'nowrap',
+                'word-break': 'normal',
+                'display': '-webkit-box',
+            });
+        }
+        else {
+            Object.assign(styles, {
+                'word-break': 'break-all',
+                'text-overflow': 'clip',
+                'display': '-webkit-box',
+                'overflow': 'hidden',
+                'word-wrap': 'break-word',
+                'white-space': 'normal !important',
+                '-webkit-line-clamp': val,
+                '-webkit-box-orient': 'vertical'
+            });
+        }
+    }
+}
+const tReg = /\$t{.+?}/g;
+const pReg = /\$p{.+?}/g;
+/**
+ * 获取转换后的字符串值，$t{key}表示翻译值，$p{key}表示url值
  * @param $vue
  * @param value
  */
 export function getStrValue($vue, value) {
-    if ($vue.$t) {
-        return $vue.$t(value);
+    let result = value;
+    const tArrs = value.match(tReg);
+    const pArrs = value.match(pReg);
+    if (tArrs) {
+        tArrs.forEach(item => {
+            const param = item.substr(3, item.length - 4);
+            if ($vue && $vue.$t) {
+                result = result.replace(item, $vue.$t(param));
+            }
+            else {
+                result = result.replace(item, param);
+            }
+        });
     }
-    else {
-        return value;
+    if (pArrs) {
+        pArrs.forEach(item => {
+            const param = item.substr(3, item.length - 4);
+            result = result.replace(item, getUrlParam(param) || param);
+        });
     }
+    return result;
 }
 //# sourceMappingURL=index.js.map

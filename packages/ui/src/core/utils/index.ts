@@ -1,20 +1,20 @@
 import { getUrlParam } from '@megmore/es-helper'
 import { positionType } from '../constants'
-
+import { loadAssets } from '../loader'
 export const unit =  '100vw / 100'
 
-interface screenSize {
-  height: '100vh',
-  width: '100vw'
-}
-
-/**
- *
- * @param options
- */
-export function setPageSize (options: screenSize) {
-
-}
+// interface screenSize {
+//   height: '100vh',
+//   width: '100vw'
+// }
+//
+// /**
+//  *
+//  * @param options
+//  */
+// export function setPageSize (options: screenSize) {
+//
+// }
 
 /**
  * 获取尺寸值
@@ -82,7 +82,8 @@ export function genPosY (styles: any = {}, val: string | number | undefined, flo
  */
 export function genBgImg (styles: any = {}, val: ImageData | string | undefined ) {
   if (val !== undefined && val !== '') {
-    styles['backgroundImage'] = `url(${val})`
+
+    styles['backgroundImage'] = `url(${loadAssets(val)})`
   } else {
     styles['backgroundImage'] = 'unset'
   }
@@ -97,17 +98,6 @@ export function genBgImg (styles: any = {}, val: ImageData | string | undefined 
 export function genColor (styles: any = {}, property: string, val: string | undefined): void {
   if (val !== undefined) {
     styles[property] = val
-  }
-}
-
-/**
- * 计算浮动
- * @param styles
- * @param val
- */
-export function genFloat (styles: any = {}, val: boolean): void {
-  if (val !== undefined) {
-    styles['position'] = val ? 'absolute' : 'relative'
   }
 }
 
