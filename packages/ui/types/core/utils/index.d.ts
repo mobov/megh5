@@ -1,14 +1,5 @@
 import { positionType } from '../constants';
 export declare const unit = "100vw / 100";
-interface screenSize {
-    height: '100vh';
-    width: '100vw';
-}
-/**
- *
- * @param options
- */
-export declare function setPageSize(options: screenSize): void;
 /**
  * 获取尺寸值
  * @param val
@@ -53,12 +44,6 @@ export declare function genColor(styles: any, property: string, val: string | un
  * @param styles
  * @param val
  */
-export declare function genFloat(styles: any, val: boolean): void;
-/**
- * 计算浮动
- * @param styles
- * @param val
- */
 export declare function genPosition(styles: any, val: positionType): void;
 /**
  * 计算文字溢出。。。
@@ -72,4 +57,3 @@ export declare function genEllipsis(styles: any, val: number): void;
  * @param value
  */
 export declare function getStrValue($vue: any, value: string): string;
-export {};

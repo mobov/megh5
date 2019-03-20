@@ -8,7 +8,7 @@ import defPackageData from './files/package'
 import defMegh5Data from './files/megh5.project'
 import defMainData from './files/main'
 import AppData from './files/App'
-import { handleExportNodeAssets } from './utils'
+import { handleExportNodeAssets, handleImportNodeAssets } from './utils'
 import { saveAs } from 'file-saver'
 
 export async function exportProject (project: ProjectData) {
@@ -35,8 +35,15 @@ export async function exportProject (project: ProjectData) {
   saveAs(content, `${PackageData.name}.zip`)
 }
 
-export async function importProject () {
-
+export async function importProject (file: any): Promise<ProjectData> {
+  const Zip = await JSZip.loadAsync(file)
+  let megh5DataStr = await Zip.file('src/megh5.json').async('binarystring')
+  console.log(Zip)
+  const megh5Data: ProjectData = JSON.parse(megh5DataStr)
+  console.log(megh5Data)
+  await handleImportNodeAssets(megh5Data.UiNodes, Zip)
+  console.log(megh5Data)
+  return cloneDeep(megh5Data)
 }
 
 export {

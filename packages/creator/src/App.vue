@@ -20,8 +20,10 @@
                  variety="flat"
                  :elevation="0">
           <MFlexFiller/>
-          <v-btn color="primary"
-                 @click="handleImport">导入</v-btn>
+          <v-btn color="primary">
+            <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
+            导入
+          </v-btn>
           <v-btn color="primary"
                  @click="handleExport">导出</v-btn>
         </MAppBar>
@@ -54,12 +56,13 @@ export default class App extends Vue {
     this.SET_PROJECT(tempateProject)
   }
 
-  handleImport () {
-    importProject()
+  async handleImport (e) {
+    const result = await importProject(e.target.files[0])
+    console.log(result)
+    this.SET_PROJECT(result)
   }
 
   handleExport () {
-    console.log(JSON.stringify(this.Project, null, 2))
     exportProject(this.Project)
   }
 }

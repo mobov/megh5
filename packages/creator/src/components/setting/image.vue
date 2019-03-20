@@ -71,9 +71,9 @@ export default class SettingImage extends Vue {
 
   handleValueChange (e: any) {
     const file = e.target.files[0]
-    const reader = new FileReader()
+    let reader: any = new FileReader()
 
-    reader.addEventListener('load', () => {
+    const onLoad = () => {
       this.SET_PAGE_NODE({
         uid: this.nodeUid,
         nodeData: {
@@ -82,7 +82,11 @@ export default class SettingImage extends Vue {
           }
         }
       })
-    }, false)
+      reader.removeEventListener('load', onLoad)
+      reader = null
+    }
+
+    reader.addEventListener('load', onLoad, false)
 
     if (file) {
       reader.readAsDataURL(file)

@@ -1,11 +1,18 @@
 import { getUrlParam } from '@megmore/es-helper';
+import { loadAssets } from '../loader';
 export const unit = '100vw / 100';
-/**
- *
- * @param options
- */
-export function setPageSize(options) {
-}
+// interface screenSize {
+//   height: '100vh',
+//   width: '100vw'
+// }
+//
+// /**
+//  *
+//  * @param options
+//  */
+// export function setPageSize (options: screenSize) {
+//
+// }
 /**
  * 获取尺寸值
  * @param val
@@ -70,7 +77,7 @@ export function genPosY(styles = {}, val, float = false) {
  */
 export function genBgImg(styles = {}, val) {
     if (val !== undefined && val !== '') {
-        styles['backgroundImage'] = `url(${val})`;
+        styles['backgroundImage'] = `url(${loadAssets(val)})`;
     }
     else {
         styles['backgroundImage'] = 'unset';
@@ -85,16 +92,6 @@ export function genBgImg(styles = {}, val) {
 export function genColor(styles = {}, property, val) {
     if (val !== undefined) {
         styles[property] = val;
-    }
-}
-/**
- * 计算浮动
- * @param styles
- * @param val
- */
-export function genFloat(styles = {}, val) {
-    if (val !== undefined) {
-        styles['position'] = val ? 'absolute' : 'relative';
     }
 }
 /**

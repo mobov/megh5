@@ -21,6 +21,10 @@ export interface PropTypeLink {
   href: string
 }
 
+export interface KV {
+  [field: string]: any
+}
+
 export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color'
 
 export type positionType = 'relative' | 'absolute' | 'fixed'
@@ -83,17 +87,12 @@ export interface UiModule extends UiNode {
   },
 }
 
-export const ProjectProtocol = 'megh5:'
-
 export interface ProjectData {
   name: string
   version: string
   dependencies: any
   mainUid: string,
   UiNodes: UiNode [],
-  Assets: {
-    [name: string]: string
-  },
   Device: {
     width: number,
     height: number
