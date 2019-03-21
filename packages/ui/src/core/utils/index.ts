@@ -1,7 +1,8 @@
 import { getUrlParam } from '@megmore/es-helper'
 import { positionType } from '../constants'
 import { loadAssets } from '../loader'
-export const unit =  '100vw / 100'
+
+export const unit = '100vw / 100'
 
 // interface screenSize {
 //   height: '100vh',
@@ -20,9 +21,9 @@ export const unit =  '100vw / 100'
  * 获取尺寸值
  * @param val
  */
-export function getUnitVal ( val: string | number | undefined) {
+export function getUnitVal (val: string | number | undefined) {
   if (val !== undefined) {
-    if (typeof val === 'number' ) {
+    if (typeof val === 'number') {
       // val = `calc( ${unit} * val )`
       val = `${val}px`
     }
@@ -51,11 +52,11 @@ export function genSize (styles: any = {}, property: string, val: string | numbe
  */
 export function genPosX (styles: any = {}, val: string | number | undefined, float: boolean = false) {
   if (val !== undefined) {
-   if (float) {
-     styles['left'] = getUnitVal(val)
-   } else {
-     styles['marginLeft'] = getUnitVal(val)
-   }
+    if (float) {
+      styles['left'] = getUnitVal(val)
+    } else {
+      styles['marginLeft'] = getUnitVal(val)
+    }
   }
 }
 
@@ -80,9 +81,8 @@ export function genPosY (styles: any = {}, val: string | number | undefined, flo
  * @param styles
  * @param val
  */
-export function genBgImg (styles: any = {}, val: ImageData | string | undefined ) {
+export function genBgImg (styles: any = {}, val: ImageData | string | undefined) {
   if (val !== undefined && val !== '') {
-
     styles['backgroundImage'] = `url(${loadAssets(val)})`
   } else {
     styles['backgroundImage'] = 'unset'
@@ -125,7 +125,7 @@ export function genEllipsis (styles: any = {}, val: number): void {
         'text-overflow': 'normal',
         'white-space': 'normal',
         'word-break': 'normal',
-        'display': 'block',
+        'display': 'block'
       })
     } else if (val === 1) {
       Object.assign(styles, {
@@ -133,7 +133,7 @@ export function genEllipsis (styles: any = {}, val: number): void {
         'text-overflow': 'ellipsis',
         'white-space': 'nowrap',
         'word-break': 'normal',
-        'display': '-webkit-box',
+        'display': '-webkit-box'
       })
     } else {
       Object.assign(styles, {
@@ -152,6 +152,7 @@ export function genEllipsis (styles: any = {}, val: number): void {
 
 const tReg = /\$t{.+?}/g
 const pReg = /\$p{.+?}/g
+
 /**
  * 获取转换后的字符串值，$t{key}表示翻译值，$p{key}表示url值
  * @param $vue

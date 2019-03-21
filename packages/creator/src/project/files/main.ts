@@ -16,5 +16,3 @@ export default `
     render: h => h(App)
   }).$mount('#app')
 `
-
-

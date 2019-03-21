@@ -22,7 +22,7 @@ const MegH5: MegH5Plugin = {
 
     const componentsList = opts.components || components
 
-    Object.values(componentsList).forEach((entry) =>  {
+    Object.values(componentsList).forEach((entry) => {
       Vue.use(entry)
     })
   },
