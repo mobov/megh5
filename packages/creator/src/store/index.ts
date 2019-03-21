@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { ProjectData } from '@/constants'
+import { ActivePanels } from '@/constants'
 import BaseModuleConfig from '../base.module.config'
-import { UiNode, UiModule, UiNodeData } from '@megh5/ui/types/core/constants'
+import { UiNode, UiModule, UiNodeData,  ProjectData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
 import { deepCopy } from '@megmore/es-helper'
 import { ulid } from 'ulid'
@@ -33,12 +33,6 @@ export type StateScreen = {
 
 export type StateActivePanel = 'library' | 'setting' | 'tree' | 'editor'
 
-export enum ActivePanels {
-  library = 0,
-  setting = 1,
-  tree = 2,
-  editor = 3
-}
 
 export type StateUiModules = UiModule[]
 
@@ -82,7 +76,7 @@ export interface MutationDelActiveUid {
 }
 
 export interface MutationSetActivePanel {
-  (val: ActivePanels): {}
+  (val: number): {}
 }
 
 export interface ActionInitProject {
@@ -92,8 +86,8 @@ export interface ActionInitProject {
 interface State {
   Project: ProjectData
   UiModules: StateUiModules
-  activePanel: StateActivePanel
-  activeUid: string,
+  activePanel: number
+  activeUid: string
 }
 
 const store = new Vuex.Store<State>({
@@ -110,7 +104,7 @@ const store = new Vuex.Store<State>({
       }
     },
     UiModules: [],
-    activePanel: 'library',
+    activePanel: ActivePanels.library,
     activeUid: '0'
   },
   getters: {
@@ -181,12 +175,8 @@ const store = new Vuex.Store<State>({
         state.activeUid = val
       }
     },
-    SET_ACTIVE_PANEL (state, val: ActivePanels) {
-      if (typeof val === 'number') {
-        state.activePanel = ActivePanels[val] as StateActivePanel
-      } else {
-        state.activePanel = val
-      }
+    SET_ACTIVE_PANEL (state, val: number) {
+      state.activePanel = val
     }
   },
   actions: {

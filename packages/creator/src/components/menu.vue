@@ -17,7 +17,7 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { ProjectData } from '@/constants'
+import { ProjectData, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 import { StateUiModules, GetterPageData, MutationAddPageNode } from '@/store'
 
 @Component
@@ -32,7 +32,8 @@ export default class Menu extends Vue {
 
   @Mutation ADD_PAGE_NODE!: MutationAddPageNode
 
-  get MenuLists () {
+  get MenuLists (): UiModule [] {
+    // @ts-ignore
     return this.UiModules.filter(item => !item.uiConfig.disabled)
   }
   handleItemClick (name: string) {

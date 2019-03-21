@@ -12,7 +12,6 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-propert
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import { GetterPageData } from '@/store'
-import { ProjectData } from '@/constants'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@megmore/es-helper'
 import { merge } from 'lodash'

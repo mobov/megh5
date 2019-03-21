@@ -17,9 +17,8 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 import { Sketch } from 'vue-color'
 
 @Component({
-  components: {
-    Sketch
-  }
+  // @ts-ignore
+  components: { Sketch }
 })
 export default class SettingColor extends Vue {
   @Mutation SET_PAGE_NODE!: MutationSetPageNode

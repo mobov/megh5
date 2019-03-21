@@ -11,6 +11,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@megmore/eslint-config": "^1.0.0",
     "lerna": "^3.13.1",
     "typescript": "~3.2.2"
   }

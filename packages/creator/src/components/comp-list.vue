@@ -52,12 +52,12 @@ import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
 
-@Component()
+@Component
 export default class CompList extends Vue {
   @Prop({ type: Object, default: () => {} })
   value!: UiNode
 
-  @Mutation SET_PAGE_NODE: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   handleValueChange (field: string, value: any) {
     value = isNaN(Number(value)) ? value : Number(value)

@@ -29,7 +29,7 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-propert
 import { State, Getter, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode } from 'src/store'
 
-@Component()
+@Component
 export default class SettingSize extends Vue {
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
@@ -71,7 +71,7 @@ export default class SettingSize extends Vue {
     return max
   }
 
-  handleValueChange (value) {
+  handleValueChange (value: any) {
     value = isNaN(Number(value)) ? value : Number(value)
 
     this.SET_PAGE_NODE({

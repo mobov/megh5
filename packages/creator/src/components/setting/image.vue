@@ -40,7 +40,7 @@ import { State, Getter, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode } from 'src/store'
 import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
-@Component()
+@Component
 export default class SettingImage extends Vue {
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
