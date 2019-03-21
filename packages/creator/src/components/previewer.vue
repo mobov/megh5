@@ -94,14 +94,18 @@ export default class Previewer extends Vue {
     return compiler(h, deepCopy(this.PageData))
   }
 
+  handleClick (e: MouseEvent) {
+    e.stopPropagation()
+  }
+
   render (h: CreateElement) {
-    const { RContent, screenStyles, SET_ACTIVE_UID, Project } = this
+    const { RContent, screenStyles, SET_ACTIVE_UID, Project, handleClick } = this
 
     return (
       <div class="previewer" onClick={() => { SET_ACTIVE_UID(Project.mainUid) }}>
         <div class="previewer-mobile">
           <figure class="previewer-screen" style={screenStyles}>
-            <div ref="$screen" class="previewer-screen-main" onClick={(e) => { e.stopPropagation() }}>
+            <div ref="$screen" class="previewer-screen-main" onClick={handleClick}>
               {RContent(h)}
             </div>
           </figure>

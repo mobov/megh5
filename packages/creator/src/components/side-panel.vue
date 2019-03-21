@@ -17,17 +17,17 @@
 </style>
 <template>
   <div class="side-panel" >
-    <v-tabs :value="active" @change="handleNav" color="purple darken-3" dark slider-color="deep-orange">
+    <v-tabs :value="activePanel" @change="handleNav" color="purple darken-3" dark slider-color="deep-orange">
       <v-tab ripple>组件库</v-tab>
       <v-tab ripple>配置</v-tab>
       <v-tab ripple>组件树</v-tab>
       <v-tab ripple>编辑器</v-tab>
     </v-tabs>
     <div class="side-panel-main">
-      <Library v-show="active === 0" />
-      <ProjectSetting v-show="active === 1 && mainActive" />
-      <CompSetting v-show="active === 1 && !mainActive" />
-      <CompTree v-show="active === 2" />
+      <Library v-show="activePanel === 0" />
+      <ProjectSetting v-show="activePanel === 1 && mainActive" />
+      <CompSetting v-show="activePanel === 1 && !mainActive" />
+      <CompTree v-show="activePanel === 2" />
     </div>
   </div>
 </template>
@@ -38,36 +38,33 @@ import Library from '@/components/menu.vue'
 import CompSetting from '@/components/comp-setting.vue'
 import ProjectSetting from '@/components/project-setting.vue'
 import CompTree from '@/components/comp-tree.vue'
-import { StateActivePanel, MutationSetActivePanel, ActivePanels } from '@/store'
+import { MutationSetActivePanel } from '@/store'
+import { ActivePanels } from '@/constants'
 import { uiMode, UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 
 @Component({
   components: { Library, CompTree, CompSetting, ProjectSetting }
 })
 export default class SidePanel extends Vue {
-  @State Project: ProjectData
+  @State Project!: ProjectData
 
-  @State activePanel: StateActivePanel
+  @State activePanel!: ActivePanels
 
-  @State activeUid: string
+  @State activeUid!: string
 
-  @Mutation SET_ACTIVE_PANEL: MutationSetActivePanel
+  @Mutation SET_ACTIVE_PANEL!: MutationSetActivePanel
 
   @Watch('activeUid')
   handleCompActive () {
-    this.SET_ACTIVE_PANEL(ActivePanels['setting'])
+    this.SET_ACTIVE_PANEL(ActivePanels.setting)
   }
 
   get mainActive () {
     return this.Project.mainUid === this.activeUid
   }
 
-  get active () {
-    return ActivePanels[this.activePanel]
-  }
-
   handleNav (index: number) {
-    this.SET_ACTIVE_PANEL(ActivePanels[index])
+    this.SET_ACTIVE_PANEL(index)
   }
 }
 </script>

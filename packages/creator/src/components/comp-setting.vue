@@ -61,24 +61,23 @@ import { StateScreen, MutationSetPageNode, MutationDelActiveUid } from '@/store'
 import { deepCopy } from '@megmore/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
-@Component()
+@Component
 export default class CompSetting extends Vue {
-  @State UiModules: UiModule []
+  @State UiModules!: UiModule []
 
-  @Getter ActiveNode: UiNode
+  @Getter ActiveNode!: UiNode
 
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
 
   @Mutation DEL_PAGE_NODE!: MutationDelActiveUid
 
   get uiModule (): UiModule {
-    console.log(this.ActiveNode)
-    console.log(this.UiModules)
-    return this.UiModules.find(item => item.name === this.ActiveNode.name)
+    return this.UiModules.find(item => item.name === this.ActiveNode.name) as UiModule
   }
 
-  settingItem (name) {
-    return require(`@/components/setting/${this.uiModule.nodeConfig[name].type}.vue`).default
+  settingItem (name: string): any {
+    // @ts-ignore
+    return require(`@/components/setting/${this.uiModule!.nodeConfig[name]!.type}.vue`).default
   }
 
   handleValueChange (field: string, value: any) {

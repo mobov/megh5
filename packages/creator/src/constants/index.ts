@@ -9,16 +9,11 @@ export enum TypeDirection {
 
 export type typeDirection = 'x' | 'y' | 'xy' | 'none'
 
-export interface ProjectData {
-  name: string
-  version: string
-  dependencies: any
-  mainUid: string,
-  UiNodes: UiNode [],
-  Device: {
-    width: number,
-    height: number
-  }
+export enum ActivePanels {
+  library = 0,
+  setting = 1,
+  tree = 2,
+  editor = 3
 }
 
 export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' |  'color'

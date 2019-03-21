@@ -54,9 +54,9 @@ import { MutationSetPageNode, MutationDelActiveUid, MutationSetProjectData } fro
 import { deepCopy } from '@megmore/es-helper'
 import { uiMode, UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 
-@Component()
+@Component
 export default class ProjectSetting extends Vue {
-  @State Project: ProjectData
+  @State Project!: ProjectData
 
   @Mutation SET_PROJECT_DATA!: MutationSetProjectData
 

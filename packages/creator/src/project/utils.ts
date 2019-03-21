@@ -16,8 +16,12 @@ function getBase64Header (fileName: string): string {
 
 function dataURLtoBlob (dataurl: string) {
   // @ts-ignore
-  let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
+  let arr = dataurl.split(',')
+  // @ts-ignore
+  let mime = arr[0].match(/:(.*?);/)[1]
+  let bstr = atob(arr[1])
+  let n = bstr.length
+  let u8arr = new Uint8Array(n)
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n)
   }
@@ -58,7 +62,7 @@ export async function handleImportNodeAssets (nodeData: UiNode[], Zip: typeof JS
           if (assetsReg.test(Props[propKey])) {
             let fileName = Props[propKey].replace(assetsReg, '')
             promises.push(
-              Zip.file(`src/assets/${fileName}`).async('base64').then(res=> {
+              Zip.file(`src/assets/${fileName}`).async('base64').then(res => {
                 Props[propKey] = `${getBase64Header(fileName)}${res}`
               })
             )
@@ -73,5 +77,3 @@ export async function handleImportNodeAssets (nodeData: UiNode[], Zip: typeof JS
 
   await Promise.all(promises)
 }
-
-

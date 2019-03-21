@@ -56,7 +56,7 @@ export default class App extends Vue {
     this.SET_PROJECT(tempateProject)
   }
 
-  async handleImport (e) {
+  async handleImport (e: any) {
     const result = await importProject(e.target.files[0])
     console.log(result)
     this.SET_PROJECT(result)
