@@ -1,6 +1,6 @@
 {
   "name": "@megh5/creator",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@megh5/ui": "^0.1.0",
+    "@megh5/ui": "^0.2.0",
     "@megmore/es-helper": "^0.0.32",
     "@megmore/eslint-config": "^1.0.0",
     "@megmore/scss-helper": "^0.0.4",
