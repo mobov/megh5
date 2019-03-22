@@ -5,8 +5,13 @@
   }
   .setting-image-main {
     position: relative;
-    height: 200px;
-    width: 300px;
+    height: 150px;
+    width: 100%;
+    display: flex;
+  }
+  .setting-image-uploadder {
+    height: 150px;
+    width: 250px;
   }
   .setting-image-backer {
     opacity: 0;
@@ -14,8 +19,8 @@
     z-index: 2;
     left: 0;
     top: 0;
-    height: 200px;
-    width: 300px;
+    height: 150px;
+    width: 250px;
     cursor: pointer;
   }
 </style>
@@ -23,14 +28,18 @@
   <div class="setting-image m-pb-md">
     <div class="setting-label">{{label}}</div>
     <div class="setting-image-main">
-      <v-img :src="value"
-             contain
-             height="200px"
-             width="300px"
-             class="m-elevation-2 grey lighten-2"/>
-      <input class="setting-image-backer"
-             @change="handleValueChange"
-             type="file">
+      <div class="setting-image-uploadder">
+        <v-img :src="value"
+               contain
+               height="150px"
+               width="250px"
+               class="m-elevation-2 grey lighten-2"/>
+        <input class="setting-image-backer"
+               @change="handleValueChange"
+               type="file">
+      </div>
+
+      <v-btn color="error" small @click="handleDelete">清除</v-btn>
     </div>
   </div>
 </template>
@@ -91,6 +100,17 @@ export default class SettingImage extends Vue {
     if (file) {
       reader.readAsDataURL(file)
     }
+  }
+
+  handleDelete () {
+    this.SET_PAGE_NODE({
+      uid: this.nodeUid,
+      nodeData: {
+        [this.fieldPath]: {
+          [this.field]: ''
+        }
+      }
+    })
   }
 }
 </script>

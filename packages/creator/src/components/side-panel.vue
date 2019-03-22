@@ -17,7 +17,7 @@
 </style>
 <template>
   <div class="side-panel" >
-    <v-tabs :value="activePanel" @change="handleNav" color="purple darken-3" dark slider-color="deep-orange">
+    <v-tabs :value="activePanel" @change="handleNav" color="primary" dark slider-color="success">
       <v-tab ripple>组件库</v-tab>
       <v-tab ripple>配置</v-tab>
       <v-tab ripple>组件树</v-tab>
