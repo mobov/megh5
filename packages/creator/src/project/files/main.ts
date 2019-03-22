@@ -6,6 +6,9 @@ export default `
   import App from './App.vue'
   import i18n from './i18n'
   import FastClick from 'fastclick'
+  import MegH5 from '@megh5/ui'
+
+  Vue.use(MegH5)
 
   FastClick.attach(document.body)
   document.addEventListener('touchstart', () => {})
