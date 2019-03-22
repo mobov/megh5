@@ -2,6 +2,9 @@
   "name": "@megh5/types",
   "version": "0.1.2-alpha.0",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "index.d.ts",
   "peerDependencies": {
     "vue": "^2.6.7"
