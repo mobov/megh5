@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "creator:serve": "lerna run serve --scope @megh5/creator --stream",
-    "ui:tsc": "lerna run tsc --scope @megh5/ui --stream"
+    "ui:build:es": "lerna run build:es --scope @megh5/ui --stream"
   },
   "workspaces": [
     "packages/*"

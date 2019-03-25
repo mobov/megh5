@@ -7,9 +7,9 @@
   },
   "main": "src/index.ts",
   "types": "types/index.d.ts",
-  "module": "index.esm.js",
+  "module": "src/index.ts",
   "scripts": {
-    "tsc": "tsc"
+    "build:es": "tsc"
   },
   "files": [
     "src",

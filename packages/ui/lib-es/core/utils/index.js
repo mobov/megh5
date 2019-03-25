@@ -117,7 +117,7 @@ export function genEllipsis(styles = {}, val) {
                 'text-overflow': 'normal',
                 'white-space': 'normal',
                 'word-break': 'normal',
-                'display': 'block',
+                'display': 'block'
             });
         }
         else if (val === 1) {
@@ -126,7 +126,7 @@ export function genEllipsis(styles = {}, val) {
                 'text-overflow': 'ellipsis',
                 'white-space': 'nowrap',
                 'word-break': 'normal',
-                'display': '-webkit-box',
+                'display': '-webkit-box'
             });
         }
         else {
