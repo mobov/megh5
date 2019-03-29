@@ -1,6 +1,5 @@
-/**
- * Created by nocoolyoyo on 2019/3/20.
- */
+/* eslint-disable */
+
 export default `
 <script lang="jsx">
 import ProjectData from './megh5.json'

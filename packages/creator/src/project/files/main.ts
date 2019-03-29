@@ -1,6 +1,5 @@
-/**
- * Created by nocoolyoyo on 2019/3/20.
- */
+/* eslint-disable */
+
 export default `
   import Vue from 'vue'
   import App from './App.vue'

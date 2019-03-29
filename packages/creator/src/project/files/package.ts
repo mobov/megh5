@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   'name': 'megh5-project',
   'version': '0.0.1',
