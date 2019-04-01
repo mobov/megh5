@@ -8,6 +8,7 @@
 <img align="center" width="100%" src="./preview2.jpg">
 
 ##Project setup
+
 ```
 yarn install
 ```
