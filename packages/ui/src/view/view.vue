@@ -25,10 +25,10 @@ import { genBgImg, genSize, genPosX, genPosY, genPosition } from '../core/utils'
 @Component
 export default class HView extends Vue {
   @Prop({ type: String, default: 'relative' })
-  position: positionType
+  position!: positionType
 
   @Prop({ type: String, default: 'y' })
-  direction: 'x' | 'y'
+  direction!: 'x' | 'y'
 
   @Prop({ type: [Number, String], default: 100 })
   height!: string | number
@@ -43,7 +43,7 @@ export default class HView extends Vue {
   y!: string | number
 
   @Prop({ type: String, default: '' })
-  bgImg: ImageData
+  bgImg!: string
 
   get float (): boolean {
     return this.position !== 'relative'

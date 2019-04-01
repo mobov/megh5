@@ -25,7 +25,8 @@
     ]
   },
   "exclude": [
-    "src/project/files/*"
+    "src/project/files/*",
+    "node_modules/@megh5/*"
   ],
   "include": [
       "src/**/*.ts",

@@ -55,7 +55,7 @@ const BG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAi0AAACGCAMAAAAmc0pEAA
 @Component
 export default class HPromoCode extends Vue {
   @Prop({ type: String, default: 'relative' })
-  position: positionType
+  position!: positionType
 
   @Prop({ type: [Number, String], default: '100%' })
   width!: string | number
@@ -70,22 +70,22 @@ export default class HPromoCode extends Vue {
   y!: string | number
 
   @Prop({ type: String, default: 'Code' })
-  label: string
+  label!: string
 
   @Prop({ type: String, default: '10086' })
-  code: string
+  code!: string
 
   @Prop({
     type: String,
     default: GIFT
   })
-  gift: ImageData
+  gift!: string
 
   @Prop({
     type: String,
     default: BG
   })
-  bgImg: ImageData
+  bgImg!: string
 
   get viewLabel () {
     return getStrValue(this, this.label)

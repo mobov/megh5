@@ -57,19 +57,19 @@ export default class HFooter extends Vue {
   height!: string | number
 
   @Prop({ type: String, default: '' })
-  bgImg: ImageData
+  bgImg!: string
 
   @Prop({ type: String })
-  logo: ImageData
+  logo!: string
 
   @Prop({ type: Object, default: () => ({ text: 'Terms Of Service', href: '' }) })
-  termsLink: PropTypeLink
+  termsLink!: PropTypeLink
 
   @Prop({ type: Object, default: () => ({ text: 'Privacy Policy', href: '' }) })
-  policyLink: PropTypeLink
+  policyLink!: PropTypeLink
 
   @Prop({ type: String, default: 'Copyright 2019 * Limited All right reserved' })
-  copyright: string
+  copyright!: string
 
   get viewTermsText () {
     return getStrValue(this, this.termsLink.text)

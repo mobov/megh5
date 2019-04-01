@@ -36,7 +36,7 @@ export default class HApp extends Vue {
   bgColor!: string
 
   @Prop({ type: String, default: '' })
-  bgImg: ImageData
+  bgImg!: string
 
   get styles (): any {
     const { height, width, bgColor, bgImg } = this

@@ -23,7 +23,7 @@ import { positionType } from '../core/constants'
 @Component
 export default class HButton extends Vue {
   @Prop({ type: String, default: 'relative' })
-  position: positionType
+  position!: positionType
 
   @Prop({ type: [Number, String], default: 50 })
   height!: string | number
@@ -38,7 +38,7 @@ export default class HButton extends Vue {
   y!: string | number
 
   @Prop({ type: String, default: '' })
-  bgImg: string
+  bgImg!: string
 
   @Prop({ type: String, default: '按钮' })
   text!: string

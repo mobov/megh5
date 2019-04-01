@@ -171,8 +171,9 @@ import { NoCache } from '@/utils/decorators'
 import { deepCopy } from '@megmore/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
-import { Utils } from '@megh5/ui'
-
+import MegH5, { Utils } from '@megh5/ui'
+console.log(MegH5)
+console.log(Utils)
 const { genPosY, genSize, genPosX, genPosition } = Utils
 
 @Component

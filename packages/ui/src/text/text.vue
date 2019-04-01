@@ -1,6 +1,4 @@
 <style lang="scss" scoped>
-  @import "~@megmore/scss-helper/import";
-
   .h-text {
     background-repeat: no-repeat;
   }
@@ -18,7 +16,7 @@ import { positionType } from '../core/constants'
 @Component
 export default class HText extends Vue {
   @Prop({ type: String, default: 'relative' })
-  position: positionType
+  position!: positionType
 
   @Prop({ type: [Number, String], default: 50 })
   height!: string | number
@@ -50,7 +48,7 @@ export default class HText extends Vue {
   }
 
   get styles (): any {
-    const { bgImg, height, width, ellipsis, fontSize, position, x, y, float } = this
+    const { height, width, ellipsis, fontSize, position, x, y, float } = this
     const styles = {}
 
     genPosition(styles, position)
