@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "~@megmore/scss-helper/import";
+  @import "~@mobov/scss-helper/import";
   .previewer {
     padding: 2rem;
     .previewer-screen {
@@ -30,7 +30,7 @@ import { State, Mutation, Getter } from 'vuex-class'
 import Store, { GetterPageData, MutationSetActiveUid } from '@/store'
 import { UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 import Element from './element.vue'
-import { deepCopy } from '@megmore/es-helper'
+import { deepCopy } from '@mobov/es-helper'
 import { merge } from 'lodash'
 
 function compiler (h: CreateElement, PNode: UiNode []): VNode[] {

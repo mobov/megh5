@@ -10,8 +10,8 @@ export default {
     'i18n': 'onemt-i18n --config=./config/i18n.js'
   },
   'dependencies': {
-    "@megmore/es-helper": "^0.0.31",
-    "@megmore/scss-helper": "^0.0.4",
+    "@mobov/es-helper": "^0.0.31",
+    "@mobov/scss-helper": "^0.0.4",
     "fastclick": "^1.0.6",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.3.0",

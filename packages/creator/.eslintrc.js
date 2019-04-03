@@ -8,7 +8,7 @@ module.exports = {
     '@vue/standard',
     '@vue/typescript',
     '@vue/typescript',
-    '@megmore/eslint-config'
+    '@mobov/eslint-config'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

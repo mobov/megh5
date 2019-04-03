@@ -1,9 +1,5 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var vuePropertyDecorator = require('vue-property-decorator');
-var esHelper = require('@mobov/es-helper');
+import { Prop, Component, Vue, Emit } from 'vue-property-decorator';
+import { isBase64, getUrlParam } from '@mobov/es-helper';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -44,7 +40,7 @@ function __decorate(decorators, target, key, desc) {
 function loadAssets(data) {
   var result = data;
 
-  if (!esHelper.isBase64(result)) {
+  if (!isBase64(result)) {
     // result = require(`@/assets/${result}`)
     result = require(result);
   }
@@ -267,7 +263,7 @@ function getStrValue($vue, value) {
   if (pArrs) {
     pArrs.forEach(function (item) {
       var param = item.substr(3, item.length - 4);
-      result = result.replace(item, esHelper.getUrlParam(param) || param);
+      result = result.replace(item, getUrlParam(param) || param);
     });
   }
 
@@ -315,29 +311,29 @@ function (_super) {
     configurable: true
   });
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: '100%'
   })], HApp.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: '100%'
   })], HApp.prototype, "width", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'transparent'
   })], HApp.prototype, "bgColor", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: ''
   })], HApp.prototype, "bgImg", void 0);
 
-  HApp = __decorate([vuePropertyDecorator.Component], HApp);
+  HApp = __decorate([Component], HApp);
   return HApp;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
 /* server only */
@@ -584,46 +580,46 @@ function (_super) {
     configurable: true
   });
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'relative'
   })], HButton.prototype, "position", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 50
   })], HButton.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HButton.prototype, "width", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HButton.prototype, "x", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HButton.prototype, "y", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: ''
   })], HButton.prototype, "bgImg", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: '按钮'
   })], HButton.prototype, "text", void 0);
 
-  __decorate([vuePropertyDecorator.Emit('click')], HButton.prototype, "onClick", null);
+  __decorate([Emit('click')], HButton.prototype, "onClick", null);
 
-  HButton = __decorate([vuePropertyDecorator.Component], HButton);
+  HButton = __decorate([Component], HButton);
   return HButton;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 /* script */
 var __vue_script__$1 = HButton;
@@ -748,44 +744,44 @@ function (_super) {
     }, [$slots.default]);
   };
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'relative'
   })], HView.prototype, "position", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'y'
   })], HView.prototype, "direction", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HView.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HView.prototype, "width", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HView.prototype, "x", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HView.prototype, "y", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: ''
   })], HView.prototype, "bgImg", void 0);
 
-  HView = __decorate([vuePropertyDecorator.Component], HView);
+  HView = __decorate([Component], HView);
   return HView;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 /* script */
 var __vue_script__$2 = HView;
@@ -871,21 +867,21 @@ function (_super) {
     configurable: true
   });
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HFooter.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: ''
   })], HFooter.prototype, "bgImg", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String
   })], HFooter.prototype, "logo", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: Object,
     default: function _default() {
       return {
@@ -895,7 +891,7 @@ function (_super) {
     }
   })], HFooter.prototype, "termsLink", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: Object,
     default: function _default() {
       return {
@@ -905,14 +901,14 @@ function (_super) {
     }
   })], HFooter.prototype, "policyLink", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'Copyright 2019 * Limited All right reserved'
   })], HFooter.prototype, "copyright", void 0);
 
-  HFooter = __decorate([vuePropertyDecorator.Component], HFooter);
+  HFooter = __decorate([Component], HFooter);
   return HFooter;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 /* script */
 var __vue_script__$3 = HFooter;
@@ -1049,54 +1045,54 @@ function (_super) {
     configurable: true
   });
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'relative'
   })], HPromoCode.prototype, "position", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: '100%'
   })], HPromoCode.prototype, "width", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HPromoCode.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HPromoCode.prototype, "x", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HPromoCode.prototype, "y", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'Code'
   })], HPromoCode.prototype, "label", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: '10086'
   })], HPromoCode.prototype, "code", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: GIFT
   })], HPromoCode.prototype, "gift", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: BG
   })], HPromoCode.prototype, "bgImg", void 0);
 
-  HPromoCode = __decorate([vuePropertyDecorator.Component], HPromoCode);
+  HPromoCode = __decorate([Component], HPromoCode);
   return HPromoCode;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 /* script */
 var __vue_script__$4 = HPromoCode;
@@ -1215,49 +1211,49 @@ function (_super) {
     configurable: true
   });
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: 'relative'
   })], HText.prototype, "position", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 50
   })], HText.prototype, "height", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 100
   })], HText.prototype, "width", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 12
   })], HText.prototype, "fontSize", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HText.prototype, "x", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: [Number, String],
     default: 0
   })], HText.prototype, "y", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: Number,
     default: 0
   })], HText.prototype, "ellipsis", void 0);
 
-  __decorate([vuePropertyDecorator.Prop({
+  __decorate([Prop({
     type: String,
     default: '内容'
   })], HText.prototype, "text", void 0);
 
-  HText = __decorate([vuePropertyDecorator.Component], HText);
+  HText = __decorate([Component], HText);
   return HText;
-}(vuePropertyDecorator.Vue);
+}(Vue);
 
 /* script */
 var __vue_script__$5 = HText;
@@ -1368,13 +1364,5 @@ var MegH5 = {
   version: '1.0.0'
 };
 
-exports.Constants = index$1;
-exports.HApp = HApp$1;
-exports.HButton = HButton$1;
-exports.HFooter = HFooter$1;
-exports.HPromoCode = HPromoCode$1;
-exports.HText = HText$1;
-exports.HView = HView$1;
-exports.Loader = loader;
-exports.Utils = index;
-exports.default = MegH5;
+export default MegH5;
+export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HView$1 as HView, loader as Loader, index as Utils };

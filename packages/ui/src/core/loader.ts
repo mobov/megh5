@@ -1,4 +1,4 @@
-import { isBase64 } from '@megmore/es-helper'
+import { isBase64 } from '@mobov/es-helper'
 
 export function loadAssets (data: any) {
   let result = data

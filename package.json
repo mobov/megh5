@@ -6,13 +6,13 @@
     "bootstrap": "lerna bootstrap",
     "creator:serve": "lerna run serve --scope @megh5/creator --stream",
     "creator:package": "lerna run build --scope @megh5/creator --stream",
-    "ui:build:lib": "lerna run build:lib --scope @megh5/ui --stream"
+    "ui:build": "lerna run build --scope @megh5/ui --stream"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@megmore/eslint-config": "^1.0.0",
+    "@mobov/eslint-config": "^1.0.1",
     "lerna": "^3.13.1",
     "typescript": "~3.2.2"
   }

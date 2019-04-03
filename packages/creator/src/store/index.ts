@@ -4,7 +4,7 @@ import { ActivePanels } from '@/constants'
 import BaseModuleConfig from '../base.module.config'
 import { UiNode, UiModule, UiNodeData,  ProjectData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
-import { deepCopy } from '@megmore/es-helper'
+import { deepCopy } from '@mobov/es-helper'
 import { ulid } from 'ulid'
 import { merge } from 'lodash'
 

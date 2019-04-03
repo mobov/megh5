@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@megmore/scss-helper/import";
+  @import "../../../../../node_modules/@mobov/scss-helper/import";
   .setting-size {
     display: inline-flex;
     align-items: flex-end;

@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "~@megmore/scss-helper/import";
+  @import "~@mobov/scss-helper/import";
   .menu {
     width: 100%;
     display: flex;

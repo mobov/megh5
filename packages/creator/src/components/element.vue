@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "~@megmore/scss-helper/import";
+  @import "~@mobov/scss-helper/import";
   $--element-active-color: #ffd0a3;
   $--element-handler-color: #03a9f4;
   .element {
@@ -168,7 +168,7 @@ import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorat
 import { State, Mutation } from 'vuex-class'
 import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
 import { NoCache } from '@/utils/decorators'
-import { deepCopy } from '@megmore/es-helper'
+import { deepCopy } from '@mobov/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
 import MegH5, { Utils } from '@megh5/ui'

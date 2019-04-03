@@ -10,10 +10,9 @@
   },
   "dependencies": {
     "@megh5/ui": "^0.2.1",
-    "@megmore/es-helper": "^0.0.32",
-    "@megmore/eslint-config": "^1.0.0",
-    "@megmore/scss-helper": "^0.0.4",
-    "@megmore/vui": "^0.0.5",
+    "@mobov/es-helper": "^1.0.6",
+    "@mobov/scss-helper": "^0.0.5",
+    "@mobov/vui": "^0.1.0",
     "@types/blueimp-md5": "^2.7.0",
     "@types/file-saver": "^2.0.0",
     "@types/jszip": "^3.1.5",
@@ -37,6 +36,7 @@
     "vuex-class": "^0.3.1"
   },
   "devDependencies": {
+    "@mobov/eslint-config": "^1.0.1",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-plugin-typescript": "^3.4.0",

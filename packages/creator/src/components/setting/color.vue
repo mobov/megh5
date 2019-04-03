@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@megmore/scss-helper/import";
+  @import "../../../../../node_modules/@mobov/scss-helper/import";
   .vc-sketch {
     box-shadow: var(--m-elevation-2) !important;
   }

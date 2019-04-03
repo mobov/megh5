@@ -1,4 +1,4 @@
-import { getUrlParam } from '@megmore/es-helper'
+import { getUrlParam } from '@mobov/es-helper'
 import { positionType } from '../constants'
 import { loadAssets } from '../loader'
 

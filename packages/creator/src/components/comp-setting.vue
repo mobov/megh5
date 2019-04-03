@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "~@megmore/scss-helper/import";
+  @import "~@mobov/scss-helper/import";
   .comp-setting {
     width: 100%;
     height: 100%;
@@ -58,7 +58,7 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
 import { StateScreen, MutationSetPageNode, MutationDelActiveUid } from '@/store'
-import { deepCopy } from '@megmore/es-helper'
+import { deepCopy } from '@mobov/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
 @Component

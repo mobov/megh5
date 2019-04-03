@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import './ui'
-import Megmore from '@megmore/vui'
-Vue.use(Megmore)
+import '@mobov/vui/lib/style.css'
+import Mobov from '@mobov/vui'
+Vue.use(Mobov)
 
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'

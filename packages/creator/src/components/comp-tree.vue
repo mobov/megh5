@@ -1,5 +1,5 @@
 <style lang='scss'>
-  @import "~@megmore/scss-helper/import";
+  @import "~@mobov/scss-helper/import";
   .comp-tree {
     width: 100%;
     height: 100%;
@@ -13,7 +13,7 @@ import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import { GetterPageData } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
-import { deepCopy } from '@megmore/es-helper'
+import { deepCopy } from '@mobov/es-helper'
 import { merge } from 'lodash'
 import CompList from './comp-list.vue'
 
