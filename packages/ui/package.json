@@ -7,7 +7,7 @@
   },
   "main": "lib/index.cjs.js",
   "types": "types/index.d.ts",
-  "module": "lib/index.es.js",
+  "module": "lib/index.esm.js",
   "scripts": {
     "build": "rollup --config build/rollup.config.js"
   },

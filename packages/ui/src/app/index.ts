@@ -1,7 +1,7 @@
 import HApp from './app.vue'
 
 HApp.install = (Vue) => {
-  Vue.component(HApp.name, HApp)
+  Vue.component('HApp', HApp)
 }
 
 export default HApp

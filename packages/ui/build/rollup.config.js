@@ -20,9 +20,12 @@ const baseConfig = {
     postcss({ extensions: ['.scss'], extract: `lib/style.css` }),
     typescript({
       importHelpers: true,
+      // objectHashIgnoreUnknownHack: true,
+      /// rollupCommonJSResolveHack: true,
+      tsconfig: 'tsconfig.json',
       clean: true,
-      rootDir: './src',
-      declarationDir:  './types/',
+      // rootDir: './src',
+      // declarationDir: './types/',
       useTsconfigDeclarationDir: true,
       extensions
     }),
@@ -33,7 +36,7 @@ const baseConfig = {
       presets: [
         '@babel/preset-env',
         '@vue/babel-preset-jsx',
-        '@babel/preset-typescript',
+        // '@babel/preset-typescript',
         // 'es2015-rollup',
       ],
       extensions,
@@ -54,8 +57,8 @@ const baseConfig = {
 export default [
   merge(baseConfig, {
     output: [{
-      file: `lib/index.es.js`,
-      format: 'es',
+      file: `lib/index.esm.js`,
+      format: 'esm',
       exports: 'named'
     },{
       file: `lib/index.cjs.js`,

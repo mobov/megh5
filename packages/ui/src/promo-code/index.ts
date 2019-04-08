@@ -1,7 +1,7 @@
 import HPromoCode from './promo-code.vue'
 
 HPromoCode.install = (Vue) => {
-  Vue.component(HPromoCode.name, HPromoCode)
+  Vue.component('HPromoCode', HPromoCode)
 }
 
 export default HPromoCode

@@ -37,11 +37,11 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
   const result: VNode[] = []
   if (PNode !== undefined) {
     for (let node of PNode) {
-      // props
-      const nodeModule = deepCopy(Store.state.UiModules.find(item => item.name === node.name))
-
+      // @ts-ignore
+      const nodeModule = deepCopy(Store.state.UiModules.find(item => item.name === node.name)) as UiModule
+      // @ts-ignore
       node.nodeData = merge(nodeModule.nodeData, node.nodeData)
-
+      // @ts-ignore
       if (nodeModule.uiConfig.disabled) {
         result.push(h(node.name, node.nodeData, node.children ? compiler(h, node.children) : []))
       } else {

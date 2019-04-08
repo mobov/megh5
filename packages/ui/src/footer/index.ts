@@ -1,7 +1,7 @@
 import HFooter from './footer.vue'
 
 HFooter.install = (Vue) => {
-  Vue.component(HFooter.name, HFooter)
+  Vue.component('HFooter', HFooter)
 }
 
 export default HFooter

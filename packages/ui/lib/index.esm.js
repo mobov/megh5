@@ -1,6 +1,90 @@
 import { Prop, Component, Vue, Emit } from 'vue-property-decorator';
 import { isBase64, getUrlParam } from '@mobov/es-helper';
 
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -15,20 +99,6 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -74,7 +144,7 @@ function getUnitVal(val) {
   if (val !== undefined) {
     if (typeof val === 'number') {
       // val = `calc( ${unit} * val )`
-      val = val + "px";
+      val = "".concat(val, "px");
     }
   }
 
@@ -87,10 +157,10 @@ function getUnitVal(val) {
  * @param val
  */
 
-function genSize(styles, property, val) {
-  if (styles === void 0) {
-    styles = {};
-  }
+function genSize() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var property = arguments.length > 1 ? arguments[1] : undefined;
+  var val = arguments.length > 2 ? arguments[2] : undefined;
 
   if (val !== undefined) {
     val = getUnitVal(val);
@@ -104,14 +174,10 @@ function genSize(styles, property, val) {
  * @param val
  */
 
-function genPosX(styles, val, float) {
-  if (styles === void 0) {
-    styles = {};
-  }
-
-  if (float === void 0) {
-    float = false;
-  }
+function genPosX() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
+  var float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
     if (float) {
@@ -128,14 +194,10 @@ function genPosX(styles, val, float) {
  * @param val
  */
 
-function genPosY(styles, val, float) {
-  if (styles === void 0) {
-    styles = {};
-  }
-
-  if (float === void 0) {
-    float = false;
-  }
+function genPosY() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
+  var float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
     if (float) {
@@ -151,13 +213,12 @@ function genPosY(styles, val, float) {
  * @param val
  */
 
-function genBgImg(styles, val) {
-  if (styles === void 0) {
-    styles = {};
-  }
+function genBgImg() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
 
   if (val !== undefined && val !== '') {
-    styles['backgroundImage'] = "url(" + loadAssets(val) + ")";
+    styles['backgroundImage'] = "url(".concat(loadAssets(val), ")");
   } else {
     styles['backgroundImage'] = 'unset';
   }
@@ -169,10 +230,10 @@ function genBgImg(styles, val) {
  * @param val
  */
 
-function genColor(styles, property, val) {
-  if (styles === void 0) {
-    styles = {};
-  }
+function genColor() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var property = arguments.length > 1 ? arguments[1] : undefined;
+  var val = arguments.length > 2 ? arguments[2] : undefined;
 
   if (val !== undefined) {
     styles[property] = val;
@@ -184,10 +245,9 @@ function genColor(styles, property, val) {
  * @param val
  */
 
-function genPosition(styles, val) {
-  if (styles === void 0) {
-    styles = {};
-  }
+function genPosition() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
 
   if (val !== undefined) {
     styles['position'] = val;
@@ -199,10 +259,9 @@ function genPosition(styles, val) {
  * @param val
  */
 
-function genEllipsis(styles, val) {
-  if (styles === void 0) {
-    styles = {};
-  }
+function genEllipsis() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
 
   if (val !== undefined) {
     if (val === 0) {
@@ -284,56 +343,57 @@ var index = /*#__PURE__*/Object.freeze({
 });
 
 var HApp =
-/** @class */
-function (_super) {
-  __extends(HApp, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HApp, _Vue);
 
   function HApp() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HApp);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HApp).apply(this, arguments));
   }
 
-  Object.defineProperty(HApp.prototype, "styles", {
+  _createClass(HApp, [{
+    key: "styles",
     get: function get() {
-      var _a = this,
-          height = _a.height,
-          width = _a.width,
-          bgColor = _a.bgColor,
-          bgImg = _a.bgImg;
-
+      var height = this.height,
+          width = this.width,
+          bgColor = this.bgColor,
+          bgImg = this.bgImg;
       var styles = {};
       genSize(styles, 'min-height', height);
       genSize(styles, 'width', width);
       genColor(styles, 'background-color', bgColor);
       genBgImg(styles, bgImg);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    }
+  }]);
 
-  __decorate([Prop({
-    type: [Number, String],
-    default: '100%'
-  })], HApp.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: '100%'
-  })], HApp.prototype, "width", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: 'transparent'
-  })], HApp.prototype, "bgColor", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: ''
-  })], HApp.prototype, "bgImg", void 0);
-
-  HApp = __decorate([Component], HApp);
   return HApp;
 }(Vue);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: '100%'
+})], HApp.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: '100%'
+})], HApp.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: 'transparent'
+})], HApp.prototype, "bgColor", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+})], HApp.prototype, "bgImg", void 0);
+
+HApp = __decorate([Component], HApp);
+var script = HApp;
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
 /* server only */
@@ -473,7 +533,7 @@ function addStyle(id, css) {
 var browser = createInjector;
 
 /* script */
-var __vue_script__ = HApp;
+var __vue_script__ = script;
 /* template */
 
 var __vue_render__ = function __vue_render__() {
@@ -528,45 +588,43 @@ var HApp$1 = normalizeComponent_1({
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, browser, undefined);
 
 HApp$1.install = function (Vue) {
-  Vue.component(HApp$1.name, HApp$1);
+  Vue.component('HApp', HApp$1);
 };
 
 var HButton =
-/** @class */
-function (_super) {
-  __extends(HButton, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HButton, _Vue);
 
   function HButton() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HButton);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HButton).apply(this, arguments));
   }
 
-  HButton.prototype.onClick = function (e) {};
-
-  Object.defineProperty(HButton.prototype, "viewText", {
+  _createClass(HButton, [{
+    key: "onClick",
+    value: function onClick(e) {}
+  }, {
+    key: "viewText",
     get: function get() {
       return getStrValue(this, this.text);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HButton.prototype, "float", {
+    }
+  }, {
+    key: "float",
     get: function get() {
       return this.position !== 'relative';
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HButton.prototype, "styles", {
+    }
+  }, {
+    key: "styles",
     get: function get() {
-      var _a = this,
-          height = _a.height,
-          width = _a.width,
-          x = _a.x,
-          y = _a.y,
-          bgImg = _a.bgImg,
-          position = _a.position,
-          float = _a.float;
-
+      var height = this.height,
+          width = this.width,
+          x = this.x,
+          y = this.y,
+          bgImg = this.bgImg,
+          position = this.position,
+          float = this.float;
       var styles = {};
       genPosition(styles, position);
       genBgImg(styles, bgImg);
@@ -575,54 +633,54 @@ function (_super) {
       genPosX(styles, x, float);
       genPosY(styles, y, float);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    }
+  }]);
 
-  __decorate([Prop({
-    type: String,
-    default: 'relative'
-  })], HButton.prototype, "position", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 50
-  })], HButton.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HButton.prototype, "width", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HButton.prototype, "x", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HButton.prototype, "y", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: ''
-  })], HButton.prototype, "bgImg", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: '按钮'
-  })], HButton.prototype, "text", void 0);
-
-  __decorate([Emit('click')], HButton.prototype, "onClick", null);
-
-  HButton = __decorate([Component], HButton);
   return HButton;
 }(Vue);
 
+__decorate([Prop({
+  type: String,
+  default: 'relative'
+})], HButton.prototype, "position", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 50
+})], HButton.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HButton.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HButton.prototype, "x", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HButton.prototype, "y", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+})], HButton.prototype, "bgImg", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: '按钮'
+})], HButton.prototype, "text", void 0);
+
+__decorate([Emit('click')], HButton.prototype, "onClick", null);
+
+HButton = __decorate([Component], HButton);
+var script$1 = HButton;
+
 /* script */
-var __vue_script__$1 = HButton;
+var __vue_script__$1 = script$1;
 /* template */
 
 var __vue_render__$1 = function __vue_render__() {
@@ -678,46 +736,54 @@ var HButton$1 = normalizeComponent_1({
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, browser, undefined);
 
 HButton$1.install = function (Vue) {
-  Vue.component(HButton$1.name, HButton$1);
+  Vue.component('HButton', HButton$1);
 };
 
 var HView =
-/** @class */
-function (_super) {
-  __extends(HView, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HView, _Vue);
 
   function HView() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HView).apply(this, arguments));
   }
 
-  Object.defineProperty(HView.prototype, "float", {
+  _createClass(HView, [{
+    key: "render",
+    value: function render() {
+      var h = arguments[0];
+      var styles = this.styles,
+          $slots = this.$slots,
+          classes = this.classes;
+      return h("div", {
+        "staticClass": "h-view",
+        "class": classes,
+        "style": styles
+      }, [$slots.default]);
+    }
+  }, {
+    key: "float",
     get: function get() {
       return this.position !== 'relative';
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HView.prototype, "classes", {
+    }
+  }, {
+    key: "classes",
     get: function get() {
-      var _a;
-
       var direction = this.direction;
-      return _a = {}, _a["--direction-" + direction] = true, _a;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HView.prototype, "styles", {
+      return _defineProperty({}, "--direction-".concat(direction), true);
+    }
+  }, {
+    key: "styles",
     get: function get() {
-      var _a = this,
-          float = _a.float,
-          bgImg = _a.bgImg,
-          height = _a.height,
-          width = _a.width,
-          x = _a.x,
-          y = _a.y,
-          position = _a.position;
-
+      var float = this.float,
+          bgImg = this.bgImg,
+          height = this.height,
+          width = this.width,
+          x = this.x,
+          y = this.y,
+          position = this.position;
       var styles = {};
       genPosition(styles, position);
       genBgImg(styles, bgImg);
@@ -726,65 +792,52 @@ function (_super) {
       genPosX(styles, x, float);
       genPosY(styles, y, float);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    }
+  }]);
 
-  HView.prototype.render = function () {
-    var _a = this,
-        styles = _a.styles,
-        $slots = _a.$slots,
-        classes = _a.classes;
-
-    return h("div", {
-      "staticClass": "h-view",
-      "class": classes,
-      "style": styles
-    }, [$slots.default]);
-  };
-
-  __decorate([Prop({
-    type: String,
-    default: 'relative'
-  })], HView.prototype, "position", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: 'y'
-  })], HView.prototype, "direction", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HView.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HView.prototype, "width", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HView.prototype, "x", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HView.prototype, "y", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: ''
-  })], HView.prototype, "bgImg", void 0);
-
-  HView = __decorate([Component], HView);
   return HView;
 }(Vue);
 
+__decorate([Prop({
+  type: String,
+  default: 'relative'
+})], HView.prototype, "position", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: 'y'
+})], HView.prototype, "direction", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HView.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HView.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HView.prototype, "x", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HView.prototype, "y", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+})], HView.prototype, "bgImg", void 0);
+
+HView = __decorate([Component], HView);
+var script$2 = HView;
+
 /* script */
-var __vue_script__$2 = HView;
+var __vue_script__$2 = script$2;
 /* template */
 
 /* style */
@@ -819,99 +872,94 @@ var __vue_is_functional_template__$2 = undefined;
 var HView$1 = normalizeComponent_1({}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, browser, undefined);
 
 HView$1.install = function (Vue) {
-  Vue.component(HView$1.name, HView$1);
+  Vue.component('HView', HView$1);
 };
 
 var HFooter =
-/** @class */
-function (_super) {
-  __extends(HFooter, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HFooter, _Vue);
 
   function HFooter() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HFooter);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HFooter).apply(this, arguments));
   }
 
-  Object.defineProperty(HFooter.prototype, "viewTermsText", {
+  _createClass(HFooter, [{
+    key: "viewTermsText",
     get: function get() {
       return getStrValue(this, this.termsLink.text);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HFooter.prototype, "viewPolicyText", {
+    }
+  }, {
+    key: "viewPolicyText",
     get: function get() {
       return getStrValue(this, this.policyLink.text);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HFooter.prototype, "viewCopyright", {
+    }
+  }, {
+    key: "viewCopyright",
     get: function get() {
       return getStrValue(this, this.copyright);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HFooter.prototype, "styles", {
+    }
+  }, {
+    key: "styles",
     get: function get() {
-      var _a = this,
-          height = _a.height,
-          bgImg = _a.bgImg;
-
+      var height = this.height,
+          bgImg = this.bgImg;
       var styles = {};
       genBgImg(styles, bgImg);
       genSize(styles, 'height', height);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HFooter.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: ''
-  })], HFooter.prototype, "bgImg", void 0);
-
-  __decorate([Prop({
-    type: String
-  })], HFooter.prototype, "logo", void 0);
-
-  __decorate([Prop({
-    type: Object,
-    default: function _default() {
-      return {
-        text: 'Terms Of Service',
-        href: ''
-      };
     }
-  })], HFooter.prototype, "termsLink", void 0);
+  }]);
 
-  __decorate([Prop({
-    type: Object,
-    default: function _default() {
-      return {
-        text: 'Privacy Policy',
-        href: ''
-      };
-    }
-  })], HFooter.prototype, "policyLink", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: 'Copyright 2019 * Limited All right reserved'
-  })], HFooter.prototype, "copyright", void 0);
-
-  HFooter = __decorate([Component], HFooter);
   return HFooter;
 }(Vue);
 
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HFooter.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+})], HFooter.prototype, "bgImg", void 0);
+
+__decorate([Prop({
+  type: String
+})], HFooter.prototype, "logo", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: function _default() {
+    return {
+      text: 'Terms Of Service',
+      href: ''
+    };
+  }
+})], HFooter.prototype, "termsLink", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: function _default() {
+    return {
+      text: 'Privacy Policy',
+      href: ''
+    };
+  }
+})], HFooter.prototype, "policyLink", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: 'Copyright 2019 * Limited All right reserved'
+})], HFooter.prototype, "copyright", void 0);
+
+HFooter = __decorate([Component], HFooter);
+var script$3 = HFooter;
+
 /* script */
-var __vue_script__$3 = HFooter;
+var __vue_script__$3 = script$3;
 /* template */
 
 var __vue_render__$2 = function __vue_render__() {
@@ -985,53 +1033,48 @@ var HFooter$1 = normalizeComponent_1({
 }, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, browser, undefined);
 
 HFooter$1.install = function (Vue) {
-  Vue.component(HFooter$1.name, HFooter$1);
+  Vue.component('HFooter', HFooter$1);
 };
 
 var GIFT = 'data:image/png;base64,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';
 var BG = 'data:image/png;base64,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';
 
 var HPromoCode =
-/** @class */
-function (_super) {
-  __extends(HPromoCode, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HPromoCode, _Vue);
 
   function HPromoCode() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HPromoCode);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HPromoCode).apply(this, arguments));
   }
 
-  Object.defineProperty(HPromoCode.prototype, "viewLabel", {
+  _createClass(HPromoCode, [{
+    key: "viewLabel",
     get: function get() {
       return getStrValue(this, this.label);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HPromoCode.prototype, "viewCode", {
+    }
+  }, {
+    key: "viewCode",
     get: function get() {
       return getStrValue(this, this.code);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HPromoCode.prototype, "float", {
+    }
+  }, {
+    key: "float",
     get: function get() {
       return this.position !== 'relative';
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HPromoCode.prototype, "styles", {
+    }
+  }, {
+    key: "styles",
     get: function get() {
-      var _a = this,
-          bgImg = _a.bgImg,
-          x = _a.x,
-          y = _a.y,
-          height = _a.height,
-          width = _a.width,
-          float = _a.float,
-          position = _a.position;
-
+      var bgImg = this.bgImg,
+          x = this.x,
+          y = this.y,
+          height = this.height,
+          width = this.width,
+          float = this.float,
+          position = this.position;
       var styles = {};
       genPosition(styles, position);
       genBgImg(styles, bgImg);
@@ -1040,62 +1083,62 @@ function (_super) {
       genSize(styles, 'height', height);
       genSize(styles, 'width', width);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    }
+  }]);
 
-  __decorate([Prop({
-    type: String,
-    default: 'relative'
-  })], HPromoCode.prototype, "position", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: '100%'
-  })], HPromoCode.prototype, "width", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HPromoCode.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HPromoCode.prototype, "x", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HPromoCode.prototype, "y", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: 'Code'
-  })], HPromoCode.prototype, "label", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: '10086'
-  })], HPromoCode.prototype, "code", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: GIFT
-  })], HPromoCode.prototype, "gift", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: BG
-  })], HPromoCode.prototype, "bgImg", void 0);
-
-  HPromoCode = __decorate([Component], HPromoCode);
   return HPromoCode;
 }(Vue);
 
+__decorate([Prop({
+  type: String,
+  default: 'relative'
+})], HPromoCode.prototype, "position", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: '100%'
+})], HPromoCode.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HPromoCode.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HPromoCode.prototype, "x", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HPromoCode.prototype, "y", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: 'Code'
+})], HPromoCode.prototype, "label", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: '10086'
+})], HPromoCode.prototype, "code", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: GIFT
+})], HPromoCode.prototype, "gift", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: BG
+})], HPromoCode.prototype, "bgImg", void 0);
+
+HPromoCode = __decorate([Component], HPromoCode);
+var script$4 = HPromoCode;
+
 /* script */
-var __vue_script__$4 = HPromoCode;
+var __vue_script__$4 = script$4;
 /* template */
 
 var __vue_render__$3 = function __vue_render__() {
@@ -1159,44 +1202,41 @@ var HPromoCode$1 = normalizeComponent_1({
 }, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, browser, undefined);
 
 HPromoCode$1.install = function (Vue) {
-  Vue.component(HPromoCode$1.name, HPromoCode$1);
+  Vue.component('HPromoCode', HPromoCode$1);
 };
 
 var HText =
-/** @class */
-function (_super) {
-  __extends(HText, _super);
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HText, _Vue);
 
   function HText() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    _classCallCheck(this, HText);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HText).apply(this, arguments));
   }
 
-  Object.defineProperty(HText.prototype, "viewText", {
+  _createClass(HText, [{
+    key: "viewText",
     get: function get() {
       return getStrValue(this, this.text);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HText.prototype, "float", {
+    }
+  }, {
+    key: "float",
     get: function get() {
       return this.position !== 'relative';
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(HText.prototype, "styles", {
+    }
+  }, {
+    key: "styles",
     get: function get() {
-      var _a = this,
-          height = _a.height,
-          width = _a.width,
-          ellipsis = _a.ellipsis,
-          fontSize = _a.fontSize,
-          position = _a.position,
-          x = _a.x,
-          y = _a.y,
-          float = _a.float;
-
+      var height = this.height,
+          width = this.width,
+          ellipsis = this.ellipsis,
+          fontSize = this.fontSize,
+          position = this.position,
+          x = this.x,
+          y = this.y,
+          float = this.float;
       var styles = {};
       genPosition(styles, position);
       genEllipsis(styles, ellipsis);
@@ -1206,57 +1246,57 @@ function (_super) {
       genPosX(styles, x, float);
       genPosY(styles, y, float);
       return styles;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    }
+  }]);
 
-  __decorate([Prop({
-    type: String,
-    default: 'relative'
-  })], HText.prototype, "position", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 50
-  })], HText.prototype, "height", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 100
-  })], HText.prototype, "width", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 12
-  })], HText.prototype, "fontSize", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HText.prototype, "x", void 0);
-
-  __decorate([Prop({
-    type: [Number, String],
-    default: 0
-  })], HText.prototype, "y", void 0);
-
-  __decorate([Prop({
-    type: Number,
-    default: 0
-  })], HText.prototype, "ellipsis", void 0);
-
-  __decorate([Prop({
-    type: String,
-    default: '内容'
-  })], HText.prototype, "text", void 0);
-
-  HText = __decorate([Component], HText);
   return HText;
 }(Vue);
 
+__decorate([Prop({
+  type: String,
+  default: 'relative'
+})], HText.prototype, "position", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 50
+})], HText.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 100
+})], HText.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 12
+})], HText.prototype, "fontSize", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HText.prototype, "x", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: 0
+})], HText.prototype, "y", void 0);
+
+__decorate([Prop({
+  type: Number,
+  default: 0
+})], HText.prototype, "ellipsis", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: '内容'
+})], HText.prototype, "text", void 0);
+
+HText = __decorate([Component], HText);
+var script$5 = HText;
+
 /* script */
-var __vue_script__$5 = HText;
+var __vue_script__$5 = script$5;
 /* template */
 
 var __vue_render__$4 = function __vue_render__() {
@@ -1309,7 +1349,7 @@ var HText$1 = normalizeComponent_1({
 }, __vue_inject_styles__$5, __vue_script__$5, __vue_scope_id__$5, __vue_is_functional_template__$5, __vue_module_identifier__$5, browser, undefined);
 
 HText$1.install = function (Vue) {
-  Vue.component(HText$1.name, HText$1);
+  Vue.component('HText', HText$1);
 };
 
 
@@ -1346,10 +1386,8 @@ var index$1 = /*#__PURE__*/Object.freeze({
 
 var MegH5 = {
   installed: false,
-  install: function install(Vue, opts) {
-    if (opts === void 0) {
-      opts = {};
-    }
+  install: function install(Vue) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     if (MegH5.installed) {
       return;

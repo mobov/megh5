@@ -1,7 +1,7 @@
 import HButton from './button.vue'
 
 HButton.install = (Vue) => {
-  Vue.component(HButton.name, HButton)
+  Vue.component('HButton', HButton)
 }
 
 export default HButton

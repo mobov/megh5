@@ -7,7 +7,7 @@
 <img align="center" width="100%" src="./preview2.gif">
 <img align="center" width="100%" src="./preview2.jpg">
 
-##Project setup
+## Project setup
 
 ```
 yarn install
