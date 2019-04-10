@@ -17,6 +17,7 @@
       type="number"
       :min="min"
       :max="max"
+      :disabled="disabled"
       @input="handleValueChange"
       :label="label"
       required
@@ -43,7 +44,7 @@ export default class SettingSize extends Vue {
   nodeUid!: string
 
   @Prop({
-    type: Number
+    type: [Number, String]
   })
   value!: number
 
@@ -69,6 +70,10 @@ export default class SettingSize extends Vue {
       max = this.nodeConfig.extra.max
     }
     return max
+  }
+
+  get disabled () {
+    return typeof this.value === 'string'
   }
 
   handleValueChange (value: any) {

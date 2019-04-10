@@ -1,6 +1,5 @@
 import { getUrlParam } from '@mobov/es-helper'
 import { positionType } from '../constants'
-import { loadAssets } from '../loader'
 
 export const unit = '100vw / 100'
 
@@ -83,7 +82,7 @@ export function genPosY (styles: any = {}, val: string | number | undefined, flo
  */
 export function genBgImg (styles: any = {}, val: ImageData | string | undefined) {
   if (val !== undefined && val !== '') {
-    styles['backgroundImage'] = `url(${loadAssets(val)})`
+    styles['backgroundImage'] = `url(${val})`
   } else {
     styles['backgroundImage'] = 'unset'
   }

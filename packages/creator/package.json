@@ -12,7 +12,7 @@
     "@megh5/ui": "^0.2.4",
     "@mobov/es-helper": "^1.0.6",
     "@mobov/scss-helper": "^0.0.5",
-    "@mobov/vui": "^0.2.0",
+    "@mobov/vui": "^0.2.2",
     "@types/blueimp-md5": "^2.7.0",
     "@types/file-saver": "^2.0.0",
     "@types/jszip": "^3.1.5",

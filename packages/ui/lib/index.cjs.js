@@ -111,21 +111,6 @@ function __decorate(decorators, target, key, desc) {
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
 
-function loadAssets(data) {
-  var result = data;
-
-  if (!esHelper.isBase64(result)) {
-    // result = require(`@/assets/${result}`)
-    result = require(result);
-  }
-
-  return result;
-}
-
-var loader = /*#__PURE__*/Object.freeze({
-    loadAssets: loadAssets
-});
-
 var unit = '100vw / 100'; // interface screenSize {
 //   height: '100vh',
 //   width: '100vw'
@@ -222,7 +207,7 @@ function genBgImg() {
   var val = arguments.length > 1 ? arguments[1] : undefined;
 
   if (val !== undefined && val !== '') {
-    styles['backgroundImage'] = "url(".concat(loadAssets(val), ")");
+    styles['backgroundImage'] = "url(".concat(val, ")");
   } else {
     styles['backgroundImage'] = 'unset';
   }
@@ -1413,6 +1398,5 @@ exports.HFooter = HFooter$1;
 exports.HPromoCode = HPromoCode$1;
 exports.HText = HText$1;
 exports.HView = HView$1;
-exports.Loader = loader;
 exports.Utils = index;
 exports.default = MegH5;

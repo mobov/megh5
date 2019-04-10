@@ -8,6 +8,7 @@ import defPackageData from './files/package'
 import defMegh5Data from './files/megh5.project'
 import defMainData from './files/main'
 import AppData from './files/App'
+import babelConfig from './files/babel.config'
 import { handleExportNodeAssets, handleImportNodeAssets } from './utils'
 import { saveAs } from 'file-saver'
 
@@ -29,6 +30,7 @@ export async function exportProject (project: ProjectData) {
   PackSrc.file('megh5.json', JSON.stringify(Megh5Data, null, 2))
   PackSrc.file('main.js', MainData)
   PackSrc.file('App.vue', AppData)
+  Pack.file('babel.config.js', babelConfig)
   Pack.file('package.json', JSON.stringify(PackageData, null, 2))
 
   const content = await Pack.generateAsync({ type: 'blob' })
@@ -37,12 +39,12 @@ export async function exportProject (project: ProjectData) {
 
 export async function importProject (file: any): Promise<ProjectData> {
   const Zip = await JSZip.loadAsync(file)
-  let megh5DataStr = await Zip.file('src/megh5.json').async('binarystring')
+  const megh5DataStr = await Zip.file('src/megh5.json').async('text')
   const megh5Data: ProjectData = JSON.parse(megh5DataStr)
   await handleImportNodeAssets(megh5Data.UiNodes, Zip)
   return cloneDeep(megh5Data)
 }
 
 export {
-  defMegh5Data as tempateProject
+  defMegh5Data as templateProject
 }

@@ -7,7 +7,6 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/standard',
     '@vue/typescript',
-    '@vue/typescript',
     '@mobov/eslint-config'
   ],
   rules: {

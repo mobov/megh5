@@ -1,5 +1,5 @@
 import { Prop, Component, Vue, Emit } from 'vue-property-decorator';
-import { isBase64, getUrlParam } from '@mobov/es-helper';
+import { getUrlParam } from '@mobov/es-helper';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -107,21 +107,6 @@ function __decorate(decorators, target, key, desc) {
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
 
-function loadAssets(data) {
-  var result = data;
-
-  if (!isBase64(result)) {
-    // result = require(`@/assets/${result}`)
-    result = require(result);
-  }
-
-  return result;
-}
-
-var loader = /*#__PURE__*/Object.freeze({
-    loadAssets: loadAssets
-});
-
 var unit = '100vw / 100'; // interface screenSize {
 //   height: '100vh',
 //   width: '100vw'
@@ -218,7 +203,7 @@ function genBgImg() {
   var val = arguments.length > 1 ? arguments[1] : undefined;
 
   if (val !== undefined && val !== '') {
-    styles['backgroundImage'] = "url(".concat(loadAssets(val), ")");
+    styles['backgroundImage'] = "url(".concat(val, ")");
   } else {
     styles['backgroundImage'] = 'unset';
   }
@@ -1403,4 +1388,4 @@ var MegH5 = {
 };
 
 export default MegH5;
-export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HView$1 as HView, loader as Loader, index as Utils };
+export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HView$1 as HView, index as Utils };

@@ -1412,10 +1412,10 @@
   resolved "https://registry.npmjs.org/@mobov/scss-helper/-/scss-helper-0.0.5.tgz#846e58fe557451eef0f89a637d3b204bab2a9de7"
   integrity sha512-l4ZJThJE0GRDKLP2TD28CT6uEVh+WRk1kh4ZgvQ3PFqxuIjLipnxkGbwH0oDiN/Y7TqoijcMErv3PtzvYss8Xg==
 
-"@mobov/vui@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@mobov/vui/-/vui-0.1.0.tgz#c002856bb7161b661394c97f5786e4f1c869b991"
-  integrity sha512-O6mdF7zaV2Ih4+49mQ9qsviAbS3BIJOTCfqVy8GJfZFm0tlh9V12pzcO0uEzsRdV+LIJa+CyZpw1QKPvGvHiAQ==
+"@mobov/vui@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@mobov/vui/-/vui-0.2.2.tgz#267e1b8e52aaca35fe502421eab3742c4259a71c"
+  integrity sha512-4ZXNa/kfOXKPhrVG8RcO8In+llE4CYqbbYtfw53xTkATIF6gSgYOuroLAki6aIXs/ZwoJI312OHNQ6tS7YVVPw==
   dependencies:
     "@mobov/es-helper" "^1.0.4"
     "@mobov/scss-helper" "^0.0.5"

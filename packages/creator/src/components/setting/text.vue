@@ -34,7 +34,7 @@ export default class SettingText extends Vue {
   nodeUid!: string
 
   @Prop({
-    type: String,
+    type: [String, Number],
     default: ''
   })
   value!: string
