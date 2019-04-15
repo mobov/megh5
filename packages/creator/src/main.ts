@@ -8,8 +8,14 @@ Vue.use(Mobov)
 
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
+import colors from 'vuetify/es5/util/colors'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+    theme: {
+      primary: '#512da8', // #E53935
+    }
+  }
+)
 
 Vue.config.productionTip = false
 

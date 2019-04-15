@@ -26,7 +26,7 @@ const MegH5: MegH5Plugin = {
       Vue.use(entry)
     })
   },
-  version: '1.0.0'
+  version: '0.2.5'
 }
 
 export * from './entries'

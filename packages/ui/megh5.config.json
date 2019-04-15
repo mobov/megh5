@@ -19,6 +19,57 @@
         }
     },
     {
+        "name": "HFooter",
+        "title": "页脚",
+        "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
+        "uiConfig": {
+            "moveMode": "none",
+            "sizeMode": "none"
+        },
+        "nodeConfig": {
+            "logo": {
+                "type": "image",
+                "text": "Logo"
+            },
+            "termsLink": {
+                "type": "link",
+                "text": "Terms"
+            },
+            "policyLink": {
+                "type": "link",
+                "text": "Privacy"
+            },
+            "copyright": {
+                "type": "text",
+                "text": "copyright"
+            }
+        },
+        "nodeData": {
+            "style": {
+                "zIndex": 1,
+                "color": "#ffffff",
+                "backgroundColor": "#000000"
+            },
+            "props": {
+                "height": 100,
+                "width": 320,
+                "x": 0,
+                "y": 0,
+                "logo": "",
+                "termsLink": {
+                    "text": "Terms Of Service",
+                    "href": ""
+                },
+                "policyLink": {
+                    "text": "Privacy Policy",
+                    "href": ""
+                },
+                "copyright": "Copyright 2019 * Limited All right reserved"
+            },
+            "slot": "footer"
+        }
+    },
+    {
         "name": "HView",
         "title": "视图",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
@@ -166,54 +217,49 @@
         }
     },
     {
-        "name": "HFooter",
-        "title": "页脚",
+        "name": "HVideo",
+        "title": "视频",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "moveMode": "none",
-            "sizeMode": "none"
+            "moveMode": "xy",
+            "sizeMode": "xy"
         },
         "nodeConfig": {
-            "logo": {
-                "type": "image",
-                "text": "Logo"
+            "source": {
+                "type": "radio",
+                "text": "来源",
+                "extra": [
+                    {
+                        "text": "油管",
+                        "value": "youtube"
+                    },
+                    {
+                        "text": "优酷",
+                        "value": "youku"
+                    }
+                ]
             },
-            "termsLink": {
-                "type": "link",
-                "text": "Terms"
-            },
-            "policyLink": {
-                "type": "link",
-                "text": "Privacy"
-            },
-            "copyright": {
+            "link": {
                 "type": "text",
-                "text": "copyright"
+                "text": "视频地址/ID"
             }
         },
         "nodeData": {
             "style": {
                 "zIndex": 1,
                 "color": "#ffffff",
-                "backgroundColor": "#000000"
+                "backgroundColor": "transparent"
             },
             "props": {
-                "height": 100,
+                "position": "relative",
+                "source": "youtube",
+                "link": "XNDEzNzc1MzUwNA==",
+                "height": 180,
                 "width": 320,
                 "x": 0,
                 "y": 0,
-                "logo": "",
-                "termsLink": {
-                    "text": "Terms Of Service",
-                    "href": ""
-                },
-                "policyLink": {
-                    "text": "Privacy Policy",
-                    "href": ""
-                },
-                "copyright": "Copyright 2019 * Limited All right reserved"
-            },
-            "slot":  "footer"
+                "bgImg": ""
+            }
         }
     }
 ]

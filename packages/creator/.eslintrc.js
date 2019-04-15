@@ -12,9 +12,15 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-unused-vars': 'off'
+    'no-param-reassign': 'off',
+    'no-unused-vars': 'off',
+    'indent': 'off'
   },
-  parserOptions: {
-    parser: '@typescript-eslint/parser'
-  }
+  // parserOptions: {
+  //   parser: 'typescript-eslint-parser',
+  //   ecmaFeatures: {
+  //     'jsx': true,
+  //     'experimentalObjectRestSpread': true
+  //   }
+  // }
 }

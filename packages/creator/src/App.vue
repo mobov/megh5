@@ -20,16 +20,18 @@
                  variety="flat"
                  :elevation="0">
           <MFlexFiller/>
-          <v-btn color="primary">
-            <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
+          <m-button color="primary" size="sm" :style="{width: '100px'}" class="m-mr-sm">
             导入
-          </v-btn>
-          <v-btn color="primary"
-                 @click="handleExport">导出</v-btn>
+            <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
+          </m-button>
+          <m-button color="primary" size="sm" :style="{width: '100px'}" @click="handleExport">
+            导出
+          </m-button>
         </MAppBar>
         <SidePanel class="m-elevation-2" slot="right"></SidePanel>
         <MFlex full justify="center" align="center" @click="handleSetProject" style="height: 100%">
           <Previewer @click.stop mode="preview"/>
+          <!--<h-video type="youtube"></h-video>-->
         </MFlex>
       </MView>
     </MApp>

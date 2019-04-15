@@ -57,3 +57,4 @@ export declare function genEllipsis(styles: any, val: number): void;
  * @param value
  */
 export declare function getStrValue($vue: any, value: string): string;
+export declare function uuid(): string;

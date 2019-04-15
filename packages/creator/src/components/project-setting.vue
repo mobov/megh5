@@ -44,6 +44,11 @@
         label="版本"
         required
       ></v-text-field>
+      <v-text-field
+        v-model="Project.version"
+        label="全局变量"
+        required
+      ></v-text-field>
     </div>
   </div>
 </template>

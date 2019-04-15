@@ -20,8 +20,8 @@
     <v-tabs :value="activePanel" @change="handleNav" color="primary" dark slider-color="success">
       <v-tab ripple>组件库</v-tab>
       <v-tab ripple>配置</v-tab>
-      <v-tab ripple>组件树</v-tab>
-      <v-tab ripple>编辑器</v-tab>
+      <!--<v-tab ripple>组件树</v-tab>-->
+      <!--<v-tab ripple>编辑器</v-tab>-->
     </v-tabs>
     <div class="side-panel-main">
       <Library v-show="activePanel === 0" />

@@ -1,4 +1,4 @@
-import { Prop, Component, Vue, Emit } from 'vue-property-decorator';
+import { Prop, Component, Vue, Emit, Watch } from 'vue-property-decorator';
 import { getUrlParam } from '@mobov/es-helper';
 
 function _classCallCheck(instance, Constructor) {
@@ -162,10 +162,11 @@ function genSize() {
 function genPosX() {
   var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var val = arguments.length > 1 ? arguments[1] : undefined;
-  var float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var _float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
-    if (float) {
+    if (_float) {
       styles['left'] = getUnitVal(val);
     } else {
       styles['marginLeft'] = getUnitVal(val);
@@ -182,10 +183,11 @@ function genPosX() {
 function genPosY() {
   var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var val = arguments.length > 1 ? arguments[1] : undefined;
-  var float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var _float2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
-    if (float) {
+    if (_float2) {
       styles['top'] = getUnitVal(val);
     } else {
       styles['marginTop'] = getUnitVal(val);
@@ -313,6 +315,18 @@ function getStrValue($vue, value) {
 
   return result;
 }
+function uuid() {
+  //用于生成uuid
+  function S4() {
+    return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+  }
+
+  function guid() {
+    return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
+  }
+
+  return guid();
+}
 
 var index = /*#__PURE__*/Object.freeze({
     unit: unit,
@@ -324,7 +338,8 @@ var index = /*#__PURE__*/Object.freeze({
     genColor: genColor,
     genPosition: genPosition,
     genEllipsis: genEllipsis,
-    getStrValue: getStrValue
+    getStrValue: getStrValue,
+    uuid: uuid
 });
 
 var HApp =
@@ -359,22 +374,22 @@ function (_Vue) {
 
 __decorate([Prop({
   type: [Number, String],
-  default: '100%'
+  "default": '100%'
 })], HApp.prototype, "height", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: '100%'
+  "default": '100%'
 })], HApp.prototype, "width", void 0);
 
 __decorate([Prop({
   type: String,
-  default: 'transparent'
+  "default": 'transparent'
 })], HApp.prototype, "bgColor", void 0);
 
 __decorate([Prop({
   type: String,
-  default: ''
+  "default": ''
 })], HApp.prototype, "bgImg", void 0);
 
 HApp = __decorate([Component], HApp);
@@ -609,14 +624,14 @@ function (_Vue) {
           y = this.y,
           bgImg = this.bgImg,
           position = this.position,
-          float = this.float;
+          _float = this["float"];
       var styles = {};
       genPosition(styles, position);
       genBgImg(styles, bgImg);
       genSize(styles, 'height', height);
       genSize(styles, 'width', width);
-      genPosX(styles, x, float);
-      genPosY(styles, y, float);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
       return styles;
     }
   }]);
@@ -626,37 +641,37 @@ function (_Vue) {
 
 __decorate([Prop({
   type: String,
-  default: 'relative'
+  "default": 'relative'
 })], HButton.prototype, "position", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 50
+  "default": 50
 })], HButton.prototype, "height", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HButton.prototype, "width", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HButton.prototype, "x", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HButton.prototype, "y", void 0);
 
 __decorate([Prop({
   type: String,
-  default: ''
+  "default": ''
 })], HButton.prototype, "bgImg", void 0);
 
 __decorate([Prop({
   type: String,
-  default: '按钮'
+  "default": '按钮'
 })], HButton.prototype, "text", void 0);
 
 __decorate([Emit('click')], HButton.prototype, "onClick", null);
@@ -746,7 +761,7 @@ function (_Vue) {
         "staticClass": "h-view",
         "class": classes,
         "style": styles
-      }, [$slots.default]);
+      }, [$slots["default"]]);
     }
   }, {
     key: "float",
@@ -762,7 +777,7 @@ function (_Vue) {
   }, {
     key: "styles",
     get: function get() {
-      var float = this.float,
+      var _float = this["float"],
           bgImg = this.bgImg,
           height = this.height,
           width = this.width,
@@ -774,8 +789,8 @@ function (_Vue) {
       genBgImg(styles, bgImg);
       genSize(styles, 'height', height);
       genSize(styles, 'width', width);
-      genPosX(styles, x, float);
-      genPosY(styles, y, float);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
       return styles;
     }
   }]);
@@ -785,37 +800,37 @@ function (_Vue) {
 
 __decorate([Prop({
   type: String,
-  default: 'relative'
+  "default": 'relative'
 })], HView.prototype, "position", void 0);
 
 __decorate([Prop({
   type: String,
-  default: 'y'
+  "default": 'y'
 })], HView.prototype, "direction", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HView.prototype, "height", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HView.prototype, "width", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HView.prototype, "x", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HView.prototype, "y", void 0);
 
 __decorate([Prop({
   type: String,
-  default: ''
+  "default": ''
 })], HView.prototype, "bgImg", void 0);
 
 HView = __decorate([Component], HView);
@@ -903,12 +918,12 @@ function (_Vue) {
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HFooter.prototype, "height", void 0);
 
 __decorate([Prop({
   type: String,
-  default: ''
+  "default": ''
 })], HFooter.prototype, "bgImg", void 0);
 
 __decorate([Prop({
@@ -917,7 +932,7 @@ __decorate([Prop({
 
 __decorate([Prop({
   type: Object,
-  default: function _default() {
+  "default": function _default() {
     return {
       text: 'Terms Of Service',
       href: ''
@@ -927,7 +942,7 @@ __decorate([Prop({
 
 __decorate([Prop({
   type: Object,
-  default: function _default() {
+  "default": function _default() {
     return {
       text: 'Privacy Policy',
       href: ''
@@ -937,7 +952,7 @@ __decorate([Prop({
 
 __decorate([Prop({
   type: String,
-  default: 'Copyright 2019 * Limited All right reserved'
+  "default": 'Copyright 2019 * Limited All right reserved'
 })], HFooter.prototype, "copyright", void 0);
 
 HFooter = __decorate([Component], HFooter);
@@ -1058,13 +1073,13 @@ function (_Vue) {
           y = this.y,
           height = this.height,
           width = this.width,
-          float = this.float,
+          _float = this["float"],
           position = this.position;
       var styles = {};
       genPosition(styles, position);
       genBgImg(styles, bgImg);
-      genPosX(styles, x, float);
-      genPosY(styles, y, float);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
       genSize(styles, 'height', height);
       genSize(styles, 'width', width);
       return styles;
@@ -1076,47 +1091,47 @@ function (_Vue) {
 
 __decorate([Prop({
   type: String,
-  default: 'relative'
+  "default": 'relative'
 })], HPromoCode.prototype, "position", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: '100%'
+  "default": '100%'
 })], HPromoCode.prototype, "width", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HPromoCode.prototype, "height", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HPromoCode.prototype, "x", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HPromoCode.prototype, "y", void 0);
 
 __decorate([Prop({
   type: String,
-  default: 'Code'
+  "default": 'Code'
 })], HPromoCode.prototype, "label", void 0);
 
 __decorate([Prop({
   type: String,
-  default: '10086'
+  "default": '10086'
 })], HPromoCode.prototype, "code", void 0);
 
 __decorate([Prop({
   type: String,
-  default: GIFT
+  "default": GIFT
 })], HPromoCode.prototype, "gift", void 0);
 
 __decorate([Prop({
   type: String,
-  default: BG
+  "default": BG
 })], HPromoCode.prototype, "bgImg", void 0);
 
 HPromoCode = __decorate([Component], HPromoCode);
@@ -1221,15 +1236,15 @@ function (_Vue) {
           position = this.position,
           x = this.x,
           y = this.y,
-          float = this.float;
+          _float = this["float"];
       var styles = {};
       genPosition(styles, position);
       genEllipsis(styles, ellipsis);
       genSize(styles, 'width', width);
       genSize(styles, 'height', height);
       genSize(styles, 'fontSize', fontSize);
-      genPosX(styles, x, float);
-      genPosY(styles, y, float);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
       return styles;
     }
   }]);
@@ -1239,42 +1254,42 @@ function (_Vue) {
 
 __decorate([Prop({
   type: String,
-  default: 'relative'
+  "default": 'relative'
 })], HText.prototype, "position", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 50
+  "default": 50
 })], HText.prototype, "height", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 100
+  "default": 100
 })], HText.prototype, "width", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 12
+  "default": 12
 })], HText.prototype, "fontSize", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HText.prototype, "x", void 0);
 
 __decorate([Prop({
   type: [Number, String],
-  default: 0
+  "default": 0
 })], HText.prototype, "y", void 0);
 
 __decorate([Prop({
   type: Number,
-  default: 0
+  "default": 0
 })], HText.prototype, "ellipsis", void 0);
 
 __decorate([Prop({
   type: String,
-  default: '内容'
+  "default": '内容'
 })], HText.prototype, "text", void 0);
 
 HText = __decorate([Component], HText);
@@ -1337,7 +1352,314 @@ HText$1.install = function (Vue) {
   Vue.component('HText', HText$1);
 };
 
+if (!window['YT']) {
+  var YT = {
+    loading: 0,
+    loaded: 0
+  };
+}
 
+if (!window['YTConfig']) {
+  var YTConfig = {
+    'host': 'http://www.youtube.com'
+  };
+}
+
+if (!YT.loading) {
+  YT.loading = 1;
+
+  (function () {
+    var l = [];
+
+    YT.ready = function (f) {
+      if (YT.loaded) {
+        f();
+      } else {
+        l.push(f);
+      }
+    };
+
+    window.onYTReady = function () {
+      YT.loaded = 1;
+
+      for (var i = 0; i < l.length; i++) {
+        try {
+          l[i]();
+        } catch (e) {}
+      }
+    };
+
+    YT.setConfig = function (c) {
+      for (var k in c) {
+        if (c.hasOwnProperty(k)) {
+          YTConfig[k] = c[k];
+        }
+      }
+    };
+
+    var a = document.createElement('script');
+    a.type = 'text/javascript';
+    a.id = 'www-widgetapi-script';
+    a.src = 'https://s.ytimg.com/yts/jsbin/www-widgetapi-vflcZyLnu/www-widgetapi.js';
+    a.async = true;
+    var b = document.getElementsByTagName('script')[0];
+    b.parentNode.insertBefore(a, b);
+  })();
+}
+
+var VideoSource;
+
+(function (VideoSource) {
+  VideoSource["youtube"] = "youtube";
+  VideoSource["youku"] = "youku";
+})(VideoSource || (VideoSource = {}));
+
+var VideoHrefs = {
+  youtube: '',
+  youku: 'http://player.youku.com/embed/'
+};
+
+var HVideo =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HVideo, _Vue);
+
+  function HVideo() {
+    var _this;
+
+    _classCallCheck(this, HVideo);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HVideo).apply(this, arguments));
+    _this.videoId = '';
+    _this.instance = null;
+    return _this;
+  }
+
+  _createClass(HVideo, [{
+    key: "updateSize",
+    value: function updateSize() {
+      var $video = this.$video,
+          source = this.source,
+          height = this.height,
+          width = this.width;
+
+      if (source === VideoSource.youtube) {
+        $video.setAttribute('height', height);
+        $video.setAttribute('width', width);
+      }
+    }
+  }, {
+    key: "updateInstance",
+    value: function updateInstance(newVal, oldVal) {
+      console.log(newVal);
+      console.log(oldVal);
+      var $video = this.$video,
+          source = this.source;
+
+      if (oldVal === VideoSource.youtube) {
+        this.instance.destroy();
+      }
+
+      this.init();
+    } //
+    // @Watch('link')
+
+  }, {
+    key: "init",
+    value: function init() {
+      var _this2 = this;
+
+      var source = this.source,
+          height = this.height,
+          width = this.width;
+      this.videoId = uuid();
+
+      if (source === VideoSource.youtube) {
+        var $container = document.createElement('div');
+        var YT = window.YT;
+        $container.setAttribute('id', this.videoId); // @ts-ignore
+
+        this.$refs.box.appendChild($container);
+
+        var initYTPlayer = function initYTPlayer() {
+          console.log(_this2.videoId);
+          _this2.instance = new YT.Player($container, {
+            width: width,
+            height: height,
+            videoId: _this2.link,
+            showinfo: 0
+          });
+        };
+
+        if (YT) {
+          initYTPlayer();
+        } else {
+          window.onYouTubeIframeAPIReady = function () {
+            initYTPlayer();
+          };
+        }
+      }
+    }
+  }, {
+    key: "mounted",
+    value: function mounted() {
+      this.init();
+    }
+  }, {
+    key: "float",
+    get: function get() {
+      return this.position !== 'relative';
+    }
+  }, {
+    key: "styles",
+    get: function get() {
+      var height = this.height,
+          width = this.width,
+          position = this.position,
+          x = this.x,
+          y = this.y,
+          _float = this["float"],
+          bgImg = this.bgImg;
+      var styles = {};
+      genPosition(styles, position);
+      genSize(styles, 'width', width);
+      genSize(styles, 'height', height);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
+      genBgImg(styles, bgImg);
+      return styles;
+    }
+  }, {
+    key: "$video",
+    get: function get() {
+      return this.$refs.box.children[0];
+    }
+  }, {
+    key: "videoHref",
+    get: function get() {
+      return "".concat(VideoHrefs[this.source]).concat(this.link);
+    }
+  }]);
+
+  return HVideo;
+}(Vue);
+
+__decorate([Prop({
+  type: String,
+  "default": 'relative'
+})], HVideo.prototype, "position", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 50
+})], HVideo.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 100
+})], HVideo.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 0
+})], HVideo.prototype, "x", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 0
+})], HVideo.prototype, "y", void 0);
+
+__decorate([Prop({
+  type: String,
+  "default": ''
+})], HVideo.prototype, "bgImg", void 0);
+
+__decorate([Prop({
+  type: String,
+  "default": 'youtube'
+})], HVideo.prototype, "source", void 0);
+
+__decorate([Prop({
+  type: String,
+  "default": 'XNDEzNzc1MzUwNA=='
+})], HVideo.prototype, "link", void 0);
+
+__decorate([Watch('height'), Watch('width')], HVideo.prototype, "updateSize", null);
+
+__decorate([Watch('source')], HVideo.prototype, "updateInstance", null);
+
+HVideo = __decorate([Component], HVideo);
+var script$6 = HVideo;
+
+/* script */
+var __vue_script__$6 = script$6;
+/* template */
+
+var __vue_render__$5 = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c("div", {
+    staticClass: "h-video",
+    style: _vm.styles
+  }, [_c("div", {
+    ref: "box",
+    staticClass: "h-video-box"
+  }, [_vm.source !== "youtube" ? _c("iframe", {
+    attrs: {
+      height: _vm.height,
+      width: _vm.width,
+      src: _vm.videoHref,
+      frameborder: "0",
+      allowfullscreen: ""
+    }
+  }) : _vm._e(), _vm._v(" "), void 0], 2)]);
+};
+
+var __vue_staticRenderFns__$5 = [];
+__vue_render__$5._withStripped = true;
+/* style */
+
+var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-ce4e3992_0", {
+    source: ".h-video[data-v-ce4e3992] {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=video.vue.map */",
+    map: {
+      "version": 3,
+      "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\video\\video.vue", "video.vue"],
+      "names": [],
+      "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;AAAA;;ACCA,oCAAoC",
+      "file": "video.vue",
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-video {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-video\" :style=\"styles\">\r\n    <div class=\"h-video-box\" ref=\"box\">\r\n      <!--<div v-if=\"source === 'youtube'\" v-once :id=\"videoId\"></div>-->\r\n      <iframe v-if=\"source !== 'youtube'\"\r\n              :height=\"height\"\r\n              :width=\"width\"\r\n              :src=\"videoHref\"\r\n              frameborder=\"0\" allowfullscreen>\r\n      </iframe>\r\n      <template>\r\n\r\n      </template>\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\n// @ts-ignore\r\nimport './sdk/youtube'\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'\r\nimport { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n// <iframe height=498 width=510 src='http://player.youku.com/embed/XNDEzNzc1MzUwNA==' frameborder=0 'allowfullscreen'></iframe>\r\ntype videoSource = 'youtube' | 'youku'\r\n\r\nenum VideoSource {\r\n  youtube = 'youtube',\r\n  youku = 'youku'\r\n}\r\n\r\nconst VideoHrefs = {\r\n  youtube: '',\r\n  youku: 'http://player.youku.com/embed/'\r\n}\r\n\r\n@Component\r\nexport default class HVideo extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  // @Prop({ type: String, default: false })\r\n  // modal!: videoType\r\n\r\n  @Prop({ type: String, default: 'youtube' })\r\n  source!: videoSource\r\n\r\n  @Prop({ type: String, default: 'XNDEzNzc1MzUwNA==' })\r\n  link!: string\r\n\r\n  @Watch('height')\r\n  @Watch('width')\r\n  updateSize () {\r\n    const { $video, source, height, width } = this\r\n    if (source === VideoSource.youtube) {\r\n      $video.setAttribute('height', height as string)\r\n      $video.setAttribute('width', width as string)\r\n    }\r\n  }\r\n\r\n  @Watch('source')\r\n  updateInstance (newVal: VideoSource, oldVal: VideoSource) {\r\n    console.log(newVal)\r\n    console.log(oldVal)\r\n    const { $video, source } = this\r\n    if (oldVal === VideoSource.youtube) {\r\n      this.instance.destroy()\r\n    }\r\n\r\n    this.init()\r\n  }\r\n  //\r\n  // @Watch('link')\r\n\r\n  private get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  private get styles (): any {\r\n    const { height, width, position, x, y, float, bgImg } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  private get $video (): HTMLFrameElement {\r\n    return (this.$refs.box as HTMLElement)!.children[0] as HTMLFrameElement\r\n  }\r\n\r\n  get videoHref () {\r\n    return `${VideoHrefs[this.source]}${this.link}`\r\n  }\r\n\r\n  private videoId: string = ''\r\n\r\n  private instance: any = null\r\n\r\n  private init () {\r\n    const { source, height, width } = this\r\n\r\n    this.videoId = uuid()\r\n\r\n    if (source === VideoSource.youtube) {\r\n      const $container = document.createElement('div')\r\n      const YT = window.YT\r\n\r\n      $container.setAttribute('id', this.videoId)\r\n      // @ts-ignore\r\n      this.$refs.box.appendChild($container)\r\n\r\n      const initYTPlayer = () => {\r\n        console.log(this.videoId)\r\n        this.instance = new YT.Player($container, {\r\n          width,\r\n          height,\r\n          videoId: this.link,\r\n          showinfo: 0\r\n        })\r\n      }\r\n\r\n      if (YT) {\r\n        initYTPlayer()\r\n      } else {\r\n        window.onYouTubeIframeAPIReady = () => {\r\n          initYTPlayer()\r\n        }\r\n      }\r\n    } else {\r\n\r\n    }\r\n  }\r\n\r\n  mounted () {\r\n    this.init()\r\n  }\r\n}\r\n</script>\r\n", ".h-video {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=video.vue.map */"]
+    },
+    media: undefined
+  });
+};
+/* scoped */
+
+
+var __vue_scope_id__$6 = "data-v-ce4e3992";
+/* module identifier */
+
+var __vue_module_identifier__$6 = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$6 = false;
+/* style inject SSR */
+
+var HVideo$1 = normalizeComponent_1({
+  render: __vue_render__$5,
+  staticRenderFns: __vue_staticRenderFns__$5
+}, __vue_inject_styles__$6, __vue_script__$6, __vue_scope_id__$6, __vue_is_functional_template__$6, __vue_module_identifier__$6, browser, undefined);
+
+HVideo$1.install = function (Vue) {
+  Vue.component('HVideo', HVideo$1);
+};
+
+// export { default as HSwiper } from './swiper'
 
 var components = /*#__PURE__*/Object.freeze({
     HApp: HApp$1,
@@ -1345,7 +1667,8 @@ var components = /*#__PURE__*/Object.freeze({
     HView: HView$1,
     HFooter: HFooter$1,
     HPromoCode: HPromoCode$1,
-    HText: HText$1
+    HText: HText$1,
+    HVideo: HVideo$1
 });
 
 var Mode;
@@ -1384,8 +1707,8 @@ var MegH5 = {
       Vue.use(entry);
     });
   },
-  version: '1.0.0'
+  version: '0.2.5'
 };
 
 export default MegH5;
-export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HView$1 as HView, index as Utils };
+export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HVideo$1 as HVideo, HView$1 as HView, index as Utils };

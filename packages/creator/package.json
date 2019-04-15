@@ -50,6 +50,7 @@
     "sass": "^1.16.0",
     "sass-loader": "^7.1.0",
     "typescript": "~3.2.2",
+    "typescript-eslint-parser": "^22.0.0",
     "vue-template-compiler": "^2.6.7"
   }
 }

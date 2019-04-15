@@ -26,6 +26,7 @@
     "lib": ["dom", "es6", "es2017"]
   },
   "include": [
+    "./src/**/*.d.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx"
   ]

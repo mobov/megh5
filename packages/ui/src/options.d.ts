@@ -1,5 +1,14 @@
 // 1. 确保在声明补充的类型之前导入 'vue'
-import Vue, { VueConstructor } from 'vue'
+import Vue, { VNode, VueConstructor } from 'vue'
+
+declare global {
+  interface Window {
+    YT: {
+      Player: any
+    }
+    onYouTubeIframeAPIReady: any
+  }
+}
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {
@@ -53,26 +62,3 @@ declare module 'vue/types/vue' {
     options: Options
   }
 }
-
-declare module '*.vue' {
-  export default Vue
-}
-
-declare module "*.png" {
-  const value: string
-  export default value
-}
-
-declare module "*.jpg" {
-  const value: string
-  export default value
-}
-
-declare module "*/megh5.config.js" {
-  const value: any
-  export default value
-}
-
-
-
-

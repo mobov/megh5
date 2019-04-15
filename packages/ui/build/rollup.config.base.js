@@ -1,4 +1,3 @@
-import { merge }  from 'lodash'
 import commonjs from 'rollup-plugin-commonjs'
 import vue from 'rollup-plugin-vue'
 import typescript from 'rollup-plugin-typescript2'
@@ -9,13 +8,10 @@ import packages from '../package.json'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.vue']
 const external = Object.keys(packages.dependencies)
-const name = 'Megh5UI'
 
-const baseConfig = {
+const config = {
+  // inputOptions
   input: 'src/index.ts',
-  output: {
-    name,
-  },
   plugins: [
     postcss({ extensions: ['.scss'], extract: `lib/style.css` }),
     typescript({
@@ -35,10 +31,13 @@ const baseConfig = {
       babelrc: false,
       presets: [
         '@babel/preset-env',
-        '@vue/babel-preset-jsx',
+        '@vue/babel-preset-jsx'
         // '@babel/preset-typescript',
         // 'es2015-rollup',
       ],
+      // plugins: [
+      //   '@babel/plugin-syntax-dynamic-import'
+      // ],
       extensions,
       exclude: 'node_modules/**'
     }),
@@ -51,20 +50,10 @@ const baseConfig = {
     commonjs({
       extensions
     })
-  ]
+  ],
+  external,
+
+  // outputOptions
 }
 
-export default [
-  merge(baseConfig, {
-    output: [{
-      file: `lib/index.esm.js`,
-      format: 'esm',
-      exports: 'named'
-    },{
-      file: `lib/index.cjs.js`,
-      format: 'cjs',
-      exports: 'named'
-    }],
-    external
-  })
-]
+export default config

@@ -10,7 +10,7 @@ export default {
     "i18n": "onemt-i18n --config=./config/i18n.js"
   },
   "dependencies": {
-    "@megh5/ui": "^0.2.4",
+    "@megh5/ui": "^0.2.5",
     "@mobov/es-helper": "^1.0.6",
     "@mobov/scss-helper": "^0.0.5",
     "fastclick": "^1.0.6",
@@ -23,6 +23,7 @@ export default {
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
+    "cross-env": "^5.2.0",
     "fibers": "^3.1.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",

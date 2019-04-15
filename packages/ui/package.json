@@ -9,7 +9,8 @@
   "types": "types/index.d.ts",
   "module": "lib/index.esm.js",
   "scripts": {
-    "build": "rollup --config build/rollup.config.js"
+    "serve": "rollup -w --config build/rollup.config.watch.js",
+    "build": "rollup --name=Megh5UI --config build/rollup.config.bundle.js"
   },
   "peerDependencies": {
     "@megh5/types": "0.0.1",
@@ -24,10 +25,12 @@
     "@mobov/es-helper": "^1.0.6",
     "@mobov/scss-helper": "^0.0.5",
     "vue": "^2.6.7",
+    "vue-awesome-swiper": "^3.1.3",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.3.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@mobov/eslint-config": "^1.0.1",
