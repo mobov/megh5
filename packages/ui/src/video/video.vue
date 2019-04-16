@@ -61,8 +61,8 @@ export default class HVideo extends Vue {
   @Prop({ type: String, default: '' })
   bgImg!: string
 
-  // @Prop({ type: String, default: false })
-  // modal!: videoType
+  @Prop({ type: String, default: '' })
+  callType!: videoType
 
   @Prop({ type: String, default: 'youtube' })
   source!: videoSource

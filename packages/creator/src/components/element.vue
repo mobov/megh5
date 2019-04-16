@@ -26,7 +26,11 @@
       top: 0 !important;
       width: 100%;
       height: 100%;
-      pointer-events: none;
+
+      a, iframe {
+        pointer-events: none;
+      }
+
     }
     &.--active {
       z-index: 99 !important;
