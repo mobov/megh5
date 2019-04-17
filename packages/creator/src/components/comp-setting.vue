@@ -81,7 +81,7 @@ export default class CompSetting extends Vue {
     return this.ActiveNode.locked ? {
       color: 'error',
       text: '解锁'
-    }: {
+    } : {
       color: 'success',
       text: '锁定'
     }

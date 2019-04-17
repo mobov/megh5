@@ -31,58 +31,12 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import Store, { GetterPageData, MutationSetActiveUid } from '@/store'
-import { UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
-import Element from './element.vue'
+import { GetterPageData, MutationSetActiveUid } from '@/store'
+import { ProjectData } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
-import { merge } from 'lodash'
+import { compiler } from '@/utils'
 
-function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
-  const result: VNode[] = []
-  if (PNode !== undefined) {
-    for (let node of PNode) {
-      // @ts-ignore
-      const nodeModule = deepCopy(Store.state.UiModules.find(item => item.name === node.name)) as UiModule
-      // @ts-ignore
-      node.nodeData = merge(nodeModule.nodeData, node.nodeData)
-      // @ts-ignore
-      if (nodeModule.uiConfig.disabled) {
-        result.push(h(node.name, node.nodeData, node.children ? compiler(h, node.children) : []))
-      } else {
-        const elementData: VNodeData = {
-          key: node.uid,
-          props: {
-            nodeUid: node.uid,
-            ...node.nodeData.props,
-            ...nodeModule.uiConfig
-          },
-          style: {
-            ...node.nodeData.style
-          }
-        }
-        // slot
-        if (node.nodeData.slot) {
-          elementData.slot = node.nodeData.slot
-          delete node.nodeData.slot
-        }
-
-        console.log(elementData)
-
-        result.push(h(
-          'Element',
-          elementData,
-          [h(node.name, node.nodeData, node.children ? compiler(h, node.children) : [])]
-        ))
-      }
-    }
-  }
-
-  return result
-}
-
-@Component({
-  components: { Element }
-})
+@Component
 export default class Previewer extends Vue {
   @Getter PageData!: GetterPageData
 
@@ -97,23 +51,19 @@ export default class Previewer extends Vue {
     }
   }
 
-  RContent (h: CreateElement): VNode[] {
-    return compiler(h, deepCopy(this.PageData))
-  }
-
   handleClick (e: MouseEvent) {
     e.stopPropagation()
   }
 
   render (h: CreateElement) {
-    const { RContent, screenStyles, SET_ACTIVE_UID, Project, handleClick } = this
+    const { screenStyles, SET_ACTIVE_UID, Project, handleClick } = this
 
     return (
       <div class="previewer" onClick={() => { SET_ACTIVE_UID(Project.mainUid) }}>
         <div class="previewer-mobile">
           <figure class="previewer-screen" style={screenStyles}>
             <div ref="$screen" class="previewer-screen-main" onClick={handleClick}>
-              {RContent(h)}
+              {compiler(h, deepCopy(this.PageData))}
             </div>
           </figure>
         </div>

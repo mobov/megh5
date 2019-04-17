@@ -1346,7 +1346,7 @@ var __vue_render__$4 = function __vue_render__() {
   return _c("div", {
     staticClass: "h-text",
     style: _vm.styles
-  }, [_vm._v("\n  " + _vm._s(_vm.viewText) + "\n")]);
+  }, [_vm._t("default")], 2);
 };
 
 var __vue_staticRenderFns__$4 = [];
@@ -1355,15 +1355,15 @@ __vue_render__$4._withStripped = true;
 
 var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-e2ae0278_0", {
-    source: ".h-text[data-v-e2ae0278] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
+  inject("data-v-98ba9e12_0", {
+    source: ".h-text[data-v-98ba9e12] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\text\\text.vue", "text.vue"],
       "names": [],
       "mappings": "AACA;EACA,4BAAA;AAAA;;ACCA,mCAAmC",
       "file": "text.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    {{viewText}}\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, ellipsis)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    <slot></slot>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, ellipsis)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
     },
     media: undefined
   });
@@ -1371,7 +1371,7 @@ var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$5 = "data-v-e2ae0278";
+var __vue_scope_id__$5 = "data-v-98ba9e12";
 /* module identifier */
 
 var __vue_module_identifier__$5 = undefined;
@@ -1734,7 +1734,7 @@ function (_Vue) {
   }, {
     key: "classes",
     get: function get() {
-      return {};
+      return _defineProperty({}, "--append-to-".concat(this.append), true);
     }
   }]);
 
@@ -1747,19 +1747,9 @@ __decorate([Prop({
 })], HModal.prototype, "value", void 0);
 
 __decorate([Prop({
-  type: [Number, String],
-  "default": 50
-})], HModal.prototype, "height", void 0);
-
-__decorate([Prop({
-  type: [Number, String],
-  "default": 100
-})], HModal.prototype, "width", void 0);
-
-__decorate([Prop({
-  type: [Number, String],
-  "default": 12
-})], HModal.prototype, "fontSize", void 0);
+  type: String,
+  "default": 'root'
+})], HModal.prototype, "append", void 0);
 
 HModal = __decorate([Component], HModal);
 var script$7 = HModal;
@@ -1810,15 +1800,15 @@ __vue_render__$6._withStripped = true;
 
 var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-6692891a_0", {
-    source: ".h-modal[data-v-6692891a] {\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n}\n.modal-enter[data-v-6692891a],\n.modal-leave-active[data-v-6692891a] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
+  inject("data-v-3cbf8e38_0", {
+    source: ".h-modal[data-v-3cbf8e38] {\n  height: 100%;\n  width: 100%;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n}\n.h-modal.--append-to-root[data-v-3cbf8e38] {\n    position: fixed;\n}\n.h-modal.--append-to-parent[data-v-3cbf8e38] {\n    position: absolute;\n}\n.modal-enter[data-v-3cbf8e38],\n.modal-leave-active[data-v-3cbf8e38] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\modal\\modal.vue", "modal.vue"],
       "names": [],
-      "mappings": "AAMA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,cAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;AAAA;AAEA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACLA,oCAAoC",
+      "mappings": "AAMA;EACA,YAAA;EACA,WAAA;EAEA,cAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;AAAA;AAXA;IAcA,eAAA;AAAA;AAdA;IAiBA,kBAAA;AAAA;AAGA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACTA,oCAAoC",
       "file": "modal.vue",
-      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  $btn_download_ratio: 565 / 168;\r\n  $btn-width: 40vw;\r\n  $logo-width: 100vw;\r\n  $btn-height: (1/$btn_download_ratio)*$btn-width;\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n    position: fixed;\r\n    z-index: 10099;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :class=\"classes\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n      <div style=\"width:60%;height:300px;background:#fff\"></div>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  get classes (): any {\r\n    return {}\r\n  }\r\n\r\n  beforeEnter () {\r\n\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n\r\n  }\r\n\r\n  mounted () {\r\n    Store.$app.$el.appendChild(this.$el)\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto; }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
+      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  $btn_download_ratio: 565 / 168;\r\n  $btn-width: 40vw;\r\n  $logo-width: 100vw;\r\n  $btn-height: (1/$btn_download_ratio)*$btn-width;\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n    z-index: 10099;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n\r\n    &.--append-to-root {\r\n      position: fixed;\r\n    }\r\n    &.--append-to-parent {\r\n      position: absolute;\r\n    }\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :class=\"classes\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n      <div style=\"width:60%;height:300px;background:#fff\"></div>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  @Prop({ type: String, default: 'root' })\r\n  append!: 'root' | 'parent'\r\n\r\n  get classes (): any {\r\n    return {\r\n      [`--append-to-${this.append}`]: true\r\n    }\r\n  }\r\n\r\n  beforeEnter () {\r\n\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n\r\n  }\r\n\r\n  mounted () {\r\n    Store.$app.$el.appendChild(this.$el)\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto; }\n  .h-modal.--append-to-root {\n    position: fixed; }\n  .h-modal.--append-to-parent {\n    position: absolute; }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
     },
     media: undefined
   });
@@ -1826,7 +1816,7 @@ var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$7 = "data-v-6692891a";
+var __vue_scope_id__$7 = "data-v-3cbf8e38";
 /* module identifier */
 
 var __vue_module_identifier__$7 = undefined;

@@ -1,4 +1,5 @@
-import { VNodeData } from 'vue'
+
+import { VNodeData, VNodeChildren, VNode } from 'vue'
 
 export enum Mode {
   light = 'light',
@@ -29,26 +30,26 @@ export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n
 
 export type positionType = 'relative' | 'absolute' | 'fixed'
 
+export interface UiNodeProps {
+  // 基础参数
+  position?: positionType
+  x?: number | string
+  y?: number | string
+  height?: number | string
+  width?: number | string
+  // 组件拓展参数
+  bgImg?: string
+  text?: string
+  logo?: string,
+  termsLink?: PropTypeLink,
+  policyLink?: PropTypeLink,
+  copyright?: string
+  [field: string]: any
+}
+
 export interface UiNodeData extends VNodeData {
-  props?: {
-    // 基础参数
-    position?: positionType
-    x?: number | string
-    y?: number | string
-    height?: number | string
-    width?: number | string
-    // 组件拓展参数
-    bgImg?: string
-    text?: string
-    logo?: string,
-    termsLink?: PropTypeLink,
-    policyLink?: PropTypeLink,
-    copyright?: string
-    [field: string]: any
-  }
-  style?: {
-    [field: string]: any
-  }
+  style?: object;
+  props?: UiNodeProps
 }
 
 export interface UiNodeConfig {
@@ -64,7 +65,7 @@ export interface UiNode {
   locked: boolean
   uiConfig?: UiNodeConfig
   nodeData: UiNodeData
-  children: UiNode []
+  children: Array<UiNode>
 }
 
 interface SettingTypeOpts {

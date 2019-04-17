@@ -17,6 +17,7 @@ const Project: ProjectData = {
     nodeData: {
       style: {},
       props: {
+        position: 'relative',
         width: '100%',
         height: '100%',
         x: 0,
@@ -31,6 +32,7 @@ const Project: ProjectData = {
       nodeData: {
         style: {},
         props: {
+          position: 'relative',
           width: 320,
           height: 100,
           x: 0,

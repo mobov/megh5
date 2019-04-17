@@ -1,9 +1,7 @@
 import { Vue } from 'vue-property-decorator';
 export default class HModal extends Vue {
     value: boolean;
-    height: string | number;
-    width: string | number;
-    fontSize: string | number;
+    append: 'root' | 'parent';
     readonly classes: any;
     beforeEnter(): void;
     afterLeave(): void;

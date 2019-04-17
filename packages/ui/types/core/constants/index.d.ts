@@ -20,24 +20,23 @@ export interface KV {
 }
 export declare type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color';
 export declare type positionType = 'relative' | 'absolute' | 'fixed';
+export interface UiNodeProps {
+    position?: positionType;
+    x?: number | string;
+    y?: number | string;
+    height?: number | string;
+    width?: number | string;
+    bgImg?: string;
+    text?: string;
+    logo?: string;
+    termsLink?: PropTypeLink;
+    policyLink?: PropTypeLink;
+    copyright?: string;
+    [field: string]: any;
+}
 export interface UiNodeData extends VNodeData {
-    props?: {
-        position?: positionType;
-        x?: number | string;
-        y?: number | string;
-        height?: number | string;
-        width?: number | string;
-        bgImg?: string;
-        text?: string;
-        logo?: string;
-        termsLink?: PropTypeLink;
-        policyLink?: PropTypeLink;
-        copyright?: string;
-        [field: string]: any;
-    };
-    style?: {
-        [field: string]: any;
-    };
+    style?: object;
+    props?: UiNodeProps;
 }
 export interface UiNodeConfig {
     disabled?: boolean;
@@ -51,7 +50,7 @@ export interface UiNode {
     locked: boolean;
     uiConfig?: UiNodeConfig;
     nodeData: UiNodeData;
-    children: UiNode[];
+    children: Array<UiNode>;
 }
 interface SettingTypeOpts {
     type: settingType;

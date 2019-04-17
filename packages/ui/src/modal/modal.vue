@@ -7,7 +7,7 @@
   .h-modal {
     height: 100%;
     width: 100%;
-    position: fixed;
+
     z-index: 10099;
     left: 0;
     top: 0;
@@ -16,6 +16,13 @@
     flex-direction: column;
     transition: opacity .3s ease;
     will-change: auto;
+
+    &.--append-to-root {
+      position: fixed;
+    }
+    &.--append-to-parent {
+      position: absolute;
+    }
   }
   .modal-enter,
   .modal-leave-active {
@@ -44,17 +51,13 @@ export default class HModal extends Vue {
   @Prop({ type: Boolean, default: false })
   value!: boolean
 
-  @Prop({ type: [Number, String], default: 50 })
-  height!: string | number
-
-  @Prop({ type: [Number, String], default: 100 })
-  width!: string | number
-
-  @Prop({ type: [Number, String], default: 12 })
-  fontSize!: string | number
+  @Prop({ type: String, default: 'root' })
+  append!: 'root' | 'parent'
 
   get classes (): any {
-    return {}
+    return {
+      [`--append-to-${this.append}`]: true
+    }
   }
 
   beforeEnter () {

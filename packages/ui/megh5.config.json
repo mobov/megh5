@@ -15,7 +15,9 @@
                 "backgroundColor": "transparent"
             },
             "props": {
-                "bgColor": "transparent"
+                "bgColor": "transparent",
+                "height": 736,
+                "width": 320
             }
         }
     },
@@ -287,14 +289,29 @@
             "value": {
                 "type": "switch",
                 "text": "显示"
+            },
+            "append": {
+                "type": "radio",
+                "text": "挂载",
+                "extra": [
+                    {
+                        "text": "根元素",
+                        "value": "root"
+                    },
+                    {
+                        "text": "父元素",
+                        "value": "parent"
+                    }
+                ]
             }
         },
         "nodeData": {
             "style": {
-                "backgroundColor": "transparent"
+                "backgroundColor": "rgba(0, 0, 0, 0.7)"
             },
             "props": {
-                "value": false
+                "value": true,
+                "append": "root"
             }
         }
     }

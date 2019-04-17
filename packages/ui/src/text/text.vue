@@ -5,7 +5,7 @@
 </style>
 <template>
   <div class="h-text" :style="styles">
-    {{viewText}}
+    <slot></slot>
   </div>
 </template>
 <script lang="ts">
