@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { ActivePanels } from '@/constants'
 import BaseModuleConfig from '../base.module.config'
-import { UiNode, UiModule, UiNodeData,  ProjectData } from '@megh5/ui/types/core/constants'
+import { UiNode, UiModule, UiNodeData, ProjectData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
 import { deepCopy } from '@mobov/es-helper'
 import { ulid } from 'ulid'
@@ -12,6 +12,7 @@ Vue.use(Vuex)
 
 export interface UiNodeOpts {
   uid: string
+  locked?: boolean
   nodeData?: UiNodeData
 }
 
@@ -32,7 +33,6 @@ export type StateScreen = {
 }
 
 export type StateActivePanel = 'library' | 'setting' | 'tree' | 'editor'
-
 
 export type StateUiModules = UiModule[]
 
@@ -146,6 +146,7 @@ const store = new Vuex.Store<State>({
         name: val.name,
         uid: ulid(),
         pid: pid,
+        locked: false,
         nodeData: { ...nodeModule.nodeData },
         children: []
       }

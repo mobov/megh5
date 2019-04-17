@@ -5,4 +5,5 @@ export default class HApp extends Vue {
     bgColor: string;
     bgImg: string;
     readonly styles: any;
+    mounted(): void;
 }

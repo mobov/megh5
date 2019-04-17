@@ -22,6 +22,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
+import Store from '../core/store'
 import { genSize, genColor, genBgImg } from '../core/utils'
 
 @Component
@@ -48,6 +49,12 @@ export default class HApp extends Vue {
     genBgImg(styles, bgImg)
 
     return styles
+  }
+
+  mounted () {
+    Store.SET_APP(this)
+    console.log(Store)
+   // Vue.prototype.$app = this
   }
 }
 </script>

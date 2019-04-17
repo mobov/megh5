@@ -1,4 +1,4 @@
-import { Prop, Component, Vue, Emit, Watch } from 'vue-property-decorator';
+import { Vue, Prop, Component, Emit, Watch } from 'vue-property-decorator';
 import { getUrlParam } from '@mobov/es-helper';
 
 function _classCallCheck(instance, Constructor) {
@@ -106,6 +106,37 @@ function __decorate(decorators, target, key, desc) {
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
+
+// export default class HAppStore extends Vue {
+//   root!: VueConstructor
+//
+//   public SET_ROOT (val: VueConstructor) {
+//     this.root = val
+//   }
+// }
+
+var HAppStore =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HAppStore, _Vue);
+
+  function HAppStore() {
+    _classCallCheck(this, HAppStore);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HAppStore).apply(this, arguments));
+  }
+
+  _createClass(HAppStore, [{
+    key: "SET_APP",
+    value: function SET_APP(val) {
+      this.$app = val;
+    }
+  }]);
+
+  return HAppStore;
+}(Vue);
+
+var Store = new HAppStore();
 
 var unit = '100vw / 100'; // interface screenSize {
 //   height: '100vh',
@@ -354,6 +385,12 @@ function (_Vue) {
   }
 
   _createClass(HApp, [{
+    key: "mounted",
+    value: function mounted() {
+      Store.SET_APP(this);
+      console.log(Store); // Vue.prototype.$app = this
+    }
+  }, {
     key: "styles",
     get: function get() {
       var height = this.height,
@@ -557,7 +594,7 @@ __vue_render__._withStripped = true;
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-54dd5a72_0", {
+  inject("data-v-2bdd7bab_0", {
     source: ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
     map: {
       "version": 3,
@@ -565,7 +602,7 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
       "names": [],
       "mappings": "AACA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AANA;IAQA,YAAA;IACA,kBAAA;AAAA;;ACCA,kCAAkC",
       "file": "app.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-app {\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: 'transparent' })\r\n  bgColor!: string\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgColor, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genColor(styles, 'background-color', bgColor)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-app {\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: 'transparent' })\r\n  bgColor!: string\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgColor, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genColor(styles, 'background-color', bgColor)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n    console.log(Store)\r\n   // Vue.prototype.$app = this\r\n  }\r\n}\r\n</script>\r\n", ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
     },
     media: undefined
   });
@@ -1451,8 +1488,6 @@ function (_Vue) {
   }, {
     key: "updateInstance",
     value: function updateInstance(newVal, oldVal) {
-      console.log(newVal);
-      console.log(oldVal);
       var $video = this.$video,
           source = this.source;
 
@@ -1471,7 +1506,8 @@ function (_Vue) {
 
       var source = this.source,
           height = this.height,
-          width = this.width;
+          width = this.width,
+          autoPlay = this.autoPlay;
       this.videoId = uuid();
 
       if (source === VideoSource.youtube) {
@@ -1482,13 +1518,19 @@ function (_Vue) {
         this.$refs.box.appendChild($container);
 
         var initYTPlayer = function initYTPlayer() {
-          console.log(_this2.videoId);
           _this2.instance = new YT.Player($container, {
             width: width,
             height: height,
             videoId: _this2.link,
-            showinfo: 0
+            showinfo: 0,
+            rel: 0
           });
+
+          if (autoPlay) {
+            setTimeout(function () {
+              _this2.instance.playVideo();
+            }, 500);
+          }
         };
 
         if (YT) {
@@ -1575,6 +1617,11 @@ __decorate([Prop({
 })], HVideo.prototype, "bgImg", void 0);
 
 __decorate([Prop({
+  type: Boolean,
+  "default": false
+})], HVideo.prototype, "autoPlay", void 0);
+
+__decorate([Prop({
   type: String,
   "default": 'youtube'
 })], HVideo.prototype, "source", void 0);
@@ -1616,7 +1663,7 @@ var __vue_render__$5 = function __vue_render__() {
       frameborder: "0",
       allowfullscreen: ""
     }
-  }) : _vm._e(), _vm._v(" "), void 0], 2)]);
+  }) : _vm._e()])]);
 };
 
 var __vue_staticRenderFns__$5 = [];
@@ -1625,15 +1672,15 @@ __vue_render__$5._withStripped = true;
 
 var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-ce4e3992_0", {
-    source: ".h-video[data-v-ce4e3992] {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=video.vue.map */",
+  inject("data-v-309073a7_0", {
+    source: ".h-video[data-v-309073a7] {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=video.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\video\\video.vue", "video.vue"],
       "names": [],
       "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;AAAA;;ACCA,oCAAoC",
       "file": "video.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-video {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-video\" :style=\"styles\">\r\n    <div class=\"h-video-box\" ref=\"box\">\r\n      <!--<div v-if=\"source === 'youtube'\" v-once :id=\"videoId\"></div>-->\r\n      <iframe v-if=\"source !== 'youtube'\"\r\n              :height=\"height\"\r\n              :width=\"width\"\r\n              :src=\"videoHref\"\r\n              frameborder=\"0\" allowfullscreen>\r\n      </iframe>\r\n      <template>\r\n\r\n      </template>\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\n// @ts-ignore\r\nimport './sdk/youtube'\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'\r\nimport { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n// <iframe height=498 width=510 src='http://player.youku.com/embed/XNDEzNzc1MzUwNA==' frameborder=0 'allowfullscreen'></iframe>\r\ntype videoSource = 'youtube' | 'youku'\r\n\r\nenum VideoSource {\r\n  youtube = 'youtube',\r\n  youku = 'youku'\r\n}\r\n\r\nconst VideoHrefs = {\r\n  youtube: '',\r\n  youku: 'http://player.youku.com/embed/'\r\n}\r\n\r\n@Component\r\nexport default class HVideo extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  // @Prop({ type: String, default: false })\r\n  // modal!: videoType\r\n\r\n  @Prop({ type: String, default: 'youtube' })\r\n  source!: videoSource\r\n\r\n  @Prop({ type: String, default: 'XNDEzNzc1MzUwNA==' })\r\n  link!: string\r\n\r\n  @Watch('height')\r\n  @Watch('width')\r\n  updateSize () {\r\n    const { $video, source, height, width } = this\r\n    if (source === VideoSource.youtube) {\r\n      $video.setAttribute('height', height as string)\r\n      $video.setAttribute('width', width as string)\r\n    }\r\n  }\r\n\r\n  @Watch('source')\r\n  updateInstance (newVal: VideoSource, oldVal: VideoSource) {\r\n    console.log(newVal)\r\n    console.log(oldVal)\r\n    const { $video, source } = this\r\n    if (oldVal === VideoSource.youtube) {\r\n      this.instance.destroy()\r\n    }\r\n\r\n    this.init()\r\n  }\r\n  //\r\n  // @Watch('link')\r\n\r\n  private get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  private get styles (): any {\r\n    const { height, width, position, x, y, float, bgImg } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  private get $video (): HTMLFrameElement {\r\n    return (this.$refs.box as HTMLElement)!.children[0] as HTMLFrameElement\r\n  }\r\n\r\n  get videoHref () {\r\n    return `${VideoHrefs[this.source]}${this.link}`\r\n  }\r\n\r\n  private videoId: string = ''\r\n\r\n  private instance: any = null\r\n\r\n  private init () {\r\n    const { source, height, width } = this\r\n\r\n    this.videoId = uuid()\r\n\r\n    if (source === VideoSource.youtube) {\r\n      const $container = document.createElement('div')\r\n      const YT = window.YT\r\n\r\n      $container.setAttribute('id', this.videoId)\r\n      // @ts-ignore\r\n      this.$refs.box.appendChild($container)\r\n\r\n      const initYTPlayer = () => {\r\n        console.log(this.videoId)\r\n        this.instance = new YT.Player($container, {\r\n          width,\r\n          height,\r\n          videoId: this.link,\r\n          showinfo: 0\r\n        })\r\n      }\r\n\r\n      if (YT) {\r\n        initYTPlayer()\r\n      } else {\r\n        window.onYouTubeIframeAPIReady = () => {\r\n          initYTPlayer()\r\n        }\r\n      }\r\n    } else {\r\n\r\n    }\r\n  }\r\n\r\n  mounted () {\r\n    this.init()\r\n  }\r\n}\r\n</script>\r\n", ".h-video {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=video.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-video {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-video\" :style=\"styles\">\r\n    <div class=\"h-video-box\" ref=\"box\">\r\n      <!--<div v-if=\"source === 'youtube'\" v-once :id=\"videoId\"></div>-->\r\n      <iframe v-if=\"source !== 'youtube'\"\r\n              :height=\"height\"\r\n              :width=\"width\"\r\n              :src=\"videoHref\"\r\n              frameborder=\"0\" allowfullscreen>\r\n      </iframe>\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\n// @ts-ignore\r\nimport './sdk/youtube'\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'\r\nimport { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\ntype videoSource = 'youtube' | 'youku'\r\n\r\nenum VideoSource {\r\n  youtube = 'youtube',\r\n  youku = 'youku'\r\n}\r\n\r\nconst VideoHrefs = {\r\n  youtube: '',\r\n  youku: 'http://player.youku.com/embed/'\r\n}\r\n\r\n@Component\r\nexport default class HVideo extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: Boolean, default: false })\r\n  autoPlay!: boolean\r\n\r\n  @Prop({ type: String, default: 'youtube' })\r\n  source!: videoSource\r\n\r\n  @Prop({ type: String, default: 'XNDEzNzc1MzUwNA==' })\r\n  link!: string\r\n\r\n  @Watch('height')\r\n  @Watch('width')\r\n  updateSize () {\r\n    const { $video, source, height, width } = this\r\n    if (source === VideoSource.youtube) {\r\n      $video.setAttribute('height', height as string)\r\n      $video.setAttribute('width', width as string)\r\n    }\r\n  }\r\n\r\n  @Watch('source')\r\n  updateInstance (newVal: VideoSource, oldVal: VideoSource) {\r\n    const { $video, source } = this\r\n    if (oldVal === VideoSource.youtube) {\r\n      this.instance.destroy()\r\n    }\r\n\r\n    this.init()\r\n  }\r\n  //\r\n  // @Watch('link')\r\n\r\n  private get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  private get styles (): any {\r\n    const { height, width, position, x, y, float, bgImg } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  private get $video (): HTMLFrameElement {\r\n    return (this.$refs.box as HTMLElement)!.children[0] as HTMLFrameElement\r\n  }\r\n\r\n  get videoHref () {\r\n    return `${VideoHrefs[this.source]}${this.link}`\r\n  }\r\n\r\n  private videoId: string = ''\r\n\r\n  private instance: any = null\r\n\r\n  private init () {\r\n    const { source, height, width, autoPlay } = this\r\n\r\n    this.videoId = uuid()\r\n\r\n    if (source === VideoSource.youtube) {\r\n      const $container = document.createElement('div')\r\n      const YT = window.YT\r\n\r\n      $container.setAttribute('id', this.videoId)\r\n      // @ts-ignore\r\n      this.$refs.box.appendChild($container)\r\n\r\n      const initYTPlayer = () => {\r\n        this.instance = new YT.Player($container, {\r\n          width,\r\n          height,\r\n          videoId: this.link,\r\n          showinfo: 0,\r\n          rel: 0\r\n        })\r\n\r\n        if (autoPlay) {\r\n          setTimeout(() => {\r\n            this.instance.playVideo()\r\n          }, 500)\r\n        }\r\n      }\r\n\r\n      if (YT) {\r\n        initYTPlayer()\r\n      } else {\r\n        window.onYouTubeIframeAPIReady = () => {\r\n          initYTPlayer()\r\n        }\r\n      }\r\n    } else {\r\n      // if (autoPlay) {\r\n      //   setTimeout(() => {\r\n      //     this.$video.click()\r\n      //   }, 500)\r\n      // }\r\n    }\r\n  }\r\n\r\n  mounted () {\r\n    this.init()\r\n  }\r\n}\r\n</script>\r\n", ".h-video {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=video.vue.map */"]
     },
     media: undefined
   });
@@ -1641,7 +1688,7 @@ var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$6 = "data-v-ce4e3992";
+var __vue_scope_id__$6 = "data-v-309073a7";
 /* module identifier */
 
 var __vue_module_identifier__$6 = undefined;
@@ -1659,6 +1706,144 @@ HVideo$1.install = function (Vue) {
   Vue.component('HVideo', HVideo$1);
 };
 
+var HModal =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HModal, _Vue);
+
+  function HModal() {
+    _classCallCheck(this, HModal);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HModal).apply(this, arguments));
+  }
+
+  _createClass(HModal, [{
+    key: "beforeEnter",
+    value: function beforeEnter() {}
+  }, {
+    key: "afterLeave",
+    value: function afterLeave() {}
+  }, {
+    key: "handleMaskClick",
+    value: function handleMaskClick() {}
+  }, {
+    key: "mounted",
+    value: function mounted() {
+      Store.$app.$el.appendChild(this.$el);
+    }
+  }, {
+    key: "classes",
+    get: function get() {
+      return {};
+    }
+  }]);
+
+  return HModal;
+}(Vue);
+
+__decorate([Prop({
+  type: Boolean,
+  "default": false
+})], HModal.prototype, "value", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 50
+})], HModal.prototype, "height", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 100
+})], HModal.prototype, "width", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  "default": 12
+})], HModal.prototype, "fontSize", void 0);
+
+HModal = __decorate([Component], HModal);
+var script$7 = HModal;
+
+/* script */
+var __vue_script__$7 = script$7;
+/* template */
+
+var __vue_render__$6 = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c("transition", {
+    attrs: {
+      name: "modal"
+    },
+    on: {
+      "before-enter": _vm.beforeEnter,
+      "after-leave": _vm.afterLeave
+    }
+  }, [_c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.value,
+      expression: "value"
+    }],
+    staticClass: "h-modal",
+    "class": _vm.classes,
+    on: {
+      click: _vm.handleMaskClick
+    }
+  }, [_vm._t("default", [_c("div", {
+    staticStyle: {
+      width: "60%",
+      height: "300px",
+      background: "#fff"
+    }
+  })])], 2)]);
+};
+
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
+/* style */
+
+var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-6692891a_0", {
+    source: ".h-modal[data-v-6692891a] {\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n}\n.modal-enter[data-v-6692891a],\n.modal-leave-active[data-v-6692891a] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
+    map: {
+      "version": 3,
+      "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\modal\\modal.vue", "modal.vue"],
+      "names": [],
+      "mappings": "AAMA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,cAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;AAAA;AAEA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACLA,oCAAoC",
+      "file": "modal.vue",
+      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  $btn_download_ratio: 565 / 168;\r\n  $btn-width: 40vw;\r\n  $logo-width: 100vw;\r\n  $btn-height: (1/$btn_download_ratio)*$btn-width;\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n    position: fixed;\r\n    z-index: 10099;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :class=\"classes\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n      <div style=\"width:60%;height:300px;background:#fff\"></div>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  get classes (): any {\r\n    return {}\r\n  }\r\n\r\n  beforeEnter () {\r\n\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n\r\n  }\r\n\r\n  mounted () {\r\n    Store.$app.$el.appendChild(this.$el)\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto; }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
+    },
+    media: undefined
+  });
+};
+/* scoped */
+
+
+var __vue_scope_id__$7 = "data-v-6692891a";
+/* module identifier */
+
+var __vue_module_identifier__$7 = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$7 = false;
+/* style inject SSR */
+
+var HModal$1 = normalizeComponent_1({
+  render: __vue_render__$6,
+  staticRenderFns: __vue_staticRenderFns__$6
+}, __vue_inject_styles__$7, __vue_script__$7, __vue_scope_id__$7, __vue_is_functional_template__$7, __vue_module_identifier__$7, browser, undefined);
+
+HModal$1.install = function (Vue) {
+  Vue.component('HModal', HModal$1);
+};
+
 // export { default as HSwiper } from './swiper'
 
 var components = /*#__PURE__*/Object.freeze({
@@ -1668,7 +1853,8 @@ var components = /*#__PURE__*/Object.freeze({
     HFooter: HFooter$1,
     HPromoCode: HPromoCode$1,
     HText: HText$1,
-    HVideo: HVideo$1
+    HVideo: HVideo$1,
+    HModal: HModal$1
 });
 
 var Mode;
@@ -1711,4 +1897,4 @@ var MegH5 = {
 };
 
 export default MegH5;
-export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HPromoCode$1 as HPromoCode, HText$1 as HText, HVideo$1 as HVideo, HView$1 as HView, index as Utils };
+export { index$1 as Constants, HApp$1 as HApp, HButton$1 as HButton, HFooter$1 as HFooter, HModal$1 as HModal, HPromoCode$1 as HPromoCode, HText$1 as HText, HVideo$1 as HVideo, HView$1 as HView, index as Utils };

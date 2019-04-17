@@ -8,8 +8,10 @@
      justify-content: center;
      align-items: center;
      height: 100px;
-     width: calc(100% / 3);
+     /*width: calc(100% / 3);*/
+     width: 100px;
      cursor: pointer;
+     flex-wrap: wrap;
    }
   }
 </style>

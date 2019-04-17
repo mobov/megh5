@@ -32,6 +32,8 @@
     <MFlex v-m-ripple class="comp-setting-header m-hr-b m-p-md" align="center">
       {{uiModule.title}}
       <MFlexFiller />
+      <v-btn :color="lockBtnState.color" small @click="handleLock">{{lockBtnState.text}}</v-btn>
+      <!--<v-switch v-model="ActiveNode.locked" label="锁定"></v-switch>-->
       <v-btn color="error" small @click="handleDelete">删除</v-btn>
     </MFlex>
     <div class="comp-setting-main m-hr-b m-p-md">
@@ -57,7 +59,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode, MutationDelActiveUid } from '@/store'
+import { StateScreen, MutationSetPageNode, MutationDelActiveUid, MutationSetUiModule } from '@/store'
 import { deepCopy } from '@mobov/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
@@ -73,6 +75,16 @@ export default class CompSetting extends Vue {
 
   get uiModule (): UiModule {
     return this.UiModules.find(item => item.name === this.ActiveNode.name) as UiModule
+  }
+
+  get lockBtnState () {
+    return this.ActiveNode.locked ? {
+      color: 'error',
+      text: '解锁'
+    }: {
+      color: 'success',
+      text: '锁定'
+    }
   }
 
   settingItem (name: string): any {
@@ -95,6 +107,13 @@ export default class CompSetting extends Vue {
 
   handleDelete () {
     this.DEL_PAGE_NODE(this.ActiveNode.uid)
+  }
+
+  handleLock () {
+    this.SET_PAGE_NODE({
+      uid: this.ActiveNode.uid,
+      locked: !this.ActiveNode.locked
+    })
   }
 }
 </script>

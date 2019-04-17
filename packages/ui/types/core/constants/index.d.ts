@@ -39,15 +39,17 @@ export interface UiNodeData extends VNodeData {
         [field: string]: any;
     };
 }
+export interface UiNodeConfig {
+    disabled?: boolean;
+    moveMode?: uiMode;
+    sizeMode?: uiMode;
+}
 export interface UiNode {
     name: string;
     uid: string;
     pid: string;
-    uiConfig?: {
-        disabled?: boolean;
-        moveMode: uiMode;
-        sizeMode: uiMode;
-    };
+    locked: boolean;
+    uiConfig?: UiNodeConfig;
     nodeData: UiNodeData;
     children: UiNode[];
 }

@@ -5,6 +5,7 @@
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
             "disabled": true,
+            "locked": false,
             "moveMode": "none",
             "sizeMode": "none"
         },
@@ -23,6 +24,7 @@
         "title": "页脚",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "none",
             "sizeMode": "none"
         },
@@ -74,6 +76,7 @@
         "title": "视图",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -100,6 +103,7 @@
         "title": "文字",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -146,6 +150,7 @@
         "title": "按钮",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -180,6 +185,7 @@
         "title": "邀请码",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -221,6 +227,7 @@
         "title": "视频",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
+            "locked": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -241,7 +248,11 @@
             },
             "link": {
                 "type": "text",
-                "text": "视频地址/ID"
+                "text": "视频ID"
+            },
+            "autoPlay": {
+                "type": "switch",
+                "text": "自动播放"
             }
         },
         "nodeData": {
@@ -254,11 +265,36 @@
                 "position": "relative",
                 "source": "youtube",
                 "link": "XNDEzNzc1MzUwNA==",
+                "autoPlay": false,
                 "height": 180,
                 "width": 320,
                 "x": 0,
                 "y": 0,
                 "bgImg": ""
+            }
+        }
+    },
+    {
+        "name": "HModal",
+        "title": "弹窗",
+        "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
+        "uiConfig": {
+            "locked": false,
+            "moveMode": "none",
+            "sizeMode": "none"
+        },
+        "nodeConfig": {
+            "value": {
+                "type": "switch",
+                "text": "显示"
+            }
+        },
+        "nodeData": {
+            "style": {
+                "backgroundColor": "transparent"
+            },
+            "props": {
+                "value": false
             }
         }
     }

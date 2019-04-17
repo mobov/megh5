@@ -21,6 +21,10 @@
       @include scroller();
       @include no-scroll-bar();
     }
+
+    a, iframe {
+      pointer-events: none;
+    }
   }
 </style>
 <script lang="tsx">
@@ -60,6 +64,8 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
           elementData.slot = node.nodeData.slot
           delete node.nodeData.slot
         }
+
+        console.log(elementData)
 
         result.push(h(
           'Element',

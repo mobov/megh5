@@ -13,6 +13,7 @@ export default class HVideo extends Vue {
     x: string | number;
     y: string | number;
     bgImg: string;
+    autoPlay: boolean;
     source: videoSource;
     link: string;
     updateSize(): void;

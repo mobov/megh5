@@ -1,8 +1,9 @@
 <style lang='scss'>
   @import "~@mobov/scss-helper/import";
-  $--element-active-color: #ffd0a3;
-  $--element-handler-color: #03a9f4;
+  // $--element-active-color: #ffd0a3;
   .element {
+    --element-handler-color: #03a9f4;
+
     user-select: none;
     box-sizing: border-box;
     cursor: pointer;
@@ -26,11 +27,6 @@
       top: 0 !important;
       width: 100%;
       height: 100%;
-
-      a, iframe {
-        pointer-events: none;
-      }
-
     }
     &.--active {
       z-index: 99 !important;
@@ -38,7 +34,7 @@
       >.element-handler-b,
       >.element-handler-l,
       >.element-handler-r {
-        background-color: $--element-handler-color;
+        background-color: var(--element-handler-color);
         position: absolute;
         z-index: 2;
       }
@@ -46,7 +42,7 @@
       >.element-handler-tr,
       >.element-handler-bl,
       >.element-handler-br {
-        background-color: $--element-handler-color;
+        background-color: var(--element-handler-color);
         position: absolute;
         z-index: 3;
       }
@@ -119,13 +115,16 @@
         cursor: se-resize;
       }
     }
+    &.--isLocked {
+      --element-handler-color: #ff5252
+    }
   }
 
   .element-axis {
     width: 1px;
     height: 100vh;
     position: absolute;
-    background-color: $--element-handler-color;
+    background-color: var(--element-handler-color);
   }
 
  /* .element-edit-box {
@@ -133,52 +132,51 @@
     position: absolute;
     z-index: 2;
     cursor: move;
-    border: 3px solid  $--element-handler-color;
+    border: 3px solid  var(--element-handler-color);
   }*/
 </style>
 
 <template>
-  <div class="element" :style="styles" :class="{'--active': isActive}" @mousedown.stop="handleActive">
+  <div class="element" :style="styles" :class="classes" @mousedown.stop="handleActive">
     <slot></slot>
     <div class="element-handler-t" style="cursor: pointer"></div>
     <div class="element-handler-b" style="cursor: pointer"></div>
     <div class="element-handler-l" style="cursor: pointer"></div>
     <div class="element-handler-r" style="cursor: pointer"></div>
     <div class="element-handler-t" v-if="enableSizeY"
-         @mousedown.stop="isSizeT = true"></div>
+         @mousedown.stop="handleHandler('T')"></div>
     <div class="element-handler-b" v-if="enableSizeY"
-         @mousedown.stop="isSizeB = true"></div>
+         @mousedown.stop="handleHandler('B')"></div>
     <div class="element-handler-l" v-if="enableSizeX"
-         @mousedown.stop="isSizeL = true"></div>
+         @mousedown.stop="handleHandler('L')"></div>
     <div class="element-handler-r" v-if="enableSizeX"
-         @mousedown.stop="isSizeR = true"></div>
+         @mousedown.stop="handleHandler('R')"></div>
     <div class="element-handler-tl"
          v-if="enableSizeX && enableSizeY"
-         @mousedown.stop="isSizeT = true; isSizeL = true"></div>
+         @mousedown.stop="handleHandler('TL')"></div>
     <div class="element-handler-tr"
          v-if="enableSizeX && enableSizeY"
-         @mousedown.stop="isSizeT = true; isSizeR = true"></div>
+         @mousedown.stop="handleHandler('TR')"></div>
     <div class="element-handler-bl"
          v-if="enableSizeX && enableSizeY"
-         @mousedown.stop="isSizeB = true; isSizeL = true"></div>
+         @mousedown.stop="handleHandler('BL')"></div>
     <div class="element-handler-br"
          v-if="enableSizeX && enableSizeY"
-         @mousedown.stop="isSizeB = true; isSizeR = true"></div>
+         @mousedown.stop="handleHandler('BR')"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { VNode, VueConstructor } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { State, Mutation } from 'vuex-class'
+import { State, Mutation, Getter } from 'vuex-class'
 import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
 import { NoCache } from '@/utils/decorators'
 import { deepCopy } from '@mobov/es-helper'
 import { getLayerIndex } from '@/utils/layer'
 import { uiMode, UiNode, positionType, ProjectData } from '@megh5/ui/types/core/constants'
 import MegH5, { Utils } from '@megh5/ui'
-console.log(MegH5)
-console.log(Utils)
+
 const { genPosY, genSize, genPosX, genPosition } = Utils
 
 @Component
@@ -217,6 +215,8 @@ export default class Element extends Vue {
   zIndex!: number
 
   @State activeUid!: string
+
+  @Getter ActiveNode!: UiNode
   @Mutation SET_PAGE_NODE!: MutationSetPageNode
   @Mutation SET_ACTIVE_UID!: MutationSetActiveUid
 
@@ -235,6 +235,10 @@ export default class Element extends Vue {
     return this.activeUid === this.nodeUid
   }
 
+  get isLocked (): boolean {
+    return this.ActiveNode.locked
+  }
+
   get isMainChildren (): boolean {
     return this.parentNode.classList.contains('h-app-main')
   }
@@ -242,6 +246,12 @@ export default class Element extends Vue {
     return this.position !== 'relative'
   }
 
+  get classes (): any {
+    return {
+      '--active': this.isActive,
+      '--isLocked': this.isLocked
+    }
+  }
   get styles (): any {
     const { width, height, x, y, position, float, zIndex } = this
     const styles = {
@@ -309,6 +319,7 @@ export default class Element extends Vue {
     return this.parentHeight - this.sizeY
   }
   updateUi () {
+    if (this.isLocked) { return }
     this.SET_PAGE_NODE({
       uid: this.nodeUid,
       nodeData: {
@@ -322,11 +333,30 @@ export default class Element extends Vue {
       }
     })
   }
+
+  handleHandler (direction: string) {
+    if (this.isLocked) { return }
+    if (direction.indexOf('L') !== -1) {
+      this.isSizeL = true
+    }
+    if (direction.indexOf('R') !== -1) {
+      this.isSizeR = true
+    }
+    if (direction.indexOf('T') !== -1) {
+      this.isSizeT = true
+    }
+    if (direction.indexOf('B') !== -1) {
+      this.isSizeB = true
+    }
+  }
+
   handleActive () {
-    this.isMove = true
     this.SET_ACTIVE_UID(this.nodeUid)
+    if (this.isLocked) { return }
+    this.isMove = true
   }
   handleMoveX (val: number) {
+    if (this.isLocked) { return }
     if (!this.enableMoveX) { return }
     const { leftLimit, rightLimit } = this
     let moveX = this.moveX + val
@@ -345,6 +375,7 @@ export default class Element extends Vue {
     this.updateUi()
   }
   handleMoveY (val: number) {
+    if (this.isLocked) { return }
     if (!this.enableMoveY) { return }
     const { isMainChildren, topLimit, bottomLimit } = this
     const moveY = this.moveY + val
@@ -377,6 +408,7 @@ export default class Element extends Vue {
     // }
   }
   handleSizeX (val: number, direction: 'L' | 'R') {
+    if (this.isLocked) { return }
     const { leftLimit, widthLimit, minWidth } = this
     const sizeX = this.sizeX + (direction === 'L' ? -val : val)
 
@@ -394,6 +426,7 @@ export default class Element extends Vue {
     this.updateUi()
   }
   handleSizeY (val: number, direction: 'T' | 'B') {
+    if (this.isLocked) { return }
     const { topLimit, minHeight } = this
     const sizeY = this.sizeY + (direction === 'T' ? -val : val)
 
@@ -411,6 +444,7 @@ export default class Element extends Vue {
     this.updateUi()
   }
   handleMouseMove (e: MouseEvent) {
+    if (this.isLocked) { return }
     if (this.isMove) {
       this.handleMoveX(e.movementX)
       this.handleMoveY(e.movementY)
@@ -428,6 +462,7 @@ export default class Element extends Vue {
     }
   }
   handleMouseUp () {
+    if (this.isLocked) { return }
     this.isMove = false
     this.isSizeL = false
     this.isSizeR = false

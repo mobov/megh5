@@ -15,9 +15,6 @@
               :src="videoHref"
               frameborder="0" allowfullscreen>
       </iframe>
-      <template>
-
-      </template>
     </div>
   </div>
 </template>
@@ -28,7 +25,6 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-
 import { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'
 import { positionType } from '../core/constants'
 
-// <iframe height=498 width=510 src='http://player.youku.com/embed/XNDEzNzc1MzUwNA==' frameborder=0 'allowfullscreen'></iframe>
 type videoSource = 'youtube' | 'youku'
 
 enum VideoSource {
@@ -61,8 +57,8 @@ export default class HVideo extends Vue {
   @Prop({ type: String, default: '' })
   bgImg!: string
 
-  @Prop({ type: String, default: '' })
-  callType!: videoType
+  @Prop({ type: Boolean, default: false })
+  autoPlay!: boolean
 
   @Prop({ type: String, default: 'youtube' })
   source!: videoSource
@@ -82,8 +78,6 @@ export default class HVideo extends Vue {
 
   @Watch('source')
   updateInstance (newVal: VideoSource, oldVal: VideoSource) {
-    console.log(newVal)
-    console.log(oldVal)
     const { $video, source } = this
     if (oldVal === VideoSource.youtube) {
       this.instance.destroy()
@@ -125,7 +119,7 @@ export default class HVideo extends Vue {
   private instance: any = null
 
   private init () {
-    const { source, height, width } = this
+    const { source, height, width, autoPlay } = this
 
     this.videoId = uuid()
 
@@ -138,13 +132,19 @@ export default class HVideo extends Vue {
       this.$refs.box.appendChild($container)
 
       const initYTPlayer = () => {
-        console.log(this.videoId)
         this.instance = new YT.Player($container, {
           width,
           height,
           videoId: this.link,
-          showinfo: 0
+          showinfo: 0,
+          rel: 0
         })
+
+        if (autoPlay) {
+          setTimeout(() => {
+            this.instance.playVideo()
+          }, 500)
+        }
       }
 
       if (YT) {
@@ -155,7 +155,11 @@ export default class HVideo extends Vue {
         }
       }
     } else {
-
+      // if (autoPlay) {
+      //   setTimeout(() => {
+      //     this.$video.click()
+      //   }, 500)
+      // }
     }
   }
 
