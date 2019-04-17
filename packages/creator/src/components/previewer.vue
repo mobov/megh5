@@ -50,6 +50,7 @@ function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
         result.push(h(node.name, node.nodeData, node.children ? compiler(h, node.children) : []))
       } else {
         const elementData: VNodeData = {
+          key: node.uid,
           props: {
             nodeUid: node.uid,
             ...node.nodeData.props,
