@@ -30,18 +30,13 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
-import CompSuit from './comp-suit.vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import { GetterPageData, MutationSetActiveUid } from '@/store'
 import { ProjectData } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { compiler } from '@/utils'
 
-@Component({
-  components: {
-    CompSuit
-  }
-})
+@Component
 export default class Previewer extends Vue {
   @Getter PageData!: GetterPageData
 

@@ -17,6 +17,9 @@ Vue.use(Vuetify, {
   }
 )
 
+import CompSuit from './components/comp-suit.vue'
+Vue.component('CompSuit', CompSuit)
+
 Vue.config.productionTip = false
 
 // 全局禁止右键 菜单
