@@ -120,7 +120,7 @@ export function genEllipsis (styles: any = {}, val: number): void {
   if (val !== undefined) {
     if (val === 0) {
       Object.assign(styles, {
-        'overflow': 'auto',
+        'overflow': 'unset',
         'text-overflow': 'normal',
         'white-space': 'normal',
         'word-break': 'normal',

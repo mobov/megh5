@@ -7,13 +7,11 @@
 <template>
   <div class="setting-color m-pb-md">
     <div class="setting-label">{{label}}</div>
-    <sketch :value="value" @input="handleValueChange"></sketch>
+    <sketch v-model="_value"></sketch>
   </div>
 </template>
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode } from 'src/store'
 import { Sketch } from 'vue-color'
 
 @Component({
@@ -21,17 +19,6 @@ import { Sketch } from 'vue-color'
   components: { Sketch }
 })
 export default class SettingColor extends Vue {
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-
-  @Prop({ type: String })
-  field!: string
-
-  @Prop({ type: String })
-  fieldPath!: 'props' | 'style'
-
-  @Prop({ type: String })
-  nodeUid!: string
-
   @Prop({
     type: String,
     default: ''
@@ -44,20 +31,17 @@ export default class SettingColor extends Vue {
   })
   nodeConfig!: any
 
-  get label () {
-    return this.nodeConfig.text
+  get _value () {
+    return this.value
   }
 
-  handleValueChange (value: any) {
-    const result = `rgba(${value.rgba.r}, ${value.rgba.g}, ${value.rgba.b}, ${value.rgba.a})`
-    this.SET_PAGE_NODE({
-      uid: this.nodeUid,
-      nodeData: {
-        [this.fieldPath]: {
-          [this.field]: result
-        }
-      }
-    })
+  set _value (val: any) {
+    const result = `rgba(${val.rgba.r}, ${val.rgba.g}, ${val.rgba.b}, ${val.rgba.a})`
+    this.$emit('input', result)
+  }
+
+  get label () {
+    return this.nodeConfig.text
   }
 }
 </script>

@@ -13,12 +13,11 @@
   <div class="setting-size">
     <v-text-field
       class="setting-size__input"
-      :value="value"
+      v-model="_value"
       type="number"
       :min="min"
       :max="max"
       :disabled="disabled"
-      @input="handleValueChange"
       :label="label"
       required
     ></v-text-field>
@@ -32,17 +31,6 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component
 export default class SettingSize extends Vue {
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-
-  @Prop({ type: String })
-  field!: string
-
-  @Prop({ type: String })
-  fieldPath!: 'props' | 'style'
-
-  @Prop({ type: String })
-  nodeUid!: string
-
   @Prop({
     type: [Number, String]
   })
@@ -53,6 +41,15 @@ export default class SettingSize extends Vue {
     default: {}
   })
   nodeConfig!: any
+
+  get _value () {
+    return this.value
+  }
+
+  set _value (val: number) {
+    val = isNaN(Number(val)) ? val : Number(val)
+    this.$emit('input', val)
+  }
 
   get label () {
     return this.nodeConfig.text
@@ -74,19 +71,6 @@ export default class SettingSize extends Vue {
 
   get disabled () {
     return typeof this.value === 'string'
-  }
-
-  handleValueChange (value: any) {
-    value = isNaN(Number(value)) ? value : Number(value)
-
-    this.SET_PAGE_NODE({
-      uid: this.nodeUid,
-      nodeData: {
-        [this.fieldPath]: {
-          [this.field]: value
-        }
-      }
-    })
   }
 
   handleFullSize () {

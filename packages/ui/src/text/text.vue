@@ -5,7 +5,9 @@
 </style>
 <template>
   <div class="h-text" :style="styles">
-    <slot></slot>
+    <slot>
+      {{text}}
+    </slot>
   </div>
 </template>
 <script lang="ts">
@@ -52,7 +54,7 @@ export default class HText extends Vue {
     const styles = {}
 
     genPosition(styles, position)
-    genEllipsis(styles, ellipsis)
+    genEllipsis(styles, Number(ellipsis))
     genSize(styles, 'width', width)
     genSize(styles, 'height', height)
     genSize(styles, 'fontSize', fontSize)

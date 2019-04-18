@@ -9,7 +9,7 @@
     width: 100%;
     display: flex;
   }
-  .setting-image-uploadder {
+  .setting-image-uploader {
     height: 150px;
     width: 250px;
   }
@@ -28,7 +28,7 @@
   <div class="setting-image m-pb-md">
     <div class="setting-label">{{label}}</div>
     <div class="setting-image-main">
-      <div class="setting-image-uploadder">
+      <div class="setting-image-uploader">
         <v-img :src="value"
                contain
                height="150px"
@@ -51,17 +51,6 @@ import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component
 export default class SettingImage extends Vue {
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-
-  @Prop({ type: String })
-  field!: string
-
-  @Prop({ type: String })
-  fieldPath!: 'props' | 'style'
-
-  @Prop({ type: String })
-  nodeUid!: string
-
   @Prop({
     type: String,
     default: ''
@@ -74,6 +63,16 @@ export default class SettingImage extends Vue {
   })
   nodeConfig!: any
 
+  get _value () {
+    return this.value
+  }
+
+  set _value (val: any) {
+    // console.log(val)
+    // val = isNaN(Number(val)) ? val : Number(val)
+    // this.$emit('input', val)
+  }
+
   get label () {
     return this.nodeConfig.text
   }
@@ -83,14 +82,7 @@ export default class SettingImage extends Vue {
     let reader: any = new FileReader()
 
     const onLoad = () => {
-      this.SET_PAGE_NODE({
-        uid: this.nodeUid,
-        nodeData: {
-          [this.fieldPath]: {
-            [this.field]: reader.result
-          }
-        }
-      })
+      this.$emit('input', reader.result)
       reader.removeEventListener('load', onLoad)
       reader = null
     }
@@ -103,14 +95,7 @@ export default class SettingImage extends Vue {
   }
 
   handleDelete () {
-    this.SET_PAGE_NODE({
-      uid: this.nodeUid,
-      nodeData: {
-        [this.fieldPath]: {
-          [this.field]: ''
-        }
-      }
-    })
+    this.$emit('input', '')
   }
 }
 </script>

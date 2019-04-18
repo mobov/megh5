@@ -11,11 +11,10 @@
 <template>
   <div class="setting-radio">
     <div class="setting-label">{{label}}</div>
-    <v-radio-group :column="false" :value="value">
+    <v-radio-group :column="false" v-model="_value">
       <v-radio v-for="selection in nodeConfig.extra"
                :key="selection.value"
                :value="selection.value"
-               @change="handleValueChange"
                :label="selection.text"
       ></v-radio>
     </v-radio-group>
@@ -29,17 +28,6 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component
 export default class SettingSize extends Vue {
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-
-  @Prop({ type: String })
-  field!: string
-
-  @Prop({ type: String })
-  fieldPath!: 'props' | 'style'
-
-  @Prop({ type: String })
-  nodeUid!: string
-
   @Prop({
     type: String,
     default: ''
@@ -52,19 +40,16 @@ export default class SettingSize extends Vue {
   })
   nodeConfig!: any
 
-  get label () {
-    return this.nodeConfig.text
+  get _value () {
+    return this.value
   }
 
-  handleValueChange (value: string) {
-    this.SET_PAGE_NODE({
-      uid: this.nodeUid,
-      nodeData: {
-        [this.fieldPath]: {
-          [this.field]: value
-        }
-      }
-    })
+  set _value (val: string) {
+    this.$emit('input', val)
+  }
+
+  get label () {
+    return this.nodeConfig.text
   }
 }
 </script>

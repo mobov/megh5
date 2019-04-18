@@ -40,7 +40,7 @@
       <component :key="field"
                  :field="field"
                  fieldPath="props"
-                 :value="ActiveNode.nodeData.props[field]"
+                 v-model="ActiveNode.nodeData.props[field]"
                  :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.props"
@@ -48,7 +48,7 @@
       <component :key="field"
                  :field="field"
                  fieldPath="style"
-                 :value="ActiveNode.nodeData.style[field]"
+                 v-model="ActiveNode.nodeData.style[field]"
                  :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.style"
@@ -90,19 +90,6 @@ export default class CompSetting extends Vue {
   settingItem (name: string): any {
     // @ts-ignore
     return require(`@/components/setting/${this.uiModule!.nodeConfig[name]!.type}.vue`).default
-  }
-
-  handleValueChange (field: string, value: any) {
-    value = isNaN(Number(value)) ? value : Number(value)
-
-    this.SET_PAGE_NODE({
-      uid: this.ActiveNode.uid,
-      nodeData: {
-        props: {
-          [field]: value
-        }
-      }
-    })
   }
 
   handleDelete () {

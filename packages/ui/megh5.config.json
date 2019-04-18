@@ -126,7 +126,7 @@
         "nodeData": {
             "style": {
                 "textAlign": "left",
-                "lineHeight": 1,
+                "lineHeight": 1.5,
                 "zIndex": 1,
                 "color": "#000000",
                 "backgroundColor": "transparent"

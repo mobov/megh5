@@ -4,10 +4,7 @@
 <template>
   <div class="setting-switch">
     <div class="setting-label">{{label}}</div>
-    <v-switch
-      :value="value"
-      @change="handleValueChange"
-    ></v-switch>
+    <v-switch v-model="_value"></v-switch>
   </div>
 </template>
 <script lang="tsx">
@@ -17,17 +14,6 @@ import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component
 export default class SettingSwitch extends Vue {
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-
-  @Prop({ type: String })
-  field!: string
-
-  @Prop({ type: String })
-  fieldPath!: 'props' | 'style'
-
-  @Prop({ type: String })
-  nodeUid!: string
-
   @Prop({
     type: Boolean,
     default: false
@@ -40,19 +26,16 @@ export default class SettingSwitch extends Vue {
   })
   nodeConfig!: any
 
-  get label () {
-    return this.nodeConfig.text
+  get _value () {
+    return this.value
   }
 
-  handleValueChange (value: string) {
-    this.SET_PAGE_NODE({
-      uid: this.nodeUid,
-      nodeData: {
-        [this.fieldPath]: {
-          [this.field]: value
-        }
-      }
-    })
+  set _value (val) {
+    this.$emit('input', val)
+  }
+
+  get label () {
+    return this.nodeConfig.text
   }
 }
 </script>
