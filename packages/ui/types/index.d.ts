@@ -1,4 +1,3 @@
-import './core/styles/utils.scss';
 import { VueConstructor, Component } from 'vue';
 export declare type ComponentOrPack = Component & {
     $subcomponents?: Record<string, ComponentOrPack>;

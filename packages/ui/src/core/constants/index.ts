@@ -54,6 +54,8 @@ export interface UiNodeData extends VNodeData {
 
 export interface UiNodeConfig {
   disabled?: boolean
+  mater?: boolean
+  locked?: boolean
   moveMode?: uiMode
   sizeMode?: uiMode
 }
@@ -77,18 +79,8 @@ interface SettingTypeOpts {
 export interface UiModule extends UiNode {
   title: string
   cover: string
-  nodeConfig?: {
-    width: SettingTypeOpts
-    height: SettingTypeOpts
-    x: SettingTypeOpts
-    y: SettingTypeOpts
-    bgColor: SettingTypeOpts
-    logo: SettingTypeOpts
-    termsLink: SettingTypeOpts
-    policyLink: SettingTypeOpts
-    copyright: SettingTypeOpts
-    [field: string]: SettingTypeOpts
-  },
+  nodeConfig: UiNodeProps
+  uiConfig: UiNodeConfig
 }
 
 export interface ProjectData {

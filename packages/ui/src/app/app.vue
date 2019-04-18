@@ -1,4 +1,8 @@
 <style lang="scss">
+  html {
+    font-size: 62.5%;
+  }
+
   .h-app {
     min-height: 100%;
     width: 100%;
@@ -13,7 +17,7 @@
   }
 </style>
 <template>
-  <div class="h-app" :style="styles">
+  <div id="h-app" class="h-app" :style="styles">
     <div class="h-app-main">
       <slot></slot>
     </div>
@@ -33,19 +37,15 @@ export default class HApp extends Vue {
   @Prop({ type: [Number, String], default: '100%' })
   width!: string | number
 
-  @Prop({ type: String, default: 'transparent' })
-  bgColor!: string
-
   @Prop({ type: String, default: '' })
   bgImg!: string
 
   get styles (): any {
-    const { height, width, bgColor, bgImg } = this
+    const { height, width, bgImg } = this
     const styles = {}
 
     genSize(styles, 'min-height', height)
     genSize(styles, 'width', width)
-    genColor(styles, 'background-color', bgColor)
     genBgImg(styles, bgImg)
 
     return styles
@@ -53,8 +53,6 @@ export default class HApp extends Vue {
 
   mounted () {
     Store.SET_APP(this)
-    console.log(Store)
-   // Vue.prototype.$app = this
   }
 }
 </script>

@@ -1,4 +1,12 @@
 import { ProjectData } from '@megh5/ui/types/core/constants'
+import { deepCopy } from '@mobov/es-helper'
+import { merge } from 'lodash'
+
+const megh5UiConfig = require('@megh5/ui/megh5.config.json')
+
+const HApp = deepCopy(megh5UiConfig.find((config: any) => config.name === 'HApp'))
+const HView = deepCopy(megh5UiConfig.find((config: any) => config.name === 'HView'))
+const HFooter = deepCopy(megh5UiConfig.find((config: any) => config.name === 'HFooter'))
 
 const Project: ProjectData = {
   name: 'megh5-project',
@@ -10,27 +18,50 @@ const Project: ProjectData = {
     height: 736
   },
   UiNodes: [{
-    name: 'HApp',
+    name: HApp.name,
     uid: '0',
     pid: '0',
     locked: false,
-    nodeData: {
+    uiConfig: HApp.uiConfig,
+    nodeData: merge(HApp.nodeData, {
       style: {},
       props: {
         position: 'relative',
-        width: '100%',
-        height: '100%',
+        width: 320,
+        height: 736,
         x: 0,
         y: 0
       }
-    },
+    }),
     children: [{
-      name: 'HFooter',
+      name: HView.name,
       uid: '0/1',
       pid: '0',
       locked: false,
-      nodeData: {
+      uiConfig: merge(HView.uiConfig, {
+        moveMode: 'none'
+      }),
+      nodeData: merge(HView.nodeData, {
         style: {},
+        props: {
+          position: 'relative',
+          width: 320,
+          height: 636,
+          x: 0,
+          y: 0
+        }
+      }),
+      children: []
+    }, {
+      name: HFooter.name,
+      uid: '0/2',
+      pid: '0',
+      locked: false,
+      uiConfig: merge(HFooter.uiConfig, {
+        sizeMode: 'none',
+        moveMode: 'none'
+      }),
+      nodeData: merge(HFooter.nodeData, {
         props: {
           position: 'relative',
           width: 320,
@@ -49,7 +80,7 @@ const Project: ProjectData = {
           copyright: 'Copyright 2019 * Limited All right reserved'
         },
         slot: 'footer'
-      },
+      }),
       children: []
     }]
   }]

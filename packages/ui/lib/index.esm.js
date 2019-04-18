@@ -360,17 +360,17 @@ function uuid() {
 }
 
 var index = /*#__PURE__*/Object.freeze({
-    unit: unit,
-    getUnitVal: getUnitVal,
-    genSize: genSize,
-    genPosX: genPosX,
-    genPosY: genPosY,
-    genBgImg: genBgImg,
-    genColor: genColor,
-    genPosition: genPosition,
-    genEllipsis: genEllipsis,
-    getStrValue: getStrValue,
-    uuid: uuid
+  unit: unit,
+  getUnitVal: getUnitVal,
+  genSize: genSize,
+  genPosX: genPosX,
+  genPosY: genPosY,
+  genBgImg: genBgImg,
+  genColor: genColor,
+  genPosition: genPosition,
+  genEllipsis: genEllipsis,
+  getStrValue: getStrValue,
+  uuid: uuid
 });
 
 var HApp =
@@ -388,19 +388,16 @@ function (_Vue) {
     key: "mounted",
     value: function mounted() {
       Store.SET_APP(this);
-      console.log(Store); // Vue.prototype.$app = this
     }
   }, {
     key: "styles",
     get: function get() {
       var height = this.height,
           width = this.width,
-          bgColor = this.bgColor,
           bgImg = this.bgImg;
       var styles = {};
       genSize(styles, 'min-height', height);
       genSize(styles, 'width', width);
-      genColor(styles, 'background-color', bgColor);
       genBgImg(styles, bgImg);
       return styles;
     }
@@ -418,11 +415,6 @@ __decorate([Prop({
   type: [Number, String],
   "default": '100%'
 })], HApp.prototype, "width", void 0);
-
-__decorate([Prop({
-  type: String,
-  "default": 'transparent'
-})], HApp.prototype, "bgColor", void 0);
 
 __decorate([Prop({
   type: String,
@@ -582,7 +574,10 @@ var __vue_render__ = function __vue_render__() {
 
   return _c("div", {
     staticClass: "h-app",
-    style: _vm.styles
+    style: _vm.styles,
+    attrs: {
+      id: "h-app"
+    }
   }, [_c("div", {
     staticClass: "h-app-main"
   }, [_vm._t("default")], 2), _vm._v(" "), _vm._t("footer")], 2);
@@ -594,15 +589,15 @@ __vue_render__._withStripped = true;
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-2bdd7bab_0", {
-    source: ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
+  inject("data-v-008273e2_0", {
+    source: "html {\n  font-size: 62.5%;\n}\n.h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\app\\app.vue", "app.vue"],
       "names": [],
-      "mappings": "AACA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AANA;IAQA,YAAA;IACA,kBAAA;AAAA;;ACCA,kCAAkC",
+      "mappings": "AACA;EACA,gBAAA;AAAA;AAGA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AANA;IAQA,YAAA;IACA,kBAAA;AAAA;;ACAA,kCAAkC",
       "file": "app.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-app {\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: 'transparent' })\r\n  bgColor!: string\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgColor, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genColor(styles, 'background-color', bgColor)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n    console.log(Store)\r\n   // Vue.prototype.$app = this\r\n  }\r\n}\r\n</script>\r\n", ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  html {\r\n    font-size: 62.5%;\r\n  }\r\n\r\n  .h-app {\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div id=\"h-app\" class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n  }\r\n}\r\n</script>\r\n", "html {\n  font-size: 62.5%; }\n\n.h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
     },
     media: undefined
   });
@@ -1706,35 +1701,72 @@ HVideo$1.install = function (Vue) {
   Vue.component('HVideo', HVideo$1);
 };
 
+var zIndex = 2000;
+
+function getZIndex() {
+  return zIndex++;
+}
+
 var HModal =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(HModal, _Vue);
 
   function HModal() {
+    var _this;
+
     _classCallCheck(this, HModal);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(HModal).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HModal).apply(this, arguments));
+    _this.zIndex = getZIndex();
+    return _this;
   }
 
   _createClass(HModal, [{
     key: "beforeEnter",
-    value: function beforeEnter() {}
+    value: function beforeEnter() {
+      this.zIndex = getZIndex();
+    }
   }, {
     key: "afterLeave",
     value: function afterLeave() {}
   }, {
     key: "handleMaskClick",
-    value: function handleMaskClick() {}
+    value: function handleMaskClick() {
+      this.$emit('input', false);
+    } // @Watch('appendToRoot')
+    // mountEl () {
+    //   if (this.isMounted) {
+    //     // console.log(this.$el)
+    //     // @ts-ignore
+    //     this.$el.parentNode.removeChild(this.$el)
+    //   }
+    //   this.isMounted = true
+    //   // console.log(this.$el)
+    //   // console.log(Store.$app)
+    //   if (this.appendToRoot) {
+    //     Store.$app.$el.appendChild(this.$el)
+    //   } else {
+    //     this.$parent.$el.appendChild(this.$el)
+    //   }
+    // }
+
   }, {
     key: "mounted",
     value: function mounted() {
-      Store.$app.$el.appendChild(this.$el);
+      console.log(this);
+
+      if (this.$parent.$parent.$el.id === 'h-app') {
+        this.$parent.$parent.$el.appendChild(this.$el);
+      }
     }
   }, {
-    key: "classes",
+    key: "styles",
     get: function get() {
-      return _defineProperty({}, "--append-to-".concat(this.append), true);
+      var zIndex = this.zIndex;
+      return {
+        zIndex: zIndex
+      };
     }
   }]);
 
@@ -1745,11 +1777,6 @@ __decorate([Prop({
   type: Boolean,
   "default": false
 })], HModal.prototype, "value", void 0);
-
-__decorate([Prop({
-  type: String,
-  "default": 'root'
-})], HModal.prototype, "append", void 0);
 
 HModal = __decorate([Component], HModal);
 var script$7 = HModal;
@@ -1781,17 +1808,11 @@ var __vue_render__$6 = function __vue_render__() {
       expression: "value"
     }],
     staticClass: "h-modal",
-    "class": _vm.classes,
+    style: _vm.styles,
     on: {
       click: _vm.handleMaskClick
     }
-  }, [_vm._t("default", [_c("div", {
-    staticStyle: {
-      width: "60%",
-      height: "300px",
-      background: "#fff"
-    }
-  })])], 2)]);
+  }, [_vm._t("default")], 2)]);
 };
 
 var __vue_staticRenderFns__$6 = [];
@@ -1800,15 +1821,15 @@ __vue_render__$6._withStripped = true;
 
 var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-3cbf8e38_0", {
-    source: ".h-modal[data-v-3cbf8e38] {\n  height: 100%;\n  width: 100%;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n}\n.h-modal.--append-to-root[data-v-3cbf8e38] {\n    position: fixed;\n}\n.h-modal.--append-to-parent[data-v-3cbf8e38] {\n    position: absolute;\n}\n.modal-enter[data-v-3cbf8e38],\n.modal-leave-active[data-v-3cbf8e38] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
+  inject("data-v-16e6fc98_0", {
+    source: ".h-modal[data-v-16e6fc98] {\n  height: 100%;\n  width: 100%;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n  position: absolute;\n  /*&.--append-to-root {*/\n  /*position: fixed;*/\n  /*}*/\n}\n.modal-enter[data-v-16e6fc98],\n.modal-leave-active[data-v-16e6fc98] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\modal\\modal.vue", "modal.vue"],
       "names": [],
-      "mappings": "AAMA;EACA,YAAA;EACA,WAAA;EAEA,cAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;AAAA;AAXA;IAcA,eAAA;AAAA;AAdA;IAiBA,kBAAA;AAAA;AAGA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACTA,oCAAoC",
+      "mappings": "AAEA;EACA,YAAA;EACA,WAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;EACA,kBAAA;EACA,uBAAA;EACA,mBAAA;EACA,IAAA;AAAA;AAEA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACDA,oCAAoC",
       "file": "modal.vue",
-      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  $btn_download_ratio: 565 / 168;\r\n  $btn-width: 40vw;\r\n  $logo-width: 100vw;\r\n  $btn-height: (1/$btn_download_ratio)*$btn-width;\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n    z-index: 10099;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n\r\n    &.--append-to-root {\r\n      position: fixed;\r\n    }\r\n    &.--append-to-parent {\r\n      position: absolute;\r\n    }\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :class=\"classes\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n      <div style=\"width:60%;height:300px;background:#fff\"></div>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  @Prop({ type: String, default: 'root' })\r\n  append!: 'root' | 'parent'\r\n\r\n  get classes (): any {\r\n    return {\r\n      [`--append-to-${this.append}`]: true\r\n    }\r\n  }\r\n\r\n  beforeEnter () {\r\n\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n\r\n  }\r\n\r\n  mounted () {\r\n    Store.$app.$el.appendChild(this.$el)\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  z-index: 10099;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto; }\n  .h-modal.--append-to-root {\n    position: fixed; }\n  .h-modal.--append-to-parent {\n    position: absolute; }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
+      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n    position: absolute;\r\n    /*&.--append-to-root {*/\r\n      /*position: fixed;*/\r\n    /*}*/\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :style=\"styles\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\nlet zIndex =  2000\r\n\r\nfunction getZIndex (): number {\r\n  return zIndex ++\r\n}\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  get styles (): any {\r\n    const { zIndex } = this\r\n    return {\r\n      zIndex\r\n    }\r\n  }\r\n\r\n  zIndex: number = getZIndex()\r\n\r\n  beforeEnter () {\r\n    this.zIndex = getZIndex()\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n    this.$emit('input', false)\r\n  }\r\n\r\n  // @Watch('appendToRoot')\r\n  // mountEl () {\r\n  //   if (this.isMounted) {\r\n  //     // console.log(this.$el)\r\n  //     // @ts-ignore\r\n  //     this.$el.parentNode.removeChild(this.$el)\r\n  //   }\r\n  //   this.isMounted = true\r\n  //   // console.log(this.$el)\r\n  //   // console.log(Store.$app)\r\n  //   if (this.appendToRoot) {\r\n  //     Store.$app.$el.appendChild(this.$el)\r\n  //   } else {\r\n  //     this.$parent.$el.appendChild(this.$el)\r\n  //   }\r\n  // }\r\n\r\n  mounted () {\r\n    console.log(this)\r\n    if (this.$parent.$parent.$el.id === 'h-app') {\r\n      this.$parent!.$parent!.$el.appendChild(this.$el)\r\n    }\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n  position: absolute;\n  /*&.--append-to-root {*/\n  /*position: fixed;*/\n  /*}*/ }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
     },
     media: undefined
   });
@@ -1816,7 +1837,7 @@ var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$7 = "data-v-3cbf8e38";
+var __vue_scope_id__$7 = "data-v-16e6fc98";
 /* module identifier */
 
 var __vue_module_identifier__$7 = undefined;
@@ -1837,14 +1858,14 @@ HModal$1.install = function (Vue) {
 // export { default as HSwiper } from './swiper'
 
 var components = /*#__PURE__*/Object.freeze({
-    HApp: HApp$1,
-    HButton: HButton$1,
-    HView: HView$1,
-    HFooter: HFooter$1,
-    HPromoCode: HPromoCode$1,
-    HText: HText$1,
-    HVideo: HVideo$1,
-    HModal: HModal$1
+  HApp: HApp$1,
+  HButton: HButton$1,
+  HView: HView$1,
+  HFooter: HFooter$1,
+  HPromoCode: HPromoCode$1,
+  HText: HText$1,
+  HVideo: HVideo$1,
+  HModal: HModal$1
 });
 
 var Mode;
@@ -1864,8 +1885,8 @@ var UiMode;
 })(UiMode || (UiMode = {}));
 
 var index$1 = /*#__PURE__*/Object.freeze({
-    get Mode () { return Mode; },
-    get UiMode () { return UiMode; }
+  get Mode () { return Mode; },
+  get UiMode () { return UiMode; }
 });
 
 var MegH5 = {

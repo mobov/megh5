@@ -1,4 +1,3 @@
-import './core/styles/utils.scss'
 import { VueConstructor, Component } from 'vue'
 import * as components from './entries'
 

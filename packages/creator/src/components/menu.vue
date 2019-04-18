@@ -26,6 +26,8 @@ import { StateUiModules, GetterPageData, MutationAddPageNode } from '@/store'
 export default class Menu extends Vue {
   @State activeUid!: string
 
+  @Getter ActiveNode!: UiNode
+
   @State Project!: ProjectData
 
   @Getter PageData!: GetterPageData
@@ -49,6 +51,7 @@ export default class Menu extends Vue {
     const { handleItemClick } = this
     const result: any = []
 
+    console.log(this.ActiveNode)
     this.MenuLists.forEach(list => {
       result.push(
         <div class="menu-item" v-m-ripple onClick={() => handleItemClick(list.name)}>

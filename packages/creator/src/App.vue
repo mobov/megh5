@@ -8,11 +8,12 @@
   }
 </style>
 <template>
-  <v-app>
+  <VApp>
     <MApp class="app">
       <MView rightSize="700px"
              headerSize="50px"
-             fillHeader="left"
+             leftSize="100px"
+             fillHeader="none"
              :rightIndex="5">
         <MAppBar slot="header"
                  size="100%"
@@ -20,22 +21,21 @@
                  variety="flat"
                  :elevation="0">
           <MFlexFiller/>
-          <m-button color="primary" size="sm" :style="{width: '100px'}" class="m-mr-sm">
+          <MButton color="primary" size="sm" :style="{width: '100px'}" class="m-mr-sm">
             导入
             <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
-          </m-button>
-          <m-button color="primary" size="sm" :style="{width: '100px'}" @click="handleExport">
+          </MButton>
+          <MButton color="primary" size="sm" :style="{width: '100px'}" @click="handleExport">
             导出
-          </m-button>
+          </MButton>
         </MAppBar>
-        <SidePanel class="m-elevation-2" slot="right"></SidePanel>
+        <SidePanel class="m-elevation-2" slot="right" />
         <MFlex full justify="center" align="center" @click="handleSetProject" style="height: 100%">
           <Previewer @click.stop mode="preview"/>
-          <!--<h-video type="youtube"></h-video>-->
         </MFlex>
       </MView>
     </MApp>
-  </v-app>
+  </VApp>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'

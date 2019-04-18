@@ -1,15 +1,17 @@
 <style lang='scss'>
   @import "~@mobov/scss-helper/import";
   // $--element-active-color: #ffd0a3;
+  $--comp-suit-handler-color-normal: #03a9f4;
+  $--comp-suit-handler-color-locked: #ff5252;
   .comp-suit {
-    --comp-suit-handler-color: #03a9f4;
+    --comp-suit-handler-color: #{$--comp-suit-handler-color-normal};
     user-select: none;
     box-sizing: border-box;
     cursor: pointer;
     /*position: relative;*/
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     &.--active {
-      z-index: 99 !important;
+      z-index: 99;
       >.comp-suit-handler {
         background-color: var(--comp-suit-handler-color);
         position: absolute;
@@ -89,7 +91,7 @@
       }
     }
     &.--isLocked {
-      --comp-suit-handler-color: #ff5252
+      --comp-suit-handler-color: #{$--comp-suit-handler-color-locked};
     }
   }
 
@@ -108,36 +110,6 @@
     border: 3px solid  var(--comp-suit-handler-color);
   }*/
 </style>
-
-<!--<template>-->
-  <!--<div class="comp-suit" :style="styles" :class="classes" @mousedown.stop="handleActive">-->
-    <!--<slot></slot>-->
-    <!--<div class="comp-suit-handler-t" style="cursor: pointer"></div>-->
-    <!--<div class="comp-suit-handler-b" style="cursor: pointer"></div>-->
-    <!--<div class="comp-suit-handler-l" style="cursor: pointer"></div>-->
-    <!--<div class="comp-suit-handler-r" style="cursor: pointer"></div>-->
-    <!--<div class="comp-suit-handler-t" v-if="enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('↑')"></div>-->
-    <!--<div class="comp-suit-handler-b" v-if="enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('↓')"></div>-->
-    <!--<div class="comp-suit-handler-l" v-if="enableSizeX"-->
-         <!--@mousedown.stop="handleHandler('←')"></div>-->
-    <!--<div class="comp-suit-handler-r" v-if="enableSizeX"-->
-         <!--@mousedown.stop="handleHandler('→')"></div>-->
-    <!--<div class="comp-suit-handler-tl"-->
-         <!--v-if="enableSizeX && enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('TL')"></div>-->
-    <!--<div class="comp-suit-handler-tr"-->
-         <!--v-if="enableSizeX && enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('TR')"></div>-->
-    <!--<div class="comp-suit-handler-bl"-->
-         <!--v-if="enableSizeX && enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('BL')"></div>-->
-    <!--<div class="comp-suit-handler-br"-->
-         <!--v-if="enableSizeX && enableSizeY"-->
-         <!--@mousedown.stop="handleHandler('BR')"></div>-->
-  <!--</div>-->
-<!--</template>-->
 
 <script lang="tsx">
 import { VNode, VueConstructor, CreateElement } from 'vue'
@@ -396,7 +368,6 @@ export default class CompSuit extends Vue {
     this.updateUi()
   }
   handleMouseDown (e: MouseEvent): void {
-    console.log(e)
     e.stopPropagation()
     // @ts-ignore
     const className = e.target.className
@@ -471,7 +442,6 @@ export default class CompSuit extends Vue {
 
   render (h: CreateElement) {
     this.node.nodeData.class = this.classes
-    this.node.nodeData.on = this.node.nodeData.on ? this.node.nodeData.on : {}
 
     return h(
       this.node.name,

@@ -15,24 +15,27 @@ import { GetterPageData } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { merge } from 'lodash'
-import CompList from './comp-list.vue'
+import ProjectTreeItem from './project-tree-item'
 
 @Component({
-  components: { CompList }
+  components: { ProjectTreeItem }
 })
-export default class CompTree extends Vue {
+export default class ProjectTree extends Vue {
   @Getter PageData!: GetterPageData
 
   RContent (nodes: UiNode[]) {
     const { RContent } = this
     const result: VNode[] = []
+
     for (let node of nodes) {
       result.push(
-        <div class="comp-tree-list">
-          <CompList value={node} />
-          {node.children ? RContent(node.children) : undefined }
-        </div>
+        <ProjectTreeItem value={node} />
       )
+      if (node.children) {
+        result.push(
+          ...RContent(node.children)
+        )
+      }
     }
 
     return result

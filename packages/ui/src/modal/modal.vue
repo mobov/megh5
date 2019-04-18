@@ -1,14 +1,8 @@
 <!--弹窗-->
 <style lang="scss" scoped>
-  $btn_download_ratio: 565 / 168;
-  $btn-width: 40vw;
-  $logo-width: 100vw;
-  $btn-height: (1/$btn_download_ratio)*$btn-width;
   .h-modal {
     height: 100%;
     width: 100%;
-
-    z-index: 10099;
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.7);
@@ -16,13 +10,10 @@
     flex-direction: column;
     transition: opacity .3s ease;
     will-change: auto;
-
-    &.--append-to-root {
-      position: fixed;
-    }
-    &.--append-to-parent {
-      position: absolute;
-    }
+    position: absolute;
+    /*&.--append-to-root {*/
+      /*position: fixed;*/
+    /*}*/
   }
   .modal-enter,
   .modal-leave-active {
@@ -34,34 +25,39 @@
 
 <template>
   <transition name="modal" @before-enter="beforeEnter"  @after-leave="afterLeave">
-    <div class="h-modal" :class="classes" v-show="value"  @click="handleMaskClick">
+    <div class="h-modal" :style="styles" v-show="value"  @click="handleMaskClick">
      <slot>
-      <div style="width:60%;height:300px;background:#fff"></div>
      </slot>
     </div>
   </transition>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import Store from '../core/store'
+
+let zIndex =  2000
+
+function getZIndex (): number {
+  return zIndex ++
+}
 
 @Component
 export default class HModal extends Vue {
   @Prop({ type: Boolean, default: false })
   value!: boolean
 
-  @Prop({ type: String, default: 'root' })
-  append!: 'root' | 'parent'
-
-  get classes (): any {
+  get styles (): any {
+    const { zIndex } = this
     return {
-      [`--append-to-${this.append}`]: true
+      zIndex
     }
   }
 
-  beforeEnter () {
+  zIndex: number = getZIndex()
 
+  beforeEnter () {
+    this.zIndex = getZIndex()
   }
 
   afterLeave () {
@@ -69,11 +65,31 @@ export default class HModal extends Vue {
   }
 
   handleMaskClick () {
-
+    this.$emit('input', false)
   }
 
+  // @Watch('appendToRoot')
+  // mountEl () {
+  //   if (this.isMounted) {
+  //     // console.log(this.$el)
+  //     // @ts-ignore
+  //     this.$el.parentNode.removeChild(this.$el)
+  //   }
+  //   this.isMounted = true
+  //   // console.log(this.$el)
+  //   // console.log(Store.$app)
+  //   if (this.appendToRoot) {
+  //     Store.$app.$el.appendChild(this.$el)
+  //   } else {
+  //     this.$parent.$el.appendChild(this.$el)
+  //   }
+  // }
+
   mounted () {
-    Store.$app.$el.appendChild(this.$el)
+    console.log(this)
+    if (this.$parent.$parent.$el.id === 'h-app') {
+      this.$parent!.$parent!.$el.appendChild(this.$el)
+    }
   }
 }
 </script>

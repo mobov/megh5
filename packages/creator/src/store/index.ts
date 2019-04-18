@@ -43,6 +43,10 @@ export interface GetterDevice {
   width: number
 }
 
+export interface GetterGetModule {
+  (name: string): UiModule
+}
+
 export interface MutationSetProject {
   (val: ProjectData): {}
 }
@@ -110,7 +114,8 @@ const store = new Vuex.Store<State>({
   getters: {
     PageData: (state): GetterPageData => state.Project.UiNodes,
     Device: (state): GetterDevice => state.Project.Device,
-    ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes)
+    ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes),
+    GetModule: (state) => (name: string): UiModule => state.UiModules.find(item => item.name === name) as UiModule
   },
   mutations: {
     SET_PROJECT (state, val: ProjectData) {
@@ -130,10 +135,12 @@ const store = new Vuex.Store<State>({
     ADD_PAGE_NODE (state, val: AddUiNodeOpts) {
       const nodeModule = deepCopy(state.UiModules.find(item => item.name === val.name)) as UiModule
       let pid = val.pid
+
       if (pid && pid !== state.Project.mainUid) {
         const pNode = getPathNode(pid, state.Project.UiNodes)
+        const pModule = state.UiModules.find(item => item.name === pNode.name) as UiModule
 
-        if (pNode.name === 'HView') {
+        if (pModule.uiConfig.mater) {
           pid = pNode.uid
         } else {
           pid = state.Project.mainUid

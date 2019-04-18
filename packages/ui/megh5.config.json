@@ -5,7 +5,7 @@
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
             "disabled": true,
-            "locked": false,
+            "mater": true,
             "moveMode": "none",
             "sizeMode": "none"
         },
@@ -15,7 +15,6 @@
                 "backgroundColor": "transparent"
             },
             "props": {
-                "bgColor": "transparent",
                 "height": 736,
                 "width": 320
             }
@@ -26,9 +25,9 @@
         "title": "页脚",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
-            "moveMode": "none",
-            "sizeMode": "none"
+            "mater": false,
+            "moveMode": "xy",
+            "sizeMode": "xy"
         },
         "nodeConfig": {
             "logo": {
@@ -69,8 +68,7 @@
                     "href": ""
                 },
                 "copyright": "Copyright 2019 * Limited All right reserved"
-            },
-            "slot": "footer"
+            }
         }
     },
     {
@@ -78,7 +76,7 @@
         "title": "视图",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": true,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -105,7 +103,7 @@
         "title": "文字",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -152,7 +150,7 @@
         "title": "按钮",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": true,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -187,7 +185,7 @@
         "title": "邀请码",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -229,7 +227,7 @@
         "title": "视频",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -281,7 +279,7 @@
         "title": "弹窗",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "locked": false,
+            "mater": true,
             "moveMode": "none",
             "sizeMode": "none"
         },
@@ -289,20 +287,6 @@
             "value": {
                 "type": "switch",
                 "text": "显示"
-            },
-            "append": {
-                "type": "radio",
-                "text": "挂载",
-                "extra": [
-                    {
-                        "text": "根元素",
-                        "value": "root"
-                    },
-                    {
-                        "text": "父元素",
-                        "value": "parent"
-                    }
-                ]
             }
         },
         "nodeData": {
@@ -310,8 +294,7 @@
                 "backgroundColor": "rgba(0, 0, 0, 0.7)"
             },
             "props": {
-                "value": true,
-                "append": "root"
+                "value": true
             }
         }
     }
