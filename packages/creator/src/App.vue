@@ -31,7 +31,7 @@
         </MAppBar>
         <Timeline class="m-elevation-3" slot="left"/>
         <SidePanel class="m-elevation-2" slot="right" />
-        <MFlex full justify="center" align="center" @click="handleSetProject" style="height: 100%">
+        <MFlex full justify="center" align="center" style="height: 100%">
           <Previewer @click.stop mode="preview"/>
         </MFlex>
       </MView>
@@ -70,8 +70,8 @@ export default class App extends Vue {
     exportProject(this.Project)
   }
 
-  handleSetProject () {
-    this.SET_ACTIVE_UID(this.Project.mainUid)
-  }
+  // handleSetProject () {
+  //   this.SET_ACTIVE_UID(this.Project.mainUid)
+  // }
 }
 </script>
