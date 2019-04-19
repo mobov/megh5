@@ -1,42 +1,38 @@
 <style lang='scss'>
   @import "~@mobov/scss-helper/import";
-  .comp-setting {
+  .editor {
     width: 100%;
     height: 100%;
     @include scroller();
     @include slim-scroll-bar();
-    .comp-setting-header {
+    .editor-header {
       width: inherit;
       cursor: pointer;
       height: 50px;
       font-size: 16px;
     }
-    .comp-setting-main {
+    .editor-main {
       width: inherit;
     }
     .comp-setting__sort-handler {
       cursor: move;
     }
   }
-  .setting-label {
-    color: #919191;
-    margin-bottom: 10px;
-  }
-  .setting-label {
+  .editor-item-label {
     color: #919191;
     margin-bottom: 10px;
   }
 </style>
 <template>
-  <div class="comp-setting">
-    <MFlex v-m-ripple class="comp-setting-header m-hr-b m-p-md" align="center">
+  <div class="editor">
+    <MFlex v-m-ripple class="editor-header m-hr-b m-p-md" align="center">
       {{uiModule.title}}
       <MFlexFiller />
       <v-btn :color="lockBtnState.color" small @click="handleLock">{{lockBtnState.text}}</v-btn>
       <!--<v-switch v-model="ActiveNode.locked" label="锁定"></v-switch>-->
       <v-btn color="error" small @click="handleDelete">删除</v-btn>
     </MFlex>
-    <div class="comp-setting-main m-hr-b m-p-md">
+    <div class="editor-main m-hr-b m-p-md">
       <component :key="field"
                  :field="field"
                  fieldPath="props"
@@ -59,19 +55,19 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode, MutationDelActiveUid, MutationSetUiModule } from '@/store'
+import { SET_PAGE_NODE, DEL_ACTIVE_UID, SET_UI_MODULE } from '@/store'
 import { deepCopy } from '@mobov/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
 @Component
-export default class CompSetting extends Vue {
+export default class Editor extends Vue {
   @State UiModules!: UiModule []
 
   @Getter ActiveNode!: UiNode
 
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
+  @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
 
-  @Mutation DEL_PAGE_NODE!: MutationDelActiveUid
+  @Mutation DEL_PAGE_NODE!: DEL_ACTIVE_UID
 
   get uiModule (): UiModule {
     return this.UiModules.find(item => item.name === this.ActiveNode.name) as UiModule
@@ -89,7 +85,7 @@ export default class CompSetting extends Vue {
 
   settingItem (name: string): any {
     // @ts-ignore
-    return require(`@/components/setting/${this.uiModule!.nodeConfig[name]!.type}.vue`).default
+    return require(`@/components/side-panel/editor/item/${this.uiModule!.nodeConfig[name]!.type}.vue`).default
   }
 
   handleDelete () {

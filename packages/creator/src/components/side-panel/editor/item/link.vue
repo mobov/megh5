@@ -1,11 +1,10 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
-  .setting-link {
+  .editor-item-link {
 
   }
 </style>
 <template>
-  <div class="setting-link">
+  <div class="editor-item-link">
     <v-text-field
       v-model="_value.text"
       label="链接文案"

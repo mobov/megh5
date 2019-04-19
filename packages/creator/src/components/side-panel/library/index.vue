@@ -1,9 +1,10 @@
 <style lang='scss'>
   @import "~@mobov/scss-helper/import";
-  .menu {
+  .library {
     width: 100%;
     display: flex;
-   .menu-item {
+    flex-wrap: wrap;
+   .library-item {
      display: flex;
      justify-content: center;
      align-items: center;
@@ -11,7 +12,6 @@
      /*width: calc(100% / 3);*/
      width: 100px;
      cursor: pointer;
-     flex-wrap: wrap;
    }
   }
 </style>
@@ -20,21 +20,21 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-propert
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import { ProjectData, UiNode, UiModule } from '@megh5/ui/types/core/constants'
-import { StateUiModules, GetterPageData, MutationAddPageNode } from '@/store'
+import { PageData, ADD_PAGE_NODE } from '@/store'
 
 @Component
-export default class Menu extends Vue {
+export default class Library extends Vue {
   @State activeUid!: string
 
   @Getter ActiveNode!: UiNode
 
   @State Project!: ProjectData
 
-  @Getter PageData!: GetterPageData
+  @Getter PageData!: PageData
 
-  @State UiModules!: StateUiModules
+  @State UiModules!: Array<UiModule>
 
-  @Mutation ADD_PAGE_NODE!: MutationAddPageNode
+  @Mutation ADD_PAGE_NODE!: ADD_PAGE_NODE
 
   get MenuLists (): UiModule [] {
     // @ts-ignore
@@ -47,14 +47,14 @@ export default class Menu extends Vue {
     })
   }
 
-  RMenuItem () {
+  RItem () {
     const { handleItemClick } = this
     const result: any = []
 
     console.log(this.ActiveNode)
     this.MenuLists.forEach(list => {
       result.push(
-        <div class="menu-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
+        <div class="library-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
           {list.title}
         </div>
       )
@@ -63,11 +63,11 @@ export default class Menu extends Vue {
   }
 
   render () {
-    const { RMenuItem } = this
+    const { RItem } = this
 
     return (
-      <div class="menu">
-        {RMenuItem()}
+      <div class="library">
+        {RItem()}
       </div>
     )
   }

@@ -31,23 +31,31 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { GetterPageData, MutationSetActiveUid } from '@/store'
+import { PageData, SET_ACTIVE_UID, Previewer, SET_PREVIEWER_READY, Device } from '@/store'
 import { ProjectData } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { compiler } from '@/utils'
+import CompSuit from './comp-suit.vue'
+Vue.component('CompSuit', CompSuit)
 
 @Component
 export default class Previewer extends Vue {
-  @Getter PageData!: GetterPageData
+  @Getter PageData!: PageData
+
+  @Getter Device!: Device
 
   @State Project!: ProjectData
 
-  @Mutation SET_ACTIVE_UID !: MutationSetActiveUid
+  @State Previewer!: Previewer
+
+  @Mutation SET_ACTIVE_UID !: SET_ACTIVE_UID
+
+  @Mutation SET_PREVIEWER_READY !: SET_PREVIEWER_READY
 
   get screenStyles () {
     return {
-      width: `${this.Project.Device.width}px`,
-      height: `${this.Project.Device.height}px`
+      width: `${this.Device.width}px`,
+      height: `${this.Device.height}px`
     }
   }
 
@@ -69,6 +77,10 @@ export default class Previewer extends Vue {
         </div>
       </div>
     )
+  }
+
+  mounted () {
+    this.SET_PREVIEWER_READY(this.$el as HTMLElement)
   }
 }
 </script>

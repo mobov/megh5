@@ -115,7 +115,7 @@
 import { VNode, VueConstructor, CreateElement } from 'vue'
 import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Mutation, Getter } from 'vuex-class'
-import { MutationSetPageNode, MutationSetActiveUid } from '@/store'
+import { SET_PAGE_NODE, SET_ACTIVE_UID } from '@/store'
 import { NoCache } from '@/utils/decorators'
 import { compiler } from '@/utils'
 import { uiMode, UiNode, UiNodeProps, positionType, ProjectData } from '@megh5/ui/types/core/constants'
@@ -146,8 +146,8 @@ export default class CompSuit extends Vue {
   @State activeUid!: string
 
   @Getter ActiveNode!: UiNode
-  @Mutation SET_PAGE_NODE!: MutationSetPageNode
-  @Mutation SET_ACTIVE_UID!: MutationSetActiveUid
+  @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
+  @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
   isMove = false
   isSizeL = false
@@ -441,7 +441,19 @@ export default class CompSuit extends Vue {
   }
 
   render (h: CreateElement) {
-    this.node.nodeData.class = this.classes
+    this.node.nodeData.class = this.node.nodeData.class ? {
+      [`uid-${this.node.uid}`]: true,
+      ...this.node.nodeData.class,
+      ...this.classes
+    } : {
+      [`uid-${this.node.uid}`]: true,
+      ...this.classes
+    }
+
+    // this.node.nodeData.attrs = this.node.nodeData.attrs ? this.node.nodeData.attrs : {
+    //   [`data-uid-${this.node.uid}`]: true
+    // }
+
 
     return h(
       this.node.name,

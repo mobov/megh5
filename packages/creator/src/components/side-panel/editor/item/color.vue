@@ -1,12 +1,11 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
   .vc-sketch {
     box-shadow: var(--m-elevation-2) !important;
   }
 </style>
 <template>
-  <div class="setting-color m-pb-md">
-    <div class="setting-label">{{label}}</div>
+  <div class="editor-item-color m-pb-md">
+    <div class="editor-item-label">{{label}}</div>
     <sketch v-model="_value"></sketch>
   </div>
 </template>

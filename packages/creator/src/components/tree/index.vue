@@ -1,30 +1,30 @@
 <style lang='scss'>
   @import "~@mobov/scss-helper/import";
-  .comp-tree {
+  .tree {
     width: 100%;
     height: 100%;
     @include scroller();
-    @include slim-scroll-bar();
+    @include no-scroll-bar();
   }
 </style>
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
+// @ts-ignore
+import ProjectTreeItem from './tree-item.vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { GetterPageData } from '@/store'
+import { PageData, Previewer } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
-import { deepCopy } from '@mobov/es-helper'
-import { merge } from 'lodash'
-import ProjectTreeItem from './project-tree-item'
 
 @Component({
   components: { ProjectTreeItem }
 })
-export default class ProjectTree extends Vue {
-  @Getter PageData!: GetterPageData
+export default class Tree extends Vue {
+  @Getter PageData!: PageData
 
-  RContent (nodes: UiNode[]) {
-    const { RContent } = this
+  @State Previewer!: Previewer
+
+  RItem (nodes: UiNode[]) {
     const result: VNode[] = []
 
     for (let node of nodes) {
@@ -33,7 +33,7 @@ export default class ProjectTree extends Vue {
       )
       if (node.children) {
         result.push(
-          ...RContent(node.children)
+          ...this.RItem(node.children)
         )
       }
     }
@@ -42,12 +42,15 @@ export default class ProjectTree extends Vue {
   }
 
   render () {
-    const { RContent, PageData } = this
+    const { PageData } = this
 
     return (
-      <div class="comp-tree">
-        <div class="comp-tree-scroller">
-          {RContent(PageData)}
+      <div class="tree">
+        <div class="tree-scroller">
+          {this.Previewer.ready ?
+            this.RItem(PageData) :
+            undefined
+          }
         </div>
       </div>
     )

@@ -26,72 +26,70 @@ export interface AddUiNodeOpts {
   nodeData?: UiNodeData
 }
 
-export type StateScreen = {
-  height: number
-  width: number
-  scrollHeight: number
+export interface Previewer {
+  ready: boolean
+  $el: HTMLElement | any
 }
 
 export type StateActivePanel = 'library' | 'setting' | 'tree' | 'editor'
 
-export type StateUiModules = UiModule[]
+export type PageData = UiNode[]
 
-export type GetterPageData = UiNode[]
-
-export interface GetterDevice {
+export interface Device {
   height: number
   width: number
 }
 
-export interface GetterGetModule {
+export interface GetModule {
   (name: string): UiModule
 }
 
-export interface MutationSetProject {
+export interface SET_PROJECT {
   (val: ProjectData): {}
 }
 
-export interface MutationSetProjectData {
+export interface SET_PROJECT_DATA {
   (val: KV): {}
 }
 
-export interface MutationSetPageData {
+export interface SET_PAGE_DATA {
   (val: UiNode[]): {}
 }
 
-export interface MutationSetUiModule {
+export interface SET_UI_MODULE {
   (val: UiModule | UiModule[]): {}
 }
 
-export interface MutationSetPageNode {
+export interface SET_PAGE_NODE {
   (val: UiNodeOpts): {}
 }
 
-export interface MutationAddPageNode {
+export interface ADD_PAGE_NODE {
   (val: AddUiNodeOpts): {}
 }
 
-export interface MutationSetActiveUid {
+export interface SET_ACTIVE_UID {
   (val: string): {}
 }
 
-export interface MutationDelActiveUid {
+export interface DEL_ACTIVE_UID {
   (val: string): {}
 }
 
-export interface MutationSetActivePanel {
+export interface SET_ACTIVE_PANEL {
   (val: number): {}
 }
 
-export interface ActionInitProject {
-  (val: ProjectData): Promise<ProjectData>
+export interface SET_PREVIEWER_READY {
+  ($el: HTMLElement): {}
 }
 
 interface State {
   Project: ProjectData
-  UiModules: StateUiModules
+  UiModules: Array<UiModule>
   activePanel: number
   activeUid: string
+  Previewer: Previewer
 }
 
 const store = new Vuex.Store<State>({
@@ -109,15 +107,23 @@ const store = new Vuex.Store<State>({
     },
     UiModules: [],
     activePanel: ActivePanels.library,
-    activeUid: '0'
+    activeUid: '0',
+    Previewer: {
+      ready: false,
+      $el: null
+    },
   },
   getters: {
-    PageData: (state): GetterPageData => state.Project.UiNodes,
-    Device: (state): GetterDevice => state.Project.Device,
+    PageData: (state): PageData => state.Project.UiNodes,
+    Device: (state): Device => state.Project.Device,
     ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes),
     GetModule: (state) => (name: string): UiModule => state.UiModules.find(item => item.name === name) as UiModule
   },
   mutations: {
+    SET_PREVIEWER_READY (state, $el: HTMLElement) {
+      state.Previewer.ready = true
+      state.Previewer.$el = $el
+    },
     SET_PROJECT (state, val: ProjectData) {
       state.Project = deepCopy(val)
     },

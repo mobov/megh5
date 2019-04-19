@@ -1,28 +1,21 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
-  .setting-text {
-
-  }
 </style>
 <template>
-  <div class="setting-text">
-    <v-text-field
-      v-model="_value"
-      :label="label"
-      required
-    ></v-text-field>
+  <div class="editor-item-switch">
+    <div class="editor-item-label">{{label}}</div>
+    <v-switch v-model="_value"></v-switch>
   </div>
 </template>
-<script lang="ts">
+<script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 
 @Component
-export default class SettingText extends Vue {
+export default class SettingSwitch extends Vue {
   @Prop({
-    type: [String, Number],
-    default: ''
+    type: Boolean,
+    default: false
   })
-  value!: string
+  value!: boolean
 
   @Prop({
     type: Object,
@@ -34,7 +27,7 @@ export default class SettingText extends Vue {
     return this.value
   }
 
-  set _value (val: string) {
+  set _value (val) {
     this.$emit('input', val)
   }
 

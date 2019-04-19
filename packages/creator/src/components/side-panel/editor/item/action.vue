@@ -1,16 +1,15 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
-  .setting-move {
+  .editor-item-move {
     display: flex;
     align-items: center;
-    .setting-size__input {
+    .editor-item-size__input {
       width: 500px;
     }
   }
 </style>
 <template>
-  <div class="setting-radio">
-    <div class="setting-label">{{label}}</div>
+  <div class="editor-item-radio">
+    <div class="editor-item-label">{{label}}</div>
     <v-radio-group :column="false" :value="value">
       <v-radio v-for="selection in nodeConfig.extra"
                :key="selection.value"
@@ -25,11 +24,11 @@
 <script lang="tsx">
   import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
   import { State, Getter, Mutation } from 'vuex-class'
-  import { StateScreen, MutationSetPageNode } from 'src/store'
+  import { SET_PAGE_NODE } from 'src/store'
 
   @Component
   export default class SettingSize extends Vue {
-    @Mutation SET_PAGE_NODE!: MutationSetPageNode
+    @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
 
     @Prop({ type: String })
     field!: string

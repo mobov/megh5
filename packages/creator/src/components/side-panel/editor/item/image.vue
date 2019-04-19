@@ -1,19 +1,18 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
-  .setting-image {
+  .editor-item-image {
     cursor: pointer;
   }
-  .setting-image-main {
+  .editor-item-image-main {
     position: relative;
     height: 150px;
     width: 100%;
     display: flex;
   }
-  .setting-image-uploader {
+  .editor-item-image-uploader {
     height: 150px;
     width: 250px;
   }
-  .setting-image-backer {
+  .editor-item-image-backer {
     opacity: 0;
     position: absolute;
     z-index: 2;
@@ -25,16 +24,16 @@
   }
 </style>
 <template>
-  <div class="setting-image m-pb-md">
-    <div class="setting-label">{{label}}</div>
-    <div class="setting-image-main">
-      <div class="setting-image-uploader">
+  <div class="editor-item-image m-pb-md">
+    <div class="editor-item-label">{{label}}</div>
+    <div class="editor-item-image-main">
+      <div class="editor-item-image-uploader">
         <v-img :src="value"
                contain
                height="150px"
                width="250px"
                class="m-elevation-2 grey lighten-2"/>
-        <input class="setting-image-backer"
+        <input class="editor-item-image-backer"
                @change="handleValueChange"
                type="file">
       </div>
@@ -45,9 +44,6 @@
 </template>
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode } from 'src/store'
-import { PropTypeLink } from '@megh5/ui/types/core/constants'
 
 @Component
 export default class SettingImage extends Vue {

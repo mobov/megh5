@@ -12,7 +12,7 @@
     <MApp class="app">
       <MView rightSize="700px"
              headerSize="50px"
-             leftSize="100px"
+             leftSize="50px"
              fillHeader="none"
              :rightIndex="5">
         <MAppBar slot="header"
@@ -29,6 +29,7 @@
             导出
           </MButton>
         </MAppBar>
+        <Timeline class="m-elevation-3" slot="left"/>
         <SidePanel class="m-elevation-2" slot="right" />
         <MFlex full justify="center" align="center" @click="handleSetProject" style="height: 100%">
           <Previewer @click.stop mode="preview"/>
@@ -40,20 +41,20 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { MutationSetProject, MutationSetActiveUid } from '@/store'
+import { SET_PROJECT, SET_ACTIVE_UID } from '@/store'
 import { ProjectData } from '@megh5/ui/types/core/constants'
-import Previewer from '@/components/previewer.vue'
-import Menu from '@/components/menu.vue'
-import SidePanel from '@/components/side-panel.vue'
+import Previewer from '@/components/previewer/index.vue'
+import Timeline from '@/components/timeline/index.vue'
+import SidePanel from '@/components/side-panel/index.vue'
 import { importProject, exportProject, templateProject } from '@/project'
 
 @Component({
-  components: { SidePanel, Previewer, Menu }
+  components: { SidePanel, Previewer, Timeline }
 })
 export default class App extends Vue {
   @State Project!: ProjectData
-  @Mutation SET_PROJECT!: MutationSetProject
-  @Mutation SET_ACTIVE_UID!: MutationSetActiveUid
+  @Mutation SET_PROJECT!: SET_PROJECT
+  @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
   created () {
     this.SET_PROJECT(templateProject)

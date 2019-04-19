@@ -1,18 +1,17 @@
 <style lang='scss'>
-  @import "../../../../../node_modules/@mobov/scss-helper/import";
-  .setting-size {
+  .editor-item-size {
     display: inline-flex;
     align-items: flex-end;
-    .setting-size__input {
+    .editor-item-size__input {
       max-width: 150px;
       margin-right: 10px;
     }
   }
 </style>
 <template>
-  <div class="setting-size">
+  <div class="editor-item-size">
     <v-text-field
-      class="setting-size__input"
+      class="editor-item-size__input"
       v-model="_value"
       type="number"
       :min="min"
@@ -26,8 +25,6 @@
 </template>
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { State, Getter, Mutation } from 'vuex-class'
-import { StateScreen, MutationSetPageNode } from 'src/store'
 
 @Component
 export default class SettingSize extends Vue {

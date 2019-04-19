@@ -35,7 +35,7 @@ const Project: ProjectData = {
     }),
     children: [{
       name: HView.name,
-      uid: '0/1',
+      uid: '01',
       pid: '0',
       locked: false,
       uiConfig: merge(HView.uiConfig, {
@@ -54,7 +54,7 @@ const Project: ProjectData = {
       children: []
     }, {
       name: HFooter.name,
-      uid: '0/2',
+      uid: '02',
       pid: '0',
       locked: false,
       uiConfig: merge(HFooter.uiConfig, {
