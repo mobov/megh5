@@ -47,6 +47,11 @@ export function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
           }
         }
 
+        if (node.nodeData.slot) {
+          elementData.slot = node.nodeData.slot
+          // delete node.nodeData.slot
+        }
+
         result.push(h(
           'comp-suit',
           elementData,

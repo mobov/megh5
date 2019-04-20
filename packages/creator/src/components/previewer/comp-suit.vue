@@ -4,11 +4,13 @@
   $--comp-suit-handler-color-normal: #03a9f4;
   $--comp-suit-handler-color-locked: #ff5252;
   $--comp-suit-handler-pos-fix: 0;
-  $--comp-suit-handler-size: 3px;
+  $--comp-suit-handler-size: 4px;
+  $--comp-suit-handler-corner-size: 10px;
  // $--comp-suit-select-border-size: 2px;
 
   .comp-suit {
     --comp-suit-handler-color: #{$--comp-suit-handler-color-normal};
+    --comp-suit-handler-scale: .5;
     user-select: none;
     box-sizing: border-box;
     cursor: pointer;
@@ -18,6 +20,7 @@
       z-index: 99;
       >.comp-suit-handler {
         background-color: var(--comp-suit-handler-color);
+        /*transition: transform ease .3s;*/
         position: absolute;
       }
       >.--↑,
@@ -31,11 +34,12 @@
       >.--↘,
       >.--↙ {
         z-index: 101;
-        width: 8px;
-        height: 8px;
+        width: $--comp-suit-handler-corner-size;
+        height: $--comp-suit-handler-corner-size;
         /*font-size: 1px;*/
         border-radius: 50%;
         /*border: 1px solid #fff;*/
+        transform: scale(var(--comp-suit-handler-scale));
       }
 
       >.--↑,
@@ -44,6 +48,7 @@
         width: 100%;
         left: 0;
         cursor: ns-resize;
+        transform: scaleY(var(--comp-suit-handler-scale));
       }
 
       >.--→,
@@ -52,50 +57,70 @@
         height: 100%;
         top: 0;
         cursor: ew-resize;
+        transform: scaleX(var(--comp-suit-handler-scale));
       }
 
       >.--↑ {
         top: 0;
+        transform-origin: top;
       }
 
       >.--↓ {
         bottom: 0;
+        transform-origin: bottom;
       }
 
       >.--← {
         left: 0;
+        transform-origin: left;
       }
 
       >.--→ {
         right: 0;
+        transform-origin: right;
       }
 
       >.--↖ {
         left: $--comp-suit-handler-pos-fix;
         top: $--comp-suit-handler-pos-fix;
         cursor: nw-resize;
+        transform-origin: top left;
       }
 
       >.--↗ {
         right: $--comp-suit-handler-pos-fix;
         top: $--comp-suit-handler-pos-fix;
         cursor: ne-resize;
+        transform-origin: top right;
       }
 
       >.--↙ {
         left: $--comp-suit-handler-pos-fix;
         bottom: $--comp-suit-handler-pos-fix;
         cursor: sw-resize;
+        transform-origin: bottom left;
       }
 
       >.--↘ {
         right: $--comp-suit-handler-pos-fix;
         bottom: $--comp-suit-handler-pos-fix;
         cursor: se-resize;
+        transform-origin: bottom right;
       }
     }
     &.--isLocked {
       --comp-suit-handler-color: #{$--comp-suit-handler-color-locked};
+    }
+    &.--isHanding {
+      --comp-suit-handler-scale: 1
+    }
+  }
+
+  .previewer {
+    &:hover {
+      .comp-suit {
+        --comp-suit-handler-scale: 1
+      }
     }
   }
 
@@ -187,10 +212,19 @@ export default class CompSuit extends Vue {
     return this.nodeProps!.position !== 'relative'
   }
 
+  get isHanding (): boolean {
+    return this.isMove ||
+    this.isSizeL ||
+    this.isSizeR ||
+    this.isSizeT ||
+    this.isSizeB
+  }
+
   get classes (): any {
     return {
       'comp-suit': true,
       '--active': this.isActive,
+      '--isHanding': this.isHanding,
       '--isLocked': this.isLocked
     }
   }
