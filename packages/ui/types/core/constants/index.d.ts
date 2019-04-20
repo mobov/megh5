@@ -40,7 +40,7 @@ export interface UiNodeData extends VNodeData {
 }
 export interface UiNodeConfig {
     disabled?: boolean;
-    mater?: boolean;
+    isParent?: boolean;
     locked?: boolean;
     moveMode?: uiMode;
     sizeMode?: uiMode;

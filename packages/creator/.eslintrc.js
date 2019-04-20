@@ -16,11 +16,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'indent': 'off'
   },
-  // parserOptions: {
-  //   parser: 'typescript-eslint-parser',
-  //   ecmaFeatures: {
-  //     'jsx': true,
-  //     'experimentalObjectRestSpread': true
-  //   }
-  // }
+  parserOptions: {
+    parser: 'typescript-eslint-parser'
+  }
 }

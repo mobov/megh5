@@ -11,9 +11,8 @@ export type typeDirection = 'x' | 'y' | 'xy' | 'none'
 
 export enum ActivePanels {
   library = 0,
-  setting = 1,
-  tree = 2,
-  editor = 3
+  editor = 1,
+  setting = 2
 }
 
-export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' |  'color'
+export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color'

@@ -4,6 +4,9 @@
   }
 
   .h-app {
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     min-height: 100%;
     width: 100%;
     display: flex;

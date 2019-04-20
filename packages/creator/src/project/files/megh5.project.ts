@@ -26,11 +26,8 @@ const Project: ProjectData = {
     nodeData: merge(HApp.nodeData, {
       style: {},
       props: {
-        position: 'relative',
         width: 320,
         height: 736,
-        x: 0,
-        y: 0
       }
     }),
     children: [{

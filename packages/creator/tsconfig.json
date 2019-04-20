@@ -1,5 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -23,11 +22,14 @@
       "dom",
       "dom.iterable",
       "scripthost"
+    ],
+    "types": [
+      "webpack-env"
     ]
   },
   "exclude": [
     "src/project/files/*",
-    "node_modules/@megh5/*"
+    "node_modules"
   ],
   "include": [
       "src/**/*.ts",

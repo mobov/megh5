@@ -28,8 +28,6 @@
   .tree-item-thumb {
     max-width: 100%;
     height: 60px;
-    /*transform: scale(.8);*/
-
     img {
       max-width: 100%;
       max-height: 80px;
@@ -41,20 +39,13 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-propert
 import { CreateElement } from 'vue'
 import { MFlex } from '@mobov/vui'
 import { State, Mutation, Getter } from 'vuex-class'
-import { GetModule, SET_PAGE_NODE, Previewer, SET_ACTIVE_UID } from '@/store'
+import { GetModule, SET_PAGE_NODE, StatePreviewer, SET_ACTIVE_UID } from '@/store'
 import { UiModule, UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { compiler } from '@/utils'
 import domtoimage from 'dom-to-image'
 
-const thumbRatio: number = 5
-
-const ClearAttrMaps: string[] = [
-  'x', 'y',
-  'left', 'right', 'bottom', 'right', 'margin-left', 'margin-right', 'margin-bottom', 'margin-right'
-]
-
-function shotFilter (node: HTMLElement) {
+function shotFilter (node: Node | any): boolean {
   let result = true
   if (node.tagName === 'link') {
     result = false
@@ -70,7 +61,7 @@ function shotFilter (node: HTMLElement) {
   components: { MFlex }
 })
 export default class ProjectTreeItem extends Vue {
-  @State Previewer!: Previewer
+  @State Previewer!: StatePreviewer
 
   @State activeUid!: string
 
@@ -91,12 +82,12 @@ export default class ProjectTreeItem extends Vue {
     return this.value.uid === this.activeUid
   }
 
-  get classes () {
+  get classes (): any {
     const { isActive } = this
 
     const classes = {
-      [`--active`]: isActive,
-      [`--locked`]: this.value.locked
+      '--active': isActive,
+      '--locked': this.value.locked
     }
 
     return classes
@@ -105,12 +96,10 @@ export default class ProjectTreeItem extends Vue {
   snapshot: string = ''
 
   async handleShot () {
-    console.log(this.Previewer.$el)
     if (this.Previewer.ready) {
-      let $target: HTMLElement = null
+      let $target: HTMLElement | any = null
       if (this.value.name === 'h-app') {
         $target = this.Previewer.$el
-
       } else {
         $target = this.Previewer.$el.querySelector(`.uid-${this.value.uid}`)
         this.snapshot = await domtoimage.toPng($target, {
@@ -124,31 +113,35 @@ export default class ProjectTreeItem extends Vue {
     this.SET_ACTIVE_UID(this.value.uid)
   }
 
-  render () {
-    const { uiModule, snapshot, classes } = this
-    this.handleShot ()
-    /* <MFlexFiller />
-		<MIcon class="comp-list__sort-handler" name="menu" />
-		 */
-    /*
-            <div class="tree-item-thumb">
-          <img src={snapshot} />
-        </div>
-
-    */
+  render (h: CreateElement) {
+    const { uiModule, classes } = this
+    this.handleShot()
     // <MIcon class="comp-list__sort-handler" name="menu" />
-    return (
-      <MFlex staticClass={`tree-item ${classes}`}
-             class={classes}
-             onClick={this.handleActive}
-             direction="column" justify="center" align="center">
-        <MFlex class="tree-item-header m-hr-b m-p-md" align="center">
-          {uiModule.title}
-
-        </MFlex>
-      </MFlex>
-    )
+    return h('MFlex', {
+      staticClass: `tree-item ${classes}`,
+      class: classes,
+      attrs: {
+        direction: 'column',
+        justify: 'center',
+        align: 'center'
+      },
+      on: {
+        click: this.handleActive
+      }
+    }, [
+      h('MFlex', {
+        staticClass: 'tree-item-header m-hr-b m-p-md',
+        attrs: {
+          align: 'center'
+        },
+        domProps: {
+          innerHTML: uiModule.title
+        },
+        on: {
+          click: this.handleActive
+        }
+      })
+    ])
   }
-
 }
 </script>

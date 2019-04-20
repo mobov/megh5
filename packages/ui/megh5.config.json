@@ -4,19 +4,19 @@
         "title": "项目",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "disabled": true,
-            "mater": true,
+            "isParent": true,
             "moveMode": "none",
             "sizeMode": "none"
         },
         "nodeConfig": {},
         "nodeData": {
             "style": {
-                "backgroundColor": "transparent"
+                "backgroundColor": "#ffffff"
             },
             "props": {
                 "height": 736,
-                "width": 320
+                "width": 320,
+                "bgImg": ""
             }
         }
     },
@@ -25,7 +25,7 @@
         "title": "页脚",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": false,
+            "isParent": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -76,7 +76,7 @@
         "title": "视图",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": true,
+            "isParent": true,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -103,7 +103,7 @@
         "title": "文字",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": false,
+            "isParent": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -150,7 +150,7 @@
         "title": "按钮",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": true,
+            "isParent": true,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -185,7 +185,7 @@
         "title": "邀请码",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": false,
+            "isParent": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -227,7 +227,7 @@
         "title": "视频",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": false,
+            "isParent": false,
             "moveMode": "xy",
             "sizeMode": "xy"
         },
@@ -279,7 +279,7 @@
         "title": "弹窗",
         "cover": "http://img2.imgtn.bdimg.com/it/u=2357269790,3457929064&fm=26&gp=0.jpg",
         "uiConfig": {
-            "mater": true,
+            "isParent": true,
             "moveMode": "none",
             "sizeMode": "none"
         },

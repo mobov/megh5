@@ -31,7 +31,7 @@
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, SET_ACTIVE_UID, Previewer, SET_PREVIEWER_READY, Device } from '@/store'
+import { PageData, SET_ACTIVE_UID, StatePreviewer, SET_PREVIEWER_READY, Device } from '@/store'
 import { ProjectData } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { compiler } from '@/utils'
@@ -46,7 +46,7 @@ export default class Previewer extends Vue {
 
   @State Project!: ProjectData
 
-  @State Previewer!: Previewer
+  @State Previewer!: StatePreviewer
 
   @Mutation SET_ACTIVE_UID !: SET_ACTIVE_UID
 

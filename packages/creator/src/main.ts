@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import './ui'
 import '@mobov/vui/lib/style.css'
 import Mobov from '@mobov/vui'
-Vue.use(Mobov)
-
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
+import './ui'
+
+Vue.use(Mobov)
 
 Vue.use(Vuetify, {
     theme: {

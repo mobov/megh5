@@ -26,28 +26,21 @@
 import { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, Previewer } from '@/store'
+import { PageData, StatePreviewer } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { merge } from 'lodash'
 import domtoimage from 'dom-to-image'
 
-const thumbRatio: number = 5
-
-const ClearAttrMaps: string[] = [
-  'x', 'y',
-  'left', 'right', 'bottom', 'right', 'margin-left', 'margin-right', 'margin-bottom', 'margin-right'
-]
-
-function shotFilter (node: HTMLElement): boolean {
+function shotFilter (node: Node | any): boolean {
   return (node.tagName !== 'link')
 }
 
 @Component
 export default class Timeline extends Vue {
-  @State Previewer!: Previewer
+  @State Previewer!: StatePreviewer
 
-  ShotHistories!: string[] = []
+  ShotHistories: string[] = []
 
   async handleShot () {
     if (this.Previewer.ready) {

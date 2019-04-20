@@ -12,8 +12,10 @@
     </VTabs>
     <MFlex class="side-panel-main">
       <Library v-show="activePanel === 0" />
-      <Editor v-show="activePanel === 1 && !mainActive" />
-      <Setting v-show="activePanel === 1 && mainActive" />
+      <Editor v-show="activePanel === 1" />
+      <Setting v-show="activePanel === 2" />
+      <!--<Editor v-show="activePanel === 1 && !mainActive" />-->
+      <!--<Setting v-show="activePanel === 1 && mainActive" />-->
     </MFlex>
     <Tree slot="right" class="m-elevation-2" />
   </MView>
@@ -43,7 +45,7 @@ export default class SidePanel extends Vue {
 
   @Watch('activeUid')
   handleCompActive () {
-    this.SET_ACTIVE_PANEL(ActivePanels.setting)
+    this.SET_ACTIVE_PANEL(ActivePanels.editor)
   }
 
   get mainActive () {

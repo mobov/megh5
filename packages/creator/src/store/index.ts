@@ -26,12 +26,10 @@ export interface AddUiNodeOpts {
   nodeData?: UiNodeData
 }
 
-export interface Previewer {
+export interface StatePreviewer {
   ready: boolean
-  $el: HTMLElement | any
+  $el: any
 }
-
-export type StateActivePanel = 'library' | 'setting' | 'tree' | 'editor'
 
 export type PageData = UiNode[]
 
@@ -89,10 +87,11 @@ interface State {
   UiModules: Array<UiModule>
   activePanel: number
   activeUid: string
-  Previewer: Previewer
+  Previewer: StatePreviewer
 }
 
-const store = new Vuex.Store<State>({
+export default new Vuex.Store<State>({
+// export default new Vuex.Store({
   state: {
     Project: {
       name: 'demo',
@@ -110,8 +109,8 @@ const store = new Vuex.Store<State>({
     activeUid: '0',
     Previewer: {
       ready: false,
-      $el: null
-    },
+      $el: {}
+    }
   },
   getters: {
     PageData: (state): PageData => state.Project.UiNodes,
@@ -146,7 +145,7 @@ const store = new Vuex.Store<State>({
         const pNode = getPathNode(pid, state.Project.UiNodes)
         const pModule = state.UiModules.find(item => item.name === pNode.name) as UiModule
 
-        if (pModule.uiConfig.mater) {
+        if (pModule.uiConfig.isParent) {
           pid = pNode.uid
         } else {
           pid = state.Project.mainUid
@@ -177,10 +176,10 @@ const store = new Vuex.Store<State>({
     },
     SET_UI_MODULE (state, val: UiModule | UiModule[]) {
       if (val instanceof Array) {
-        const result = val.map(item => merge(item, BaseModuleConfig))
+        const result: any = val.map(item => merge(item, BaseModuleConfig))
         state.UiModules = state.UiModules.concat(result)
       } else {
-        const result = merge(val, BaseModuleConfig)
+        const result: UiModule = merge(val, BaseModuleConfig)
         state.UiModules.push(result)
       }
     },
@@ -200,5 +199,3 @@ const store = new Vuex.Store<State>({
     }
   }
 })
-
-export default store

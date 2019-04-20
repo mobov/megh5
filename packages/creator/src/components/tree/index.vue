@@ -13,7 +13,7 @@ import { CreateElement, VNode, VNodeData } from 'vue'
 // @ts-ignore
 import ProjectTreeItem from './tree-item.vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, Previewer } from '@/store'
+import { PageData, StatePreviewer } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 
 @Component({
@@ -22,7 +22,7 @@ import { UiNode } from '@megh5/ui/types/core/constants'
 export default class Tree extends Vue {
   @Getter PageData!: PageData
 
-  @State Previewer!: Previewer
+  @State Previewer!: StatePreviewer
 
   RItem (nodes: UiNode[]) {
     const result: VNode[] = []

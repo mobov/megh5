@@ -3,6 +3,10 @@
   // $--element-active-color: #ffd0a3;
   $--comp-suit-handler-color-normal: #03a9f4;
   $--comp-suit-handler-color-locked: #ff5252;
+  $--comp-suit-handler-pos-fix: 0;
+  $--comp-suit-handler-size: 3px;
+ // $--comp-suit-select-border-size: 2px;
+
   .comp-suit {
     --comp-suit-handler-color: #{$--comp-suit-handler-color-normal};
     user-select: none;
@@ -27,16 +31,16 @@
       >.--↘,
       >.--↙ {
         z-index: 101;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         /*font-size: 1px;*/
         border-radius: 50%;
-        border: 1px solid #fff;
+        /*border: 1px solid #fff;*/
       }
 
       >.--↑,
       >.--↓ {
-        height: 4px;
+        height: $--comp-suit-handler-size;
         width: 100%;
         left: 0;
         cursor: ns-resize;
@@ -44,7 +48,7 @@
 
       >.--→,
       >.--← {
-        width: 4px;
+        width: $--comp-suit-handler-size;
         height: 100%;
         top: 0;
         cursor: ew-resize;
@@ -67,26 +71,26 @@
       }
 
       >.--↖ {
-        left: -1px;
-        top: -1px;
+        left: $--comp-suit-handler-pos-fix;
+        top: $--comp-suit-handler-pos-fix;
         cursor: nw-resize;
       }
 
       >.--↗ {
-        right: -1px;
-        top: -1px;
+        right: $--comp-suit-handler-pos-fix;
+        top: $--comp-suit-handler-pos-fix;
         cursor: ne-resize;
       }
 
       >.--↙ {
-        left: -2px;
-        bottom: -1px;
+        left: $--comp-suit-handler-pos-fix;
+        bottom: $--comp-suit-handler-pos-fix;
         cursor: sw-resize;
       }
 
       >.--↘ {
-        right: -1px;
-        bottom: -1px;
+        right: $--comp-suit-handler-pos-fix;
+        bottom: $--comp-suit-handler-pos-fix;
         cursor: se-resize;
       }
     }
