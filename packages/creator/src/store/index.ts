@@ -139,6 +139,7 @@ export default new Vuex.Store<State>({
     },
     ADD_PAGE_NODE (state, val: AddUiNodeOpts) {
       const nodeModule = deepCopy(state.UiModules.find(item => item.name === val.name)) as UiModule
+      const nodeData = nodeModule.nodeData
       let pid = val.pid
 
       if (pid && pid !== state.Project.mainUid) {
@@ -147,6 +148,21 @@ export default new Vuex.Store<State>({
 
         if (pModule.uiConfig.isParent) {
           pid = pNode.uid
+          if (pNode.nodeData.props && nodeData.props) {
+            if (
+              pNode.nodeData.props.height && nodeData.props.height &&
+              pNode.nodeData.props.height < nodeData.props.height
+            ) {
+              nodeData.props.height = pNode.nodeData.props.height
+            }
+
+            if (
+              pNode.nodeData.props.width && nodeData.props.width &&
+              pNode.nodeData.props.width < nodeData.props.width
+            ) {
+              nodeData.props.width = pNode.nodeData.props.width
+            }
+          }
         } else {
           pid = state.Project.mainUid
         }
@@ -159,7 +175,7 @@ export default new Vuex.Store<State>({
         uid: ulid(),
         pid: pid,
         locked: false,
-        nodeData: { ...nodeModule.nodeData },
+        nodeData,
         children: []
       }
 

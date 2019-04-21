@@ -4,7 +4,7 @@
   $--comp-suit-handler-color-normal: #03a9f4;
   $--comp-suit-handler-color-locked: #ff5252;
   $--comp-suit-handler-pos-fix: 0;
-  $--comp-suit-handler-size: 4px;
+  $--comp-suit-handler-size: 3px;
   $--comp-suit-handler-corner-size: 10px;
  // $--comp-suit-select-border-size: 2px;
 
@@ -36,10 +36,11 @@
         z-index: 101;
         width: $--comp-suit-handler-corner-size;
         height: $--comp-suit-handler-corner-size;
+        background-color: transparent;
         /*font-size: 1px;*/
-        border-radius: 50%;
-        /*border: 1px solid #fff;*/
-        transform: scale(var(--comp-suit-handler-scale));
+        /*border-radius: 20%;*/
+        border: $--comp-suit-handler-size solid var(--comp-suit-handler-color);
+        /*transform: scale(var(--comp-suit-handler-scale));*/
       }
 
       >.--↑,
@@ -48,7 +49,7 @@
         width: 100%;
         left: 0;
         cursor: ns-resize;
-        transform: scaleY(var(--comp-suit-handler-scale));
+        /*transform: scaleY(var(--comp-suit-handler-scale));*/
       }
 
       >.--→,
@@ -57,55 +58,55 @@
         height: 100%;
         top: 0;
         cursor: ew-resize;
-        transform: scaleX(var(--comp-suit-handler-scale));
+        /*transform: scaleX(var(--comp-suit-handler-scale));*/
       }
 
       >.--↑ {
         top: 0;
-        transform-origin: top;
+        /*transform-origin: top;*/
       }
 
       >.--↓ {
         bottom: 0;
-        transform-origin: bottom;
+        /*transform-origin: bottom;*/
       }
 
       >.--← {
         left: 0;
-        transform-origin: left;
+        /*transform-origin: left;*/
       }
 
       >.--→ {
         right: 0;
-        transform-origin: right;
+        /*transform-origin: right;*/
       }
 
       >.--↖ {
         left: $--comp-suit-handler-pos-fix;
         top: $--comp-suit-handler-pos-fix;
         cursor: nw-resize;
-        transform-origin: top left;
+        /*transform-origin: top left;*/
       }
 
       >.--↗ {
         right: $--comp-suit-handler-pos-fix;
         top: $--comp-suit-handler-pos-fix;
         cursor: ne-resize;
-        transform-origin: top right;
+        /*transform-origin: top right;*/
       }
 
       >.--↙ {
         left: $--comp-suit-handler-pos-fix;
         bottom: $--comp-suit-handler-pos-fix;
         cursor: sw-resize;
-        transform-origin: bottom left;
+        /*transform-origin: bottom left;*/
       }
 
       >.--↘ {
         right: $--comp-suit-handler-pos-fix;
         bottom: $--comp-suit-handler-pos-fix;
         cursor: se-resize;
-        transform-origin: bottom right;
+        /*transform-origin: bottom right;*/
       }
     }
     &.--isLocked {
@@ -113,6 +114,16 @@
     }
     &.--isHanding {
       --comp-suit-handler-scale: 1
+    }
+    &.--size-none,
+    &.--size-x,
+    &.--size-y {
+      >.--↖,
+      >.--↗,
+      >.--↘,
+      >.--↙ {
+        display: none;
+      }
     }
   }
 
@@ -225,7 +236,8 @@ export default class CompSuit extends Vue {
       'comp-suit': true,
       '--active': this.isActive,
       '--isHanding': this.isHanding,
-      '--isLocked': this.isLocked
+      '--isLocked': this.isLocked,
+      [`--size-${this.sizeMode}`]: true
     }
   }
 

@@ -45,6 +45,10 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 
+const Files = [
+
+]
+
 @Component
 export default class SettingImage extends Vue {
   @Prop({
@@ -74,6 +78,7 @@ export default class SettingImage extends Vue {
   }
 
   handleValueChange (e: any) {
+    console.log(e)
     const file = e.target.files[0]
     let reader: any = new FileReader()
 
@@ -81,6 +86,7 @@ export default class SettingImage extends Vue {
       this.$emit('input', reader.result)
       reader.removeEventListener('load', onLoad)
       reader = null
+      e.target.value = ''
     }
 
     reader.addEventListener('load', onLoad, false)
