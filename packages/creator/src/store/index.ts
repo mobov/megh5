@@ -7,8 +7,13 @@ import { getPathNode } from '@/utils'
 import { deepCopy } from '@mobov/es-helper'
 import { ulid } from 'ulid'
 import { merge } from 'lodash'
+import domtoimage from 'dom-to-image'
 
 Vue.use(Vuex)
+
+function TimelineShotFilter (node: Node | any): boolean {
+  return (node.tagName !== 'link')
+}
 
 export interface UiNodeOpts {
   uid: string
@@ -86,12 +91,19 @@ export interface SET_LOCK {
   (uid: string): {}
 }
 
+export interface ROLL_BACK {
+  (uid: UiNode[]): {}
+}
+
+
 interface State {
   Project: ProjectData
   UiModules: Array<UiModule>
   activePanel: number
   activeUid: string
   Previewer: StatePreviewer
+  timelineShot: boolean
+  treeShot: string
 }
 
 export default new Vuex.Store<State>({
@@ -114,7 +126,9 @@ export default new Vuex.Store<State>({
     Previewer: {
       ready: false,
       $el: {}
-    }
+    },
+    timelineShot: false,
+    treeShot: ''
   },
   getters: {
     PageData: (state): PageData => state.Project.UiNodes,
@@ -140,6 +154,12 @@ export default new Vuex.Store<State>({
     SET_PAGE_NODE (state, val: UiNodeOpts) {
       const $target = getPathNode(val.uid, state.Project.UiNodes)
       merge($target, val)
+      state.timelineShot = !state.timelineShot
+      state.treeShot = $target.uid
+    },
+    ROLL_BACK (state, val: UiNode[]) {
+      state.activeUid = state.Project.mainUid
+      state.Project.UiNodes = val
     },
     SET_LOCK (state, uid: string) {
       const $target = getPathNode(uid, state.Project.UiNodes)
@@ -192,6 +212,7 @@ export default new Vuex.Store<State>({
       const $target = getPathNode(tempNode.pid, state.Project.UiNodes)
       Vue.set($target.children, $target.children.length, tempNode)
       state.activeUid = tempNode.uid
+      state.timelineShot = !state.timelineShot
     },
     DEL_PAGE_NODE (state, val: string) {
       const $target = getPathNode(val, state.Project.UiNodes)

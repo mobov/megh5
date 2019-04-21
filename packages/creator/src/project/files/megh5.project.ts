@@ -30,24 +30,6 @@ const Project: ProjectData = {
       }
     }),
     children: [{
-      name: HView.name,
-      uid: '01',
-      pid: '0',
-      uiConfig: merge(HView.uiConfig, {
-        moveMode: 'none'
-      }),
-      nodeData: merge(HView.nodeData, {
-        style: {},
-        props: {
-          position: 'relative',
-          width: 320,
-          height: 636,
-          x: 0,
-          y: 0
-        }
-      }),
-      children: []
-    }, {
       name: HFooter.name,
       uid: '02',
       pid: '0',

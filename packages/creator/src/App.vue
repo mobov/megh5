@@ -8,7 +8,7 @@
   }
 </style>
 <template>
-  <VApp>
+  <VApp id="app">
     <MApp class="app">
       <MView rightSize="700px"
              headerSize="50px"
@@ -35,6 +35,15 @@
           <Previewer @click.stop mode="preview"/>
         </MFlex>
       </MView>
+      <VSnackbar v-model="message.show" absolute :color="message.color">
+        {{message.msg}}
+        <v-btn
+          dark
+          flat
+          @click="message.show = false">
+          关闭
+        </v-btn>
+      </VSnackbar>
     </MApp>
   </VApp>
 </template>
@@ -48,12 +57,19 @@ import Timeline from '@/components/timeline/index.vue'
 import SidePanel from '@/components/side-panel/index.vue'
 import { importProject, exportProject, templateProject } from '@/project'
 
+interface MessageOpts {
+  color: 'error' | 'success'
+  msg: string
+}
+
 @Component({
   components: { SidePanel, Previewer, Timeline }
 })
 export default class App extends Vue {
   @State Project!: ProjectData
+
   @Mutation SET_PROJECT!: SET_PROJECT
+
   @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
   created () {
@@ -68,6 +84,30 @@ export default class App extends Vue {
 
   handleExport () {
     exportProject(this.Project)
+  }
+
+  mounted () {
+    Vue.prototype.$app = this
+  }
+
+  message = {
+    show: false,
+    color: 'error',
+    msg: ''
+  } as {
+    show: boolean
+    color: 'error' | 'success'
+    msg: string
+  }
+
+  showMessage (opts: MessageOpts) {
+    if (opts.color) {
+      this.message.color = opts.color
+    }
+    if (opts.msg) {
+      this.message.msg = opts.msg
+    }
+    this.message.show = true
   }
 
   // handleSetProject () {

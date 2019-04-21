@@ -26,7 +26,7 @@
 import { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, StatePreviewer } from '@/store'
+import { PageData, StatePreviewer, ROLL_BACK } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { merge } from 'lodash'
@@ -40,22 +40,39 @@ function shotFilter (node: Node | any): boolean {
 export default class Timeline extends Vue {
   @State Previewer!: StatePreviewer
 
-  ShotHistories: string[] = []
+  @State Previewer!: StatePreviewer
 
+  @State timelineShot!: boolean
+
+  @Getter PageData!: UiNode[]
+
+  @Mutation ROLL_BACK!: ROLL_BACK
+
+  ShotHistories: any[] = []
+
+  @Watch('timelineShot')
   async handleShot () {
     if (this.Previewer.ready) {
       const shot = await domtoimage.toPng(this.Previewer.$el, {
         filter: shotFilter
       })
-      this.ShotHistories.unshift(shot)
+      const history = {
+        data: deepCopy(this.PageData),
+        shot
+      }
+      this.ShotHistories.unshift(history)
     }
   }
 
+  handleRollBack (data: UiNode[]) {
+    this.ROLL_BACK(data)
+  }
+
   RThumbs () {
-    return this.ShotHistories.map(shot => {
+    return this.ShotHistories.map(history => {
       return (
-        <div class="timeline-item-thumb">
-          <img alt="" src={shot}/>
+        <div class="timeline-item-thumb" onClick={() => this.handleRollBack(history.data)}>
+          <img alt="" src={history.shot}/>
         </div>
       )
     })
@@ -69,12 +86,6 @@ export default class Timeline extends Vue {
         </div>
       </div>
     )
-  }
-  mounted () {
-
-    setInterval(() => {
-      this.handleShot()
-    }, 10000)
   }
 }
 </script>

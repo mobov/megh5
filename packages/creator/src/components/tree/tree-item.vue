@@ -35,7 +35,7 @@
   }
 </style>
 <script lang="tsx">
-import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement } from 'vue'
 import { MFlex } from '@mobov/vui'
 import { State, Mutation, Getter } from 'vuex-class'
@@ -74,6 +74,8 @@ export default class ProjectTreeItem extends Vue {
 
   @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
+  @State treeShot!: string
+
   get uiModule (): UiModule {
     return this.GetModule(this.value.name)
   }
@@ -95,7 +97,8 @@ export default class ProjectTreeItem extends Vue {
 
   snapshot: string = ''
 
-  async handleShot () {
+  // @Watch('treeShot')
+  async handleShot (val?: string) {
     if (this.Previewer.ready) {
       let $target: HTMLElement | any = null
       if (this.value.name === 'h-app') {

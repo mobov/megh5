@@ -45,9 +45,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 
-const Files = [
-
-]
+const sizeLimit = 1024 * 1024
 
 @Component
 export default class SettingImage extends Vue {
@@ -62,6 +60,8 @@ export default class SettingImage extends Vue {
     default: {}
   })
   nodeConfig!: any
+
+  snackbar: boolean = false
 
   get _value () {
     return this.value
@@ -79,19 +79,28 @@ export default class SettingImage extends Vue {
 
   handleValueChange (e: any) {
     const file = e.target.files[0]
-    let reader: any = new FileReader()
 
-    const onLoad = () => {
-      this.$emit('input', reader.result)
-      reader.removeEventListener('load', onLoad)
-      reader = null
-      e.target.value = ''
-    }
+    if (file.size < sizeLimit) {
+      let reader: any = new FileReader()
 
-    reader.addEventListener('load', onLoad, false)
+      const onLoad = () => {
+        this.$emit('input', reader.result)
+        reader.removeEventListener('load', onLoad)
+        reader = null
+        e.target.value = ''
+      }
 
-    if (file) {
-      reader.readAsDataURL(file)
+      reader.addEventListener('load', onLoad, false)
+
+      if (file) {
+        reader.readAsDataURL(file)
+      }
+    } else {
+      // @ts-ignore
+      this.$app.showMessage({
+        color: 'error',
+        msg: '图片不能大于1M'
+      })
     }
   }
 
