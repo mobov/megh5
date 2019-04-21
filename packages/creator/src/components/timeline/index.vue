@@ -29,7 +29,7 @@ import { State, Mutation, Getter } from 'vuex-class'
 import { PageData, StatePreviewer, ROLL_BACK } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
-import { merge } from 'lodash'
+import { merge, debounce } from 'lodash'
 import domtoimage from 'dom-to-image'
 
 function shotFilter (node: Node | any): boolean {
@@ -38,8 +38,6 @@ function shotFilter (node: Node | any): boolean {
 
 @Component
 export default class Timeline extends Vue {
-  @State Previewer!: StatePreviewer
-
   @State Previewer!: StatePreviewer
 
   @State timelineShot!: boolean
@@ -64,9 +62,9 @@ export default class Timeline extends Vue {
     }
   }
 
-  handleRollBack (data: UiNode[]) {
+  handleRollBack = debounce((data: UiNode[]) => {
     this.ROLL_BACK(data)
-  }
+  }, 500)
 
   RThumbs () {
     return this.ShotHistories.map(history => {

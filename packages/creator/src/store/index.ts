@@ -106,6 +106,8 @@ interface State {
   treeShot: string
 }
 
+let timelineShotTimer: any = null
+
 export default new Vuex.Store<State>({
 // export default new Vuex.Store({
   state: {
@@ -154,8 +156,20 @@ export default new Vuex.Store<State>({
     SET_PAGE_NODE (state, val: UiNodeOpts) {
       const $target = getPathNode(val.uid, state.Project.UiNodes)
       merge($target, val)
-      state.timelineShot = !state.timelineShot
       state.treeShot = $target.uid
+      if (timelineShotTimer === null) {
+        timelineShotTimer = setTimeout(() => {
+          state.timelineShot = !state.timelineShot
+          timelineShotTimer = null
+        }, 1000)
+      } else {
+        clearTimeout(timelineShotTimer)
+        timelineShotTimer = null
+      }
+
+      // if (val.nodeData && val.nodeData.props && val.nodeData.props.bgImg) {
+      //   state.timelineShot = !state.timelineShot
+      // }
     },
     ROLL_BACK (state, val: UiNode[]) {
       state.activeUid = state.Project.mainUid
@@ -220,6 +234,7 @@ export default new Vuex.Store<State>({
       const index = $parent.children.findIndex($node => $node.uid === $target.uid)
       Vue.delete($parent.children, index)
       state.activeUid = state.Project.mainUid
+      state.timelineShot = !state.timelineShot
     },
     SET_UI_MODULE (state, val: UiModule | UiModule[]) {
       if (val instanceof Array) {

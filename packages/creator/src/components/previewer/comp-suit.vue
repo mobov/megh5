@@ -142,22 +142,22 @@ export default class CompSuit extends Vue {
   }
 
   @Watch('nodeProps.height')
-  updateSizeY(value) {
+  updateSizeY(value: number) {
     this.sizeY = value
   }
 
   @Watch('nodeProps.width')
-  updateSizeX(value) {
+  updateSizeX(value: number) {
     this.sizeX = value
   }
 
   @Watch('nodeProps.x')
-  updateMoveX(value) {
+  updateMoveX(value: number) {
     this.moveX = value
   }
 
   @Watch('nodeProps.y')
-  updateMoveY(value) {
+  updateMoveY(value: number) {
     this.moveY = value
   }
 

@@ -30,7 +30,7 @@
       <MFlexFiller />
       <v-btn :color="lockBtnState.color" small @click="handleLock">{{lockBtnState.text}}</v-btn>
       <!--<v-switch v-model="ActiveNode.locked" label="锁定"></v-switch>-->
-      <v-btn color="error" small @click="handleDelete">删除</v-btn>
+      <v-btn v-if="!disableDelete" color="error" small @click="handleDelete">删除</v-btn>
     </MFlex>
     <div class="editor-main m-hr-b m-p-md">
       <component :key="field"
@@ -77,6 +77,9 @@ export default class Editor extends Vue {
     return this.UiModules.find(item => item.name === this.ActiveNode.name) as UiModule
   }
 
+  get disableDelete (): boolean {
+    return this.ActiveNode.uiConfig.isRoot === true
+  }
   get lockBtnState () {
     return this.ActiveNode.uiConfig.locked ? {
       color: 'error',
@@ -100,7 +103,7 @@ export default class Editor extends Vue {
     this.SET_LOCK(this.ActiveNode.uid)
   }
 
-  handleChange (fieldPath, field, val) {
+  handleChange (fieldPath: 'props' | 'style', field: string, val: any) {
     this.SET_PAGE_NODE({
       uid: this.ActiveNode.uid,
       nodeData: {
