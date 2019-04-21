@@ -37,6 +37,7 @@
                  :field="field"
                  fieldPath="props"
                  v-model="ActiveNode.nodeData.props[field]"
+                 @input="handleChange('props', field, arguments[0])"
                  :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.props"
@@ -45,6 +46,7 @@
                  :field="field"
                  fieldPath="style"
                  v-model="ActiveNode.nodeData.style[field]"
+                 @input="handleChange('style', field, arguments[0])"
                  :nodeConfig="uiModule.nodeConfig[field]"
                  :nodeUid="ActiveNode.uid"
                  v-for="(data, field) in ActiveNode.nodeData.style"
@@ -55,7 +57,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { State, Getter, Mutation } from 'vuex-class'
-import { SET_PAGE_NODE, DEL_ACTIVE_UID, SET_UI_MODULE } from '@/store'
+import { SET_LOCK, DEL_ACTIVE_UID, SET_UI_MODULE, SET_PAGE_NODE } from '@/store'
 import { deepCopy } from '@mobov/es-helper'
 import { uiMode, UiNode, UiModule } from '@megh5/ui/types/core/constants'
 
@@ -65,16 +67,18 @@ export default class Editor extends Vue {
 
   @Getter ActiveNode!: UiNode
 
-  @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
+  @Mutation SET_LOCK!: SET_LOCK
 
   @Mutation DEL_PAGE_NODE!: DEL_ACTIVE_UID
+
+  @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
 
   get uiModule (): UiModule {
     return this.UiModules.find(item => item.name === this.ActiveNode.name) as UiModule
   }
 
   get lockBtnState () {
-    return this.ActiveNode.locked ? {
+    return this.ActiveNode.uiConfig.locked ? {
       color: 'error',
       text: '解锁'
     } : {
@@ -93,9 +97,17 @@ export default class Editor extends Vue {
   }
 
   handleLock () {
+    this.SET_LOCK(this.ActiveNode.uid)
+  }
+
+  handleChange (fieldPath, field, val) {
     this.SET_PAGE_NODE({
       uid: this.ActiveNode.uid,
-      locked: !this.ActiveNode.locked
+      nodeData: {
+        [fieldPath]: {
+          [field]: val
+        }
+      }
     })
   }
 }

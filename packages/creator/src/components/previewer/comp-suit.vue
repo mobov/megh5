@@ -1,159 +1,6 @@
-<style lang='scss'>
-  @import "~@mobov/scss-helper/import";
-  // $--element-active-color: #ffd0a3;
-  $--comp-suit-handler-color-normal: #03a9f4;
-  $--comp-suit-handler-color-locked: #ff5252;
-  $--comp-suit-handler-pos-fix: 0;
-  $--comp-suit-handler-size: 3px;
-  $--comp-suit-handler-corner-size: 10px;
- // $--comp-suit-select-border-size: 2px;
-
-  .comp-suit {
-    --comp-suit-handler-color: #{$--comp-suit-handler-color-normal};
-    --comp-suit-handler-scale: .5;
-    user-select: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    /*position: relative;*/
-    transform: translate3d(0, 0, 0);
-    &.--active {
-      z-index: 99;
-      >.comp-suit-handler {
-        background-color: var(--comp-suit-handler-color);
-        /*transition: transform ease .3s;*/
-        position: absolute;
-      }
-      >.--↑,
-      >.--→,
-      >.--↓,
-      >.--← {
-        z-index: 100;
-      }
-      >.--↖,
-      >.--↗,
-      >.--↘,
-      >.--↙ {
-        z-index: 101;
-        width: $--comp-suit-handler-corner-size;
-        height: $--comp-suit-handler-corner-size;
-        background-color: transparent;
-        /*font-size: 1px;*/
-        /*border-radius: 20%;*/
-        border: $--comp-suit-handler-size solid var(--comp-suit-handler-color);
-        /*transform: scale(var(--comp-suit-handler-scale));*/
-      }
-
-      >.--↑,
-      >.--↓ {
-        height: $--comp-suit-handler-size;
-        width: 100%;
-        left: 0;
-        cursor: ns-resize;
-        /*transform: scaleY(var(--comp-suit-handler-scale));*/
-      }
-
-      >.--→,
-      >.--← {
-        width: $--comp-suit-handler-size;
-        height: 100%;
-        top: 0;
-        cursor: ew-resize;
-        /*transform: scaleX(var(--comp-suit-handler-scale));*/
-      }
-
-      >.--↑ {
-        top: 0;
-        /*transform-origin: top;*/
-      }
-
-      >.--↓ {
-        bottom: 0;
-        /*transform-origin: bottom;*/
-      }
-
-      >.--← {
-        left: 0;
-        /*transform-origin: left;*/
-      }
-
-      >.--→ {
-        right: 0;
-        /*transform-origin: right;*/
-      }
-
-      >.--↖ {
-        left: $--comp-suit-handler-pos-fix;
-        top: $--comp-suit-handler-pos-fix;
-        cursor: nw-resize;
-        /*transform-origin: top left;*/
-      }
-
-      >.--↗ {
-        right: $--comp-suit-handler-pos-fix;
-        top: $--comp-suit-handler-pos-fix;
-        cursor: ne-resize;
-        /*transform-origin: top right;*/
-      }
-
-      >.--↙ {
-        left: $--comp-suit-handler-pos-fix;
-        bottom: $--comp-suit-handler-pos-fix;
-        cursor: sw-resize;
-        /*transform-origin: bottom left;*/
-      }
-
-      >.--↘ {
-        right: $--comp-suit-handler-pos-fix;
-        bottom: $--comp-suit-handler-pos-fix;
-        cursor: se-resize;
-        /*transform-origin: bottom right;*/
-      }
-    }
-    &.--isLocked {
-      --comp-suit-handler-color: #{$--comp-suit-handler-color-locked};
-    }
-    &.--isHanding {
-      --comp-suit-handler-scale: 1
-    }
-    &.--size-none,
-    &.--size-x,
-    &.--size-y {
-      >.--↖,
-      >.--↗,
-      >.--↘,
-      >.--↙ {
-        display: none;
-      }
-    }
-  }
-
-  .previewer {
-    &:hover {
-      .comp-suit {
-        --comp-suit-handler-scale: 1
-      }
-    }
-  }
-
-  .comp-suit-axis {
-    width: 1px;
-    height: 100vh;
-    position: absolute;
-    background-color: var(--comp-suit-handler-color);
-  }
-
- /* .comp-suit-edit-box {
-    box-sizing: border-box;
-    position: absolute;
-    z-index: 2;
-    cursor: move;
-    border: 3px solid  var(--comp-suit-handler-color);
-  }*/
-</style>
-
 <script lang="tsx">
 import { VNode, VueConstructor, CreateElement } from 'vue'
-import { Vue, Component, Prop, Emit, Inject, Mixins } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'
 import { State, Mutation, Getter } from 'vuex-class'
 import { SET_PAGE_NODE, SET_ACTIVE_UID } from '@/store'
 import { NoCache } from '@/utils/decorators'
@@ -203,6 +50,7 @@ export default class CompSuit extends Vue {
   get nodeUid (): string {
     return this.node.uid
   }
+
   get nodeProps () {
     return this!.node!.nodeData!.props
   }
@@ -212,7 +60,7 @@ export default class CompSuit extends Vue {
   }
 
   get isLocked (): boolean {
-    return this.ActiveNode.locked
+    return this.ActiveNode.uiConfig.locked
   }
 
   get isMainChildren (): boolean {
@@ -292,6 +140,27 @@ export default class CompSuit extends Vue {
   get bottomLimit (): number {
     return this.parentHeight - this.sizeY
   }
+
+  @Watch('nodeProps.height')
+  updateSizeY(value) {
+    this.sizeY = value
+  }
+
+  @Watch('nodeProps.width')
+  updateSizeX(value) {
+    this.sizeX = value
+  }
+
+  @Watch('nodeProps.x')
+  updateMoveX(value) {
+    this.moveX = value
+  }
+
+  @Watch('nodeProps.y')
+  updateMoveY(value) {
+    this.moveY = value
+  }
+
   updateUi () {
     if (this.isLocked) { return }
     this.SET_PAGE_NODE({
@@ -522,3 +391,175 @@ export default class CompSuit extends Vue {
   }
 }
 </script>
+<style lang='scss'>
+  @import "~@mobov/scss-helper/import";
+  // $--element-active-color: #ffd0a3;
+  $--comp-suit-handler-color-normal: #03a9f4;
+  $--comp-suit-handler-color-locked: #ff5252;
+  $--comp-suit-handler-pos-fix: 0;
+  $--comp-suit-handler-size: 3px;
+  $--comp-suit-handler-corner-size: 10px;
+  // $--comp-suit-select-border-size: 2px;
+
+  .comp-suit {
+    --comp-suit-handler-color: #{$--comp-suit-handler-color-normal};
+    --comp-suit-handler-scale: .5;
+    user-select: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    /*position: relative;*/
+    transform: translate3d(0, 0, 0);
+    &.--active {
+      z-index: 99;
+      >.comp-suit-handler {
+        background-color: var(--comp-suit-handler-color);
+        /*transition: transform ease .3s;*/
+        position: absolute;
+      }
+      >.--↑,
+      >.--→,
+      >.--↓,
+      >.--← {
+        z-index: 100;
+      }
+      >.--↖,
+      >.--↗,
+      >.--↘,
+      >.--↙ {
+        z-index: 101;
+        width: $--comp-suit-handler-corner-size;
+        height: $--comp-suit-handler-corner-size;
+        background-color: transparent;
+        /*font-size: 1px;*/
+        /*border-radius: 20%;*/
+        border: $--comp-suit-handler-size solid var(--comp-suit-handler-color);
+        /*transform: scale(var(--comp-suit-handler-scale));*/
+      }
+
+      >.--↑,
+      >.--↓ {
+        height: $--comp-suit-handler-size;
+        width: 100%;
+        left: 0;
+        cursor: ns-resize;
+        /*transform: scaleY(var(--comp-suit-handler-scale));*/
+      }
+
+      >.--→,
+      >.--← {
+        width: $--comp-suit-handler-size;
+        height: 100%;
+        top: 0;
+        cursor: ew-resize;
+        /*transform: scaleX(var(--comp-suit-handler-scale));*/
+      }
+
+      >.--↑ {
+        top: 0;
+        /*transform-origin: top;*/
+      }
+
+      >.--↓ {
+        bottom: 0;
+        /*transform-origin: bottom;*/
+      }
+
+      >.--← {
+        left: 0;
+        /*transform-origin: left;*/
+      }
+
+      >.--→ {
+        right: 0;
+        /*transform-origin: right;*/
+      }
+
+      >.--↖ {
+        left: $--comp-suit-handler-pos-fix;
+        top: $--comp-suit-handler-pos-fix;
+        cursor: nw-resize;
+        /*transform-origin: top left;*/
+      }
+
+      >.--↗ {
+        right: $--comp-suit-handler-pos-fix;
+        top: $--comp-suit-handler-pos-fix;
+        cursor: ne-resize;
+        /*transform-origin: top right;*/
+      }
+
+      >.--↙ {
+        left: $--comp-suit-handler-pos-fix;
+        bottom: $--comp-suit-handler-pos-fix;
+        cursor: sw-resize;
+        /*transform-origin: bottom left;*/
+      }
+
+      >.--↘ {
+        right: $--comp-suit-handler-pos-fix;
+        bottom: $--comp-suit-handler-pos-fix;
+        cursor: se-resize;
+        /*transform-origin: bottom right;*/
+      }
+    }
+    &.--isLocked {
+      --comp-suit-handler-color: #{$--comp-suit-handler-color-locked};
+    }
+    &.--isHanding {
+      --comp-suit-handler-scale: 1
+    }
+    &.--size-none,
+    &.--size-x,
+    &.--size-y {
+      >.--↖,
+      >.--↗,
+      >.--↘,
+      >.--↙ {
+        display: none;
+      }
+    }
+    &.--size-none {
+      >.--↑,
+      >.--→,
+      >.--↓,
+      >.--←  {
+        cursor: unset;
+      }
+    }
+    &.--size-x {
+      >.--→,
+      >.--←  {
+        cursor: unset;
+      }
+    }
+    &.--size-y {
+      >.--↑,
+      >.--↓  {
+        cursor: unset;
+      }
+    }
+  }
+
+  .previewer {
+    &:hover {
+      .comp-suit {
+        --comp-suit-handler-scale: 1
+      }
+    }
+  }
+
+  .comp-suit-axis {
+    width: 1px;
+    height: 100vh;
+    position: absolute;
+    background-color: var(--comp-suit-handler-color);
+  }
+
+  /* .comp-suit-edit-box {
+		 box-sizing: border-box;
+		 position: absolute;
+		 z-index: 2;
+		 cursor: move;
+		 border: 3px solid  var(--comp-suit-handler-color);
+	 }*/
+</style>

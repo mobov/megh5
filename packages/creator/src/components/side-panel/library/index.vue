@@ -51,13 +51,14 @@ export default class Library extends Vue {
     const { handleItemClick } = this
     const result: any = []
 
-    console.log(this.ActiveNode)
     this.MenuLists.forEach(list => {
-      result.push(
-        <div class="library-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
-          {list.title}
-        </div>
-      )
+      if (!list.uiConfig.isRoot) {
+        result.push(
+          <div class="library-item" v-m-ripple onClick={() => handleItemClick(list.name)}>
+            {list.title}
+          </div>
+        )
+      }
     })
     return result
   }

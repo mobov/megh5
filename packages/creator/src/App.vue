@@ -62,7 +62,7 @@ export default class App extends Vue {
 
   async handleImport (e: any) {
     const result = await importProject(e.target.files[0])
-    console.log(result)
+
     this.SET_PROJECT(result)
   }
 

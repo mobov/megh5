@@ -1,7 +1,11 @@
 import { Vue } from 'vue-property-decorator';
-import { PropTypeLink } from '../core/constants';
+import { PropTypeLink, positionType } from '../core/constants';
 export default class HFooter extends Vue {
-    height: string | number;
+    position: positionType;
+    height: number;
+    width: number;
+    x: string | number;
+    y: string | number;
     bgImg: string;
     logo: string;
     termsLink: PropTypeLink;
@@ -10,5 +14,6 @@ export default class HFooter extends Vue {
     readonly viewTermsText: string;
     readonly viewPolicyText: string;
     readonly viewCopyright: string;
+    readonly float: boolean;
     readonly styles: any;
 }

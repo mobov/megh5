@@ -78,7 +78,6 @@ export default class SettingImage extends Vue {
   }
 
   handleValueChange (e: any) {
-    console.log(e)
     const file = e.target.files[0]
     let reader: any = new FileReader()
 

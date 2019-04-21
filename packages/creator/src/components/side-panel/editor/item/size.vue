@@ -34,6 +34,11 @@ export default class SettingSize extends Vue {
   value!: number
 
   @Prop({
+    type: String
+  })
+  field!: string
+
+  @Prop({
     type: Object,
     default: {}
   })
@@ -48,17 +53,19 @@ export default class SettingSize extends Vue {
     this.$emit('input', val)
   }
 
-  get label () {
+  get label (): string {
     return this.nodeConfig.text
   }
-  get min () {
+
+  get min (): number {
     let min = -9999
     if (this.nodeConfig.extra && this.nodeConfig.extra.min) {
       min = this.nodeConfig.extra.min
     }
     return min
   }
-  get max () {
+
+  get max (): number {
     let max = 9999
     if (this.nodeConfig.extra && this.nodeConfig.extra.max) {
       max = this.nodeConfig.extra.max
@@ -66,8 +73,16 @@ export default class SettingSize extends Vue {
     return max
   }
 
-  get disabled () {
-    return typeof this.value === 'string'
+  get disabled (): boolean {
+    let result = false
+    // return typeof this.value === 'string'
+
+
+    if (this.field === 'height') {
+
+    }
+
+    return result
   }
 
   handleFullSize () {

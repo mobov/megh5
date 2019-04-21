@@ -21,7 +21,6 @@ const Project: ProjectData = {
     name: HApp.name,
     uid: '0',
     pid: '0',
-    locked: false,
     uiConfig: HApp.uiConfig,
     nodeData: merge(HApp.nodeData, {
       style: {},
@@ -34,7 +33,6 @@ const Project: ProjectData = {
       name: HView.name,
       uid: '01',
       pid: '0',
-      locked: false,
       uiConfig: merge(HView.uiConfig, {
         moveMode: 'none'
       }),
@@ -53,7 +51,6 @@ const Project: ProjectData = {
       name: HFooter.name,
       uid: '02',
       pid: '0',
-      locked: false,
       uiConfig: merge(HFooter.uiConfig, {
         sizeMode: 'none',
         moveMode: 'none'

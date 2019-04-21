@@ -87,7 +87,7 @@ export default class ProjectTreeItem extends Vue {
 
     const classes = {
       '--active': isActive,
-      '--locked': this.value.locked
+      '--locked': this.value.uiConfig.locked
     }
 
     return classes

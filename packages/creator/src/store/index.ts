@@ -82,6 +82,10 @@ export interface SET_PREVIEWER_READY {
   ($el: HTMLElement): {}
 }
 
+export interface SET_LOCK {
+  (uid: string): {}
+}
+
 interface State {
   Project: ProjectData
   UiModules: Array<UiModule>
@@ -137,6 +141,12 @@ export default new Vuex.Store<State>({
       const $target = getPathNode(val.uid, state.Project.UiNodes)
       merge($target, val)
     },
+    SET_LOCK (state, uid: string) {
+      const $target = getPathNode(uid, state.Project.UiNodes)
+      if ($target && $target.uiConfig) {
+        $target.uiConfig.locked = !$target.uiConfig.locked
+      }
+    },
     ADD_PAGE_NODE (state, val: AddUiNodeOpts) {
       const nodeModule = deepCopy(state.UiModules.find(item => item.name === val.name)) as UiModule
       const nodeData = nodeModule.nodeData
@@ -174,7 +184,7 @@ export default new Vuex.Store<State>({
         name: val.name,
         uid: ulid(),
         pid: pid,
-        locked: false,
+        uiConfig: nodeModule.uiConfig,
         nodeData,
         children: []
       }

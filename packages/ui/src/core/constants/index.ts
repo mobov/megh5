@@ -53,19 +53,19 @@ export interface UiNodeData extends VNodeData {
 }
 
 export interface UiNodeConfig {
+  isRoot?: boolean
   disabled?: boolean
   isParent?: boolean
-  locked?: boolean
-  moveMode?: uiMode
-  sizeMode?: uiMode
+  locked: boolean
+  moveMode: uiMode
+  sizeMode: uiMode
 }
 
 export interface UiNode {
   name: string
   uid: string
   pid: string
-  locked: boolean
-  uiConfig?: UiNodeConfig
+  uiConfig: UiNodeConfig
   nodeData: UiNodeData
   children: Array<UiNode>
 }
@@ -80,7 +80,6 @@ export interface UiModule extends UiNode {
   title: string
   cover: string
   nodeConfig: UiNodeProps
-  uiConfig: UiNodeConfig
 }
 
 export interface ProjectData {
@@ -88,7 +87,7 @@ export interface ProjectData {
   version: string
   dependencies: any
   mainUid: string,
-  UiNodes: UiNode [],
+  UiNodes: Array<UiNode>,
   Device: {
     width: number,
     height: number

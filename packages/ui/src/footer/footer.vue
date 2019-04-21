@@ -48,13 +48,25 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
-import { genBgImg, genSize, getStrValue } from '../core/utils'
-import { PropTypeLink } from '../core/constants'
+import { genBgImg, genSize, getStrValue, genPosition, genPosY, genPosX } from '../core/utils'
+import { PropTypeLink, positionType } from '../core/constants'
 
 @Component
 export default class HFooter extends Vue {
+  @Prop({ type: String, default: 'relative' })
+  position!: positionType
+
   @Prop({ type: [Number, String], default: 100 })
-  height!: string | number
+  height!: number
+
+  @Prop({ type: [Number, String], default: 320 })
+  width!: number
+
+  @Prop({ type: [Number, String], default: 0 })
+  x!: string | number
+
+  @Prop({ type: [Number, String], default: 0 })
+  y!: string | number
 
   @Prop({ type: String, default: '' })
   bgImg!: string
@@ -83,12 +95,20 @@ export default class HFooter extends Vue {
     return getStrValue(this, this.copyright)
   }
 
+  get float (): boolean {
+    return this.position !== 'relative'
+  }
+
   get styles (): any {
-    const { height, bgImg } = this
+    const { height, width, position, bgImg, x, y, float } = this
     const styles = {}
 
+    genPosition(styles, position)
+    genPosX(styles, x, float)
+    genPosY(styles, y, float)
     genBgImg(styles, bgImg)
     genSize(styles, 'height', height)
+    genSize(styles, 'width', width)
 
     return styles
   }
