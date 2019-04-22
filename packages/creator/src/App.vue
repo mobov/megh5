@@ -21,6 +21,9 @@
                  variety="flat"
                  :elevation="0">
           <MFlexFiller/>
+          <MButton color="primary" size="sm" :style="{width: '100px'}" @click="handleSave" class="m-mr-sm">
+            快速保存
+          </MButton>
           <MButton color="primary" size="sm" :style="{width: '100px'}" class="m-mr-sm">
             导入
             <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
@@ -29,7 +32,7 @@
             导出
           </MButton>
         </MAppBar>
-        <Timeline class="m-elevation-3" slot="left"/>
+        <Timeline class="m-elevation-3" slot="left" ref="timeline"/>
         <SidePanel class="m-elevation-2" slot="right" />
         <MFlex full justify="center" align="center" style="height: 100%">
           <Previewer @click.stop mode="preview"/>
@@ -86,7 +89,24 @@ export default class App extends Vue {
     exportProject(this.Project)
   }
 
+  handleSave () {
+    // @ts-ignore
+    this.$refs.timeline.handleShot()
+  }
+
+  bindSaveListener (e: KeyboardEvent) {
+    //可以判断是不是mac，如果是mac,ctrl变为花键
+    if (e.keyCode == 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)) {
+      e.preventDefault()
+      this.handleSave()
+    }
+  }
+
   mounted () {
+    // bind save
+    document.addEventListener('keydown', this.bindSaveListener)
+
+
     Vue.prototype.$app = this
   }
 

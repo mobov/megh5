@@ -157,15 +157,15 @@ export default new Vuex.Store<State>({
       const $target = getPathNode(val.uid, state.Project.UiNodes)
       merge($target, val)
       state.treeShot = $target.uid
-      if (timelineShotTimer === null) {
-        timelineShotTimer = setTimeout(() => {
-          state.timelineShot = !state.timelineShot
-          timelineShotTimer = null
-        }, 1000)
-      } else {
-        clearTimeout(timelineShotTimer)
-        timelineShotTimer = null
-      }
+      // if (timelineShotTimer === null) {
+      //   timelineShotTimer = setTimeout(() => {
+      //     state.timelineShot = !state.timelineShot
+      //     timelineShotTimer = null
+      //   }, 1000)
+      // } else {
+      //   clearTimeout(timelineShotTimer)
+      //   timelineShotTimer = null
+      // }
 
       // if (val.nodeData && val.nodeData.props && val.nodeData.props.bgImg) {
       //   state.timelineShot = !state.timelineShot
@@ -226,7 +226,7 @@ export default new Vuex.Store<State>({
       const $target = getPathNode(tempNode.pid, state.Project.UiNodes)
       Vue.set($target.children, $target.children.length, tempNode)
       state.activeUid = tempNode.uid
-      state.timelineShot = !state.timelineShot
+      // state.timelineShot = !state.timelineShot
     },
     DEL_PAGE_NODE (state, val: string) {
       const $target = getPathNode(val, state.Project.UiNodes)
