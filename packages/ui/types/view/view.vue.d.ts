@@ -8,6 +8,7 @@ export default class HView extends Vue {
     x: string | number;
     y: string | number;
     bgImg: string;
+    bgSize: string;
     readonly float: boolean;
     readonly classes: {
         [x: string]: boolean;

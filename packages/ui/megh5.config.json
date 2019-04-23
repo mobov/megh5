@@ -13,12 +13,15 @@
         "nodeConfig": {},
         "nodeData": {
             "style": {
-                "backgroundColor": "#ffffff"
+                "backgroundColor": "#ffffff",
+                "backgroundRepeat": "no-repeat",
+                "backgroundPosition": "center"
             },
             "props": {
                 "height": 736,
                 "width": 320,
-                "bgImg": ""
+                "bgImg": "",
+                "bgSize": "spread"
             }
         }
     },
@@ -90,15 +93,18 @@
             "style": {
                 "zIndex": 1,
                 "color": "#000000",
-                "backgroundColor": "transparent"
+                "backgroundColor": "transparent",
+                "backgroundRepeat": "no-repeat",
+                "backgroundPosition": "center"
             },
             "props": {
-                "position": "relative",
+                "position": "absolute",
                 "height": 320,
                 "width": 320,
                 "x": 0,
                 "y": 0,
                 "bgImg": "",
+                "bgSize": "spread",
                 "direction": "y"
             }
         }
@@ -171,10 +177,12 @@
             "style": {
                 "zIndex": 1,
                 "color": "#ffffff",
-                "backgroundColor": "#000000"
+                "backgroundColor": "#000000",
+                "backgroundRepeat": "no-repeat",
+                "backgroundPosition": "center"
             },
             "props": {
-                "position": "relative",
+                "position": "absolute",
                 "height": 50,
                 "width": 100,
                 "x": 0,
@@ -218,7 +226,7 @@
                 "backgroundColor": "transparent"
             },
             "props": {
-                "position": "relative",
+                "position": "absolute",
                 "height": 50,
                 "width": 320,
                 "x": 0,
@@ -271,7 +279,7 @@
                 "backgroundColor": "transparent"
             },
             "props": {
-                "position": "relative",
+                "position": "absolute",
                 "source": "youtube",
                 "link": "XNDEzNzc1MzUwNA==",
                 "autoPlay": false,

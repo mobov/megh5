@@ -20,7 +20,7 @@
 <script lang="tsx">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
 import { positionType } from '../core/constants'
-import { genBgImg, genSize, genPosX, genPosY, genPosition } from '../core/utils'
+import { genBgImg, genSize, genPosX, genPosY, genPosition, genBgSize } from '../core/utils'
 
 @Component
 export default class HView extends Vue {
@@ -45,6 +45,9 @@ export default class HView extends Vue {
   @Prop({ type: String, default: '' })
   bgImg!: string
 
+  @Prop({ type: String, default: 'spread' })
+  bgSize!: string
+
   get float (): boolean {
     return this.position !== 'relative'
   }
@@ -58,9 +61,10 @@ export default class HView extends Vue {
   }
 
   get styles (): any {
-    const { float, bgImg, height, width, x, y, position } = this
+    const { float, bgImg, height, width, x, y, position, bgSize} = this
     const styles = {}
 
+    genBgSize(styles, bgSize)
     genPosition(styles, position)
     genBgImg(styles, bgImg)
     genSize(styles, 'height', height)

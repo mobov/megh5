@@ -242,6 +242,23 @@ function genBgImg() {
   }
 }
 /**
+ * 计算背景图片样式
+ * @param styles
+ * @param val
+ */
+
+function genBgSize() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(val);
+
+  if (['contain', 'cover'].includes(val)) {
+    styles['backgroundSize'] = val;
+  } else {
+    styles['backgroundSize'] = '100% 100%';
+  }
+}
+/**
  * 获取计算颜色样式值
  * @param styles
  * @param property
@@ -366,6 +383,7 @@ var index = /*#__PURE__*/Object.freeze({
   genPosX: genPosX,
   genPosY: genPosY,
   genBgImg: genBgImg,
+  genBgSize: genBgSize,
   genColor: genColor,
   genPosition: genPosition,
   genEllipsis: genEllipsis,
@@ -394,8 +412,10 @@ function (_Vue) {
     get: function get() {
       var height = this.height,
           width = this.width,
-          bgImg = this.bgImg;
+          bgImg = this.bgImg,
+          bgSize = this.bgSize;
       var styles = {};
+      genBgSize(styles, bgSize);
       genSize(styles, 'min-height', height);
       genSize(styles, 'width', width);
       genBgImg(styles, bgImg);
@@ -420,6 +440,11 @@ __decorate([Prop({
   type: String,
   "default": ''
 })], HApp.prototype, "bgImg", void 0);
+
+__decorate([Prop({
+  type: String,
+  "default": 'spread'
+})], HApp.prototype, "bgSize", void 0);
 
 HApp = __decorate([Component], HApp);
 var script = HApp;
@@ -589,7 +614,7 @@ __vue_render__._withStripped = true;
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-aa1dc752_0", {
+  inject("data-v-b749e802_0", {
     source: "html {\n  font-size: 62.5%;\n}\n.h-app {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
     map: {
       "version": 3,
@@ -597,7 +622,7 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
       "names": [],
       "mappings": "AACA;EACA,gBAAA;AAAA;AAGA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AATA;IAWA,YAAA;IACA,kBAAA;AAAA;;ACAA,kCAAkC",
       "file": "app.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  html {\r\n    font-size: 62.5%;\r\n  }\r\n\r\n  .h-app {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div id=\"h-app\" class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n  }\r\n}\r\n</script>\r\n", "html {\n  font-size: 62.5%; }\n\n.h-app {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  html {\r\n    font-size: 62.5%;\r\n  }\r\n\r\n  .h-app {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div id=\"h-app\" class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg, genBgSize } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: 'spread' })\r\n  bgSize!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgImg, bgSize } = this\r\n    const styles = {}\r\n\r\n    genBgSize(styles, bgSize)\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n  }\r\n}\r\n</script>\r\n", "html {\n  font-size: 62.5%; }\n\n.h-app {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
     },
     media: undefined
   });
@@ -815,8 +840,10 @@ function (_Vue) {
           width = this.width,
           x = this.x,
           y = this.y,
-          position = this.position;
+          position = this.position,
+          bgSize = this.bgSize;
       var styles = {};
+      genBgSize(styles, bgSize);
       genPosition(styles, position);
       genBgImg(styles, bgImg);
       genSize(styles, 'height', height);
@@ -865,6 +892,11 @@ __decorate([Prop({
   "default": ''
 })], HView.prototype, "bgImg", void 0);
 
+__decorate([Prop({
+  type: String,
+  "default": 'spread'
+})], HView.prototype, "bgSize", void 0);
+
 HView = __decorate([Component], HView);
 var script$2 = HView;
 
@@ -876,7 +908,7 @@ var __vue_script__$2 = script$2;
 
 var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-c93c1bba_0", {
+  inject("data-v-43e57bd1_0", {
     source: ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: stretch;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden;\n}\n.h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n.h-view.--direction-y {\n    flex-direction: column;\n}\n\n/*# sourceMappingURL=view.vue.map */",
     map: {
       "version": 3,
@@ -884,7 +916,7 @@ var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
       "names": [],
       "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,aAAA;EACA,oBAAA;EACA,kBAAA;EACA,sBAAA;EACA,gBAAA;AAAA;AARA;IAUA,mBAAA;IACA,eAAA;AAAA;AAXA;IAcA,sBAAA;AAAA;;ACAA,mCAAmC",
       "file": "view.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-view {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: stretch;\r\n    position: relative;\r\n    flex-direction: column;\r\n    overflow: hidden;\r\n    &.--direction-x  {\r\n      flex-direction: row;\r\n      flex-wrap: wrap;\r\n    }\r\n    &.--direction-y  {\r\n      flex-direction: column;\r\n    }\r\n  }\r\n</style>\r\n<script lang=\"tsx\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { positionType } from '../core/constants'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition } from '../core/utils'\r\n\r\n@Component\r\nexport default class HView extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: String, default: 'y' })\r\n  direction!: 'x' | 'y'\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get classes () {\r\n    const { direction } = this\r\n\r\n    return {\r\n      [`--direction-${direction}`]: true\r\n    }\r\n  }\r\n\r\n  get styles (): any {\r\n    const { float, bgImg, height, width, x, y, position } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n\r\n  render () {\r\n    const { styles, $slots, classes } = this\r\n\r\n    return (\r\n      <div staticClass=\"h-view\"\r\n        class={classes}\r\n        style={styles}>\r\n        {$slots.default}\r\n      </div>\r\n    )\r\n  }\r\n}\r\n</script>\r\n", ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: stretch;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden; }\n  .h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap; }\n  .h-view.--direction-y {\n    flex-direction: column; }\n\n/*# sourceMappingURL=view.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-view {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: stretch;\r\n    position: relative;\r\n    flex-direction: column;\r\n    overflow: hidden;\r\n    &.--direction-x  {\r\n      flex-direction: row;\r\n      flex-wrap: wrap;\r\n    }\r\n    &.--direction-y  {\r\n      flex-direction: column;\r\n    }\r\n  }\r\n</style>\r\n<script lang=\"tsx\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { positionType } from '../core/constants'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition, genBgSize } from '../core/utils'\r\n\r\n@Component\r\nexport default class HView extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: String, default: 'y' })\r\n  direction!: 'x' | 'y'\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: 'spread' })\r\n  bgSize!: string\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get classes () {\r\n    const { direction } = this\r\n\r\n    return {\r\n      [`--direction-${direction}`]: true\r\n    }\r\n  }\r\n\r\n  get styles (): any {\r\n    const { float, bgImg, height, width, x, y, position, bgSize} = this\r\n    const styles = {}\r\n\r\n    genBgSize(styles, bgSize)\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n\r\n  render () {\r\n    const { styles, $slots, classes } = this\r\n\r\n    return (\r\n      <div staticClass=\"h-view\"\r\n        class={classes}\r\n        style={styles}>\r\n        {$slots.default}\r\n      </div>\r\n    )\r\n  }\r\n}\r\n</script>\r\n", ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: stretch;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden; }\n  .h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap; }\n  .h-view.--direction-y {\n    flex-direction: column; }\n\n/*# sourceMappingURL=view.vue.map */"]
     },
     media: undefined
   });

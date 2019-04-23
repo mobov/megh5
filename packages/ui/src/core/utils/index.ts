@@ -89,6 +89,20 @@ export function genBgImg (styles: any = {}, val: ImageData | string | undefined)
 }
 
 /**
+ * 计算背景图片样式
+ * @param styles
+ * @param val
+ */
+export function genBgSize (styles: any = {}, val: string) {
+  console.log(val)
+  if (['contain', 'cover'].includes(val)) {
+    styles['backgroundSize'] = val
+  } else {
+    styles['backgroundSize'] = '100% 100%'
+  }
+}
+
+/**
  * 获取计算颜色样式值
  * @param styles
  * @param property

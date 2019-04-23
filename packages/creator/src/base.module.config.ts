@@ -22,6 +22,48 @@ export default {
                 'value': 'absolute'
             }]
         },
+        'backgroundPosition': {
+          'type': 'radio',
+          'text': '元素浮动',
+          'extra': [{
+            'text': '相对定位',
+            'value': 'top center'
+          }, {
+            'text': '绝对定位',
+            'value': 'absolute'
+          }]
+        },
+        'backgroundRepeat': {
+          'type': 'radio',
+          'text': '重复背景',
+          'extra': [{
+            'text': 'y',
+            'value': 'repeat-y'
+          }, {
+            'text': 'x',
+            'value': 'repeat-x'
+          }, {
+            'text': 'xy',
+            'value': 'repeat'
+          }, {
+            'text': 'none',
+            'value': 'no-repeat'
+          }]
+        },
+      'bgSize': {
+        'type': 'radio',
+        'text': '背景尺寸',
+        'extra': [{
+          'text': '适应',
+          'value': 'contain'
+        }, {
+          'text': '平铺',
+          'value': 'cover'
+        }, {
+          'text': '拉伸',
+          'value': 'spread'
+        }]
+      },
         'width': {
             'type': 'size',
             'text': '宽'

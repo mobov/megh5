@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'
 import Store from '../core/store'
-import { genSize, genColor, genBgImg } from '../core/utils'
+import { genSize, genColor, genBgImg, genBgSize } from '../core/utils'
 
 @Component
 export default class HApp extends Vue {
@@ -43,10 +43,14 @@ export default class HApp extends Vue {
   @Prop({ type: String, default: '' })
   bgImg!: string
 
+  @Prop({ type: String, default: 'spread' })
+  bgSize!: string
+
   get styles (): any {
-    const { height, width, bgImg } = this
+    const { height, width, bgImg, bgSize } = this
     const styles = {}
 
+    genBgSize(styles, bgSize)
     genSize(styles, 'min-height', height)
     genSize(styles, 'width', width)
     genBgImg(styles, bgImg)

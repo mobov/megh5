@@ -33,6 +33,12 @@ export declare function genPosY(styles: any, val: string | number | undefined, f
  */
 export declare function genBgImg(styles: any, val: ImageData | string | undefined): void;
 /**
+ * 计算背景图片样式
+ * @param styles
+ * @param val
+ */
+export declare function genBgSize(styles: any, val: string): void;
+/**
  * 获取计算颜色样式值
  * @param styles
  * @param property
