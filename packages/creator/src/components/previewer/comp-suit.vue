@@ -67,10 +67,6 @@ export default class CompSuit extends Vue {
     return this.parentNode.classList.contains('h-app-main')
   }
 
-  get float (): boolean {
-    return this.nodeProps!.position !== 'relative'
-  }
-
   get isHanding (): boolean {
     return this.isMove ||
     this.isSizeL ||
@@ -203,16 +199,12 @@ export default class CompSuit extends Vue {
     if (!this.enableMoveX) { return }
     const { leftLimit, rightLimit } = this
     let moveX = this.moveX + val
-    if (this.float) {
+    if (moveX >= leftLimit && moveX <= rightLimit) {
       this.moveX = moveX
-    } else {
-      if (moveX >= leftLimit && moveX <= rightLimit) {
-        this.moveX = moveX
-      } else if (moveX < leftLimit) {
-        this.moveX = leftLimit
-      } else if (moveX > rightLimit) {
-        this.moveX = rightLimit
-      }
+    } else if (moveX < leftLimit) {
+      this.moveX = leftLimit
+    } else if (moveX > rightLimit) {
+      this.moveX = rightLimit
     }
 
     this.updateUi()
@@ -223,9 +215,7 @@ export default class CompSuit extends Vue {
     const { isMainChildren, topLimit, bottomLimit } = this
     const moveY = this.moveY + val
 
-    if (this.float) {
-      this.moveY = moveY
-    } else if (isMainChildren) {
+    if (isMainChildren) {
       if (moveY < topLimit) {
         this.moveY = topLimit
       } else {
@@ -406,7 +396,6 @@ export default class CompSuit extends Vue {
     --comp-suit-handler-scale: .5;
     user-select: none;
     box-sizing: border-box;
-    cursor: pointer;
     /*position: relative;*/
     transform: translate3d(0, 0, 0);
     &.--active {

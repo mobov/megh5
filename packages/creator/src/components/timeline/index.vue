@@ -26,7 +26,7 @@
 import { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, StatePreviewer, ROLL_BACK } from '@/store'
+import { UiNodes, StatePreviewer, ROLL_BACK } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 import { deepCopy } from '@mobov/es-helper'
 import { merge, debounce } from 'lodash'
@@ -42,7 +42,7 @@ export default class Timeline extends Vue {
 
   @State timelineShot!: boolean
 
-  @Getter PageData!: UiNode[]
+  @Getter UiNodes!: UiNode[]
 
   @Mutation ROLL_BACK!: ROLL_BACK
 
@@ -55,7 +55,7 @@ export default class Timeline extends Vue {
         filter: shotFilter
       })
       const history = {
-        data: deepCopy(this.PageData),
+        data: deepCopy(this.UiNodes),
         shot
       }
       this.ShotHistories.unshift(history)

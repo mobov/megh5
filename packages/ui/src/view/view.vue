@@ -4,16 +4,29 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     position: relative;
     flex-direction: column;
     overflow: hidden;
+    >.h-view-main {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      flex-direction: column;
+    }
     &.--direction-x  {
       flex-direction: row;
       flex-wrap: wrap;
+      >.h-view-main {
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
     }
     &.--direction-y  {
       flex-direction: column;
+      >.h-view-main {
+        flex-direction: column;
+      }
     }
   }
 </style>
@@ -67,7 +80,7 @@ export default class HView extends Vue {
     genBgSize(styles, bgSize)
     genPosition(styles, position)
     genBgImg(styles, bgImg)
-    genSize(styles, 'height', height)
+    genSize(styles, 'min-height', height)
     genSize(styles, 'width', width)
     genPosX(styles, x, float)
     genPosY(styles, y, float)
@@ -82,7 +95,9 @@ export default class HView extends Vue {
       <div staticClass="h-view"
         class={classes}
         style={styles}>
-        {$slots.default}
+        <div staticClass="h-view-main">
+          {$slots.default}
+        </div>
       </div>
     )
   }

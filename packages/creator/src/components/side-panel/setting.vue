@@ -47,7 +47,7 @@
 <script lang="tsx">
   import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'
   import { State, Getter, Mutation } from 'vuex-class'
-  import { SET_PAGE_NODE, DEL_ACTIVE_UID, SET_PROJECT_DATA } from '@/store'
+  import { SET_PAGE_NODE, DEL_ACTIVE_UID, INIT_PROJECT_DATA } from '@/store'
   import { deepCopy } from '@mobov/es-helper'
   import { uiMode, UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 
@@ -55,12 +55,12 @@
   export default class ProjectSetting extends Vue {
     @State Project!: ProjectData
 
-    @Mutation SET_PROJECT_DATA!: SET_PROJECT_DATA
+    @Mutation INIT_PROJECT_DATA!: INIT_PROJECT_DATA
 
     // handleValueChange (field: string, value: any) {
     //   value = isNaN(Number(value)) ? value : Number(value)
     //
-    //   this.SET_PROJECT_DATA({
+    //   this.INIT_PROJECT_DATA({
     //     [field]: value
     //   })
     // }

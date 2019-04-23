@@ -13,14 +13,14 @@ import { CreateElement, VNode, VNodeData } from 'vue'
 // @ts-ignore
 import ProjectTreeItem from './tree-item.vue'
 import { State, Mutation, Getter } from 'vuex-class'
-import { PageData, StatePreviewer } from '@/store'
+import { UiNodes, StatePreviewer } from '@/store'
 import { UiNode } from '@megh5/ui/types/core/constants'
 
 @Component({
   components: { ProjectTreeItem }
 })
 export default class Tree extends Vue {
-  @Getter PageData!: PageData
+  @Getter UiNodes!: UiNodes
 
   @State Previewer!: StatePreviewer
 
@@ -42,13 +42,13 @@ export default class Tree extends Vue {
   }
 
   render () {
-    const { PageData } = this
+    const { UiNodes } = this
 
     return (
       <div class="tree">
         <div class="tree-scroller">
           {this.Previewer.ready ?
-            this.RItem(PageData) :
+            this.RItem(UiNodes) :
             undefined
           }
         </div>

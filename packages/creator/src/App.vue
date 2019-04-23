@@ -11,27 +11,12 @@
   <VApp id="app">
     <MApp class="app">
       <MView rightSize="700px"
-             headerSize="50px"
+             headerSize="47px"
              leftSize="50px"
              fillHeader="none"
+             :leftIndex="5"
              :rightIndex="5">
-        <MAppBar slot="header"
-                 size="100%"
-                 color="default"
-                 variety="flat"
-                 :elevation="0">
-          <MFlexFiller/>
-          <MButton color="primary" size="sm" :style="{width: '100px'}" @click="handleSave" class="m-mr-sm">
-            快速保存
-          </MButton>
-          <MButton color="primary" size="sm" :style="{width: '100px'}" class="m-mr-sm">
-            导入
-            <input @change="handleImport" style="cursor:pointer;opacity: 0;width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: 2" type="file" id="file" name="file" />
-          </MButton>
-          <MButton color="primary" size="sm" :style="{width: '100px'}" @click="handleExport">
-            导出
-          </MButton>
-        </MAppBar>
+        <HeaderBar slot="header"></HeaderBar>
         <Timeline class="m-elevation-3" slot="left" ref="timeline"/>
         <SidePanel class="m-elevation-2" slot="right" />
         <MFlex full justify="center" align="center" style="height: 100%">
@@ -53,11 +38,12 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Mixins } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
-import { SET_PROJECT, SET_ACTIVE_UID } from '@/store'
+import { INIT_PROJECT, SET_ACTIVE_UID } from '@/store'
 import { ProjectData } from '@megh5/ui/types/core/constants'
 import Previewer from '@/components/previewer/index.vue'
 import Timeline from '@/components/timeline/index.vue'
 import SidePanel from '@/components/side-panel/index.vue'
+import HeaderBar from '@/components/header-bar/index.vue'
 import { importProject, exportProject, templateProject } from '@/project'
 
 interface MessageOpts {
@@ -66,47 +52,20 @@ interface MessageOpts {
 }
 
 @Component({
-  components: { SidePanel, Previewer, Timeline }
+  components: { SidePanel, Previewer, Timeline, HeaderBar }
 })
 export default class App extends Vue {
   @State Project!: ProjectData
 
-  @Mutation SET_PROJECT!: SET_PROJECT
+  @Mutation INIT_PROJECT!: INIT_PROJECT
 
   @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
   created () {
-    this.SET_PROJECT(templateProject)
-  }
-
-  async handleImport (e: any) {
-    const result = await importProject(e.target.files[0])
-
-    this.SET_PROJECT(result)
-  }
-
-  handleExport () {
-    exportProject(this.Project)
-  }
-
-  handleSave () {
-    // @ts-ignore
-    this.$refs.timeline.handleShot()
-  }
-
-  bindSaveListener (e: KeyboardEvent) {
-    //可以判断是不是mac，如果是mac,ctrl变为花键
-    if (e.keyCode == 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)) {
-      e.preventDefault()
-      this.handleSave()
-    }
+    this.INIT_PROJECT(templateProject)
   }
 
   mounted () {
-    // bind save
-    document.addEventListener('keydown', this.bindSaveListener)
-
-
     Vue.prototype.$app = this
   }
 

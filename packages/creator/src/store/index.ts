@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { ActivePanels } from '@/constants'
+import { ActivePanels, ActiveTools } from '@/constants'
 import BaseModuleConfig from '../base.module.config'
 import { UiNode, UiModule, UiNodeData, ProjectData } from '@megh5/ui/types/core/constants'
 import { getPathNode } from '@/utils'
@@ -36,7 +36,11 @@ export interface StatePreviewer {
   $el: any
 }
 
-export type PageData = UiNode[]
+export interface StateSidePanel {
+  active: ActivePanels
+}
+
+export type UiNodes = UiNode[]
 
 export interface Device {
   height: number
@@ -47,11 +51,11 @@ export interface GetModule {
   (name: string): UiModule
 }
 
-export interface SET_PROJECT {
+export interface INIT_PROJECT {
   (val: ProjectData): {}
 }
 
-export interface SET_PROJECT_DATA {
+export interface INIT_PROJECT_DATA {
   (val: KV): {}
 }
 
@@ -83,7 +87,11 @@ export interface SET_ACTIVE_PANEL {
   (val: number): {}
 }
 
-export interface SET_PREVIEWER_READY {
+export interface SET_ACTIVE_TOOL {
+  (val: ActiveTools): {}
+}
+
+export interface INIT_PREVIEWER {
   ($el: HTMLElement): {}
 }
 
@@ -95,13 +103,14 @@ export interface ROLL_BACK {
   (uid: UiNode[]): {}
 }
 
-
 interface State {
   Project: ProjectData
+  Previewer: StatePreviewer
   UiModules: Array<UiModule>
   activePanel: number
   activeUid: string
-  Previewer: StatePreviewer
+  activeTool: ActiveTools
+  // SidePanel: SidePanel
   timelineShot: boolean
   treeShot: string
 }
@@ -109,7 +118,6 @@ interface State {
 let timelineShotTimer: any = null
 
 export default new Vuex.Store<State>({
-// export default new Vuex.Store({
   state: {
     Project: {
       name: 'demo',
@@ -118,35 +126,36 @@ export default new Vuex.Store<State>({
       dependencies: [],
       UiNodes: [],
       Device: {
-        height: 736,
-        width: 320
+        height: 812,
+        width: 414
       }
     },
-    UiModules: [],
-    activePanel: ActivePanels.library,
-    activeUid: '0',
     Previewer: {
       ready: false,
       $el: {}
     },
+    UiModules: [],
+    activePanel: ActivePanels.library,
+    activeTool: ActiveTools.select,
+    activeUid: '0',
     timelineShot: false,
     treeShot: ''
   },
   getters: {
-    PageData: (state): PageData => state.Project.UiNodes,
+    UiNodes: (state): UiNodes => state.Project.UiNodes,
     Device: (state): Device => state.Project.Device,
     ActiveNode: (state): UiNode => getPathNode(state.activeUid, state.Project.UiNodes),
     GetModule: (state) => (name: string): UiModule => state.UiModules.find(item => item.name === name) as UiModule
   },
   mutations: {
-    SET_PREVIEWER_READY (state, $el: HTMLElement) {
+    INIT_PREVIEWER (state, $el: HTMLElement) {
       state.Previewer.ready = true
       state.Previewer.$el = $el
     },
-    SET_PROJECT (state, val: ProjectData) {
+    INIT_PROJECT (state, val: ProjectData) {
       state.Project = deepCopy(val)
     },
-    SET_PROJECT_DATA (state, val: KV) {
+    INIT_PROJECT_DATA (state, val: KV) {
       const data = deepCopy(val)
       merge(state.Project, data)
     },
@@ -252,12 +261,9 @@ export default new Vuex.Store<State>({
     },
     SET_ACTIVE_PANEL (state, val: number) {
       state.activePanel = val
-    }
-  },
-  actions: {
-    async initProject ({ commit }, val: ProjectData): Promise<ProjectData> {
-      commit('SET_PROJECT', val)
-      return val
+    },
+    SET_ACTIVE_TOOL (state, val: ActiveTools) {
+      state.activeTool = val
     }
   }
 })

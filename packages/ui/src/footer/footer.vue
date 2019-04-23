@@ -59,7 +59,7 @@ export default class HFooter extends Vue {
   @Prop({ type: [Number, String], default: 100 })
   height!: number
 
-  @Prop({ type: [Number, String], default: 320 })
+  @Prop({ type: [Number, String], default: 350 })
   width!: number
 
   @Prop({ type: [Number, String], default: 0 })

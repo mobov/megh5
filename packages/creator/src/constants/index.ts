@@ -15,4 +15,9 @@ export enum ActivePanels {
   setting = 2
 }
 
+export enum ActiveTools {
+  select = 'select',
+  draw = 'draw'
+}
+
 export type settingType = 'text' | 'image' | 'url' | 'size' | 'urlParam' | 'i18n' | 'link' | 'color'

@@ -20,7 +20,7 @@ import { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-propert
 import { CreateElement, VNode, VNodeData } from 'vue'
 import { State, Mutation, Getter } from 'vuex-class'
 import { ProjectData, UiNode, UiModule } from '@megh5/ui/types/core/constants'
-import { PageData, ADD_PAGE_NODE } from '@/store'
+import { UiNodes, ADD_PAGE_NODE } from '@/store'
 
 @Component
 export default class Library extends Vue {
@@ -30,7 +30,7 @@ export default class Library extends Vue {
 
   @State Project!: ProjectData
 
-  @Getter PageData!: PageData
+  @Getter UiNodes!: UiNodes
 
   @State UiModules!: Array<UiModule>
 
