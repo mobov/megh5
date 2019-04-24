@@ -234,11 +234,11 @@ export default class CompSuit extends Vue {
   }
 
   handleDrawY (val: number) {
-    const moveY = this.drawingNode.nodeData.props.height + val
+    const moveY = this.drawingNode!.nodeData!.props!.height + val
     if (moveY < 15) {
       return
     }
-    if (moveY + this.drawingNode.nodeData.props.y > this.nodeProps.height) {
+    if (moveY + this.drawingNode!.nodeData!.props!.y > this.nodeProps!.height) {
       return
     }
     this.SET_PAGE_NODE({
@@ -253,8 +253,8 @@ export default class CompSuit extends Vue {
   }
 
   handleDrawX (val: number) {
-    const moveX = this.drawingNode.nodeData.props.width + val
-    if (moveX + this.drawingNode.nodeData.props.x > this.nodeProps.width) {
+    const moveX = this.drawingNode!.nodeData!.props!.width + val
+    if (moveX + this.drawingNode!.nodeData!.props!.x > this.nodeProps!.width) {
       return
     }
 

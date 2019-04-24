@@ -29,7 +29,10 @@
   },
   "exclude": [
     "src/project/files/*",
-    "node_modules"
+    "node_modules",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
   ],
   "include": [
       "src/**/*.ts",
