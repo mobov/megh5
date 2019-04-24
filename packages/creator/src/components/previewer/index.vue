@@ -5,8 +5,8 @@
   .previewer {
     padding: 2rem;
     .previewer-screen {
-      height: 805px;
-      width: 350px;
+      height: 736px;
+      width: 320px;
       border-radius: 12px;
       box-shadow: 0 0 0 14px #090a0d, 0 0 0 17px #9fa3a8, 0 0 34px 17px rgba(0,0,0,0.2);
       margin: 0;

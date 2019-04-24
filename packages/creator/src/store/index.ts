@@ -222,6 +222,9 @@ export default new Vuex.Store<State>({
       } else {
         pid = state.Project.mainUid
       }
+      if (val.nodeData) {
+        merge(nodeData,  val.nodeData)
+      }
 
       const tempNode: UiNode = {
         name: val.name,

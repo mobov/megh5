@@ -5,26 +5,17 @@ import { CreateElement, VNode, VNodeData, VueConstructor } from 'vue'
 import Store, { UiNodes, SET_ACTIVE_UID } from '@/store'
 import { UiNode, UiModule, ProjectData } from '@megh5/ui/types/core/constants'
 
+let getPathNodeCache: UiNode
 export function getPathNode (uid: string, rootNode: UiNode[]): UiNode {
-  const result = findNode({
+  if (getPathNodeCache && getPathNodeCache.uid === uid) {
+    return getPathNodeCache
+  }
+  return findNode({
     data: rootNode,
     field: 'uid',
     key: uid,
     childField: 'children'
   })
-
-  return result
-}
-
-export function getPathParentNode (uid: string, rootNode: UiNode[]): UiNode {
-  const result = findNode({
-    data: rootNode,
-    field: 'uid',
-    key: uid,
-    childField: 'children'
-  })
-
-  return result
 }
 
 export function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
@@ -43,13 +34,13 @@ export function compiler (h: CreateElement, PNode: UiNode []): VNode[] {
           key: node.uid,
           props: {
             ...nodeModule.uiConfig,
-            node
+            node,
+            value: node
           }
         }
 
         if (node.nodeData.slot) {
           elementData.slot = node.nodeData.slot
-          // delete node.nodeData.slot
         }
 
         result.push(h(

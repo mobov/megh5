@@ -69,7 +69,7 @@ export default class HeaderBar extends Vue {
 
   handleSave () {
     // @ts-ignore
-    this.$refs.timeline.handleShot()
+    this.$app.$refs.timeline.handleShot()
   }
 
   bindToolListener (e: KeyboardEvent) {

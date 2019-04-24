@@ -14,8 +14,8 @@ const Project: ProjectData = {
   dependencies: [],
   mainUid: '0',
   Device: {
-    width: 350,
-    height: 805
+    width: 320,
+    height: 736
   },
   UiNodes: [{
     name: HApp.name,
@@ -25,8 +25,8 @@ const Project: ProjectData = {
     nodeData: merge(HApp.nodeData, {
       style: {},
       props: {
-        width: 350,
-        height: 805,
+        width: 320,
+        height: 736,
       }
     }),
     children: [{
@@ -40,7 +40,7 @@ const Project: ProjectData = {
       nodeData: merge(HFooter.nodeData, {
         props: {
           position: 'relative',
-          width: 350,
+          width: 320,
           height: 100,
           x: 0,
           y: 0,

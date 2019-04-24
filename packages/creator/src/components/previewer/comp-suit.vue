@@ -1,13 +1,15 @@
+import { ActiveTools } from '../../constants'
 <script lang="tsx">
-import { VNode, VueConstructor, CreateElement } from 'vue'
-import { Vue, Component, Prop, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'
-import { State, Mutation, Getter } from 'vuex-class'
-import { SET_PAGE_NODE, SET_ACTIVE_UID } from '@/store'
-import { NoCache } from '@/utils/decorators'
-import { compiler } from '@/utils'
-import { uiMode, UiNode, UiNodeProps, positionType, ProjectData } from '@megh5/ui/types/core/constants'
+  import { CreateElement } from 'vue'
+  import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+  import { Getter, Mutation, State } from 'vuex-class'
+  import { ADD_PAGE_NODE, SET_ACTIVE_UID, SET_PAGE_NODE } from '@/store'
+  import { NoCache } from '@/utils/decorators'
+  import { compiler } from '@/utils'
+  import { uiMode, UiNode } from '@megh5/ui/types/core/constants'
+  import { ActiveTools } from '@/constants'
 
-const SuitsHandlerDirections: string[] = [
+  const SuitsHandlerDirections: string[] = [
   '↖', '↑', '↗',
   '←', '→',
   '↙', '↓', '↘'
@@ -16,7 +18,7 @@ const SuitsHandlerDirections: string[] = [
 @Component
 export default class CompSuit extends Vue {
   @Prop()
-  node!: UiNode
+  value!: UiNode
 
   @Prop({ type: String, default: 'xy' })
   moveMode!: uiMode
@@ -33,9 +35,16 @@ export default class CompSuit extends Vue {
   @State activeUid!: string
 
   @Getter ActiveNode!: UiNode
+
+  @State activeTool!: ActiveTools
+
   @Mutation SET_PAGE_NODE!: SET_PAGE_NODE
+
+  @Mutation ADD_PAGE_NODE!: ADD_PAGE_NODE
+
   @Mutation SET_ACTIVE_UID!: SET_ACTIVE_UID
 
+  isDraw = false
   isMove = false
   isSizeL = false
   isSizeR = false
@@ -48,11 +57,11 @@ export default class CompSuit extends Vue {
   sizeY: number = this.nodeProps!.height as number
 
   get nodeUid (): string {
-    return this.node.uid
+    return this.value.uid
   }
 
   get nodeProps () {
-    return this!.node!.nodeData!.props
+    return this!.value!.nodeData!.props
   }
 
   get isActive (): boolean {
@@ -98,6 +107,10 @@ export default class CompSuit extends Vue {
   get parentHeight () {
     return this.parentNode.clientHeight
   }
+
+  get drawingNode () {
+    return this.value.children[this.value.children.length - 1]
+  }
   get enableSizeX () {
     return this.sizeMode.indexOf('x') !== -1
   }
@@ -120,9 +133,11 @@ export default class CompSuit extends Vue {
   get widthLimit (): number {
     return this.parentWidth - this.moveX
   }
+
   get topLimit (): number {
     return 0
   }
+
   get leftLimit (): number {
     return 0
   }
@@ -159,6 +174,8 @@ export default class CompSuit extends Vue {
 
   updateUi () {
     if (this.isLocked) { return }
+    // this.value.nodeData
+    // this.$emit('input', this.value)
     this.SET_PAGE_NODE({
       uid: this.nodeUid,
       nodeData: {
@@ -191,9 +208,70 @@ export default class CompSuit extends Vue {
 
   handleActive () {
     this.SET_ACTIVE_UID(this.nodeUid)
+  }
+
+  handleMove () {
     if (this.isLocked) { return }
     this.isMove = true
   }
+
+  handleDraw (e: MouseEvent) {
+    if (this.isLocked) { return }
+    this.isDraw = true
+    const parentRect = this.$el.getBoundingClientRect() as any
+    this.ADD_PAGE_NODE({
+      name: 'HView',
+      pid: this.value.uid,
+      nodeData: {
+        props: {
+          x: e.x - parentRect.x,
+          y: e.y - parentRect.y,
+          width: 15,
+          height: 15
+        }
+      }
+    })
+  }
+
+  handleDrawY (val: number) {
+    const moveY = this.drawingNode.nodeData.props.height + val
+    if (moveY < 15) {
+      return
+    }
+    if (moveY + this.drawingNode.nodeData.props.y > this.nodeProps.height) {
+      return
+    }
+    this.SET_PAGE_NODE({
+      uid: this.drawingNode.uid,
+      nodeData: {
+        props: {
+          height: moveY,
+        },
+        style: {}
+      }
+    })
+  }
+
+  handleDrawX (val: number) {
+    const moveX = this.drawingNode.nodeData.props.width + val
+    if (moveX + this.drawingNode.nodeData.props.x > this.nodeProps.width) {
+      return
+    }
+
+    if (moveX < 15) {
+      return
+    }
+    this.SET_PAGE_NODE({
+      uid: this.drawingNode.uid,
+      nodeData: {
+        props: {
+          width: moveX,
+        },
+        style: {}
+      }
+    })
+  }
+
   handleMoveX (val: number) {
     if (this.isLocked) { return }
     if (!this.enableMoveX) { return }
@@ -206,9 +284,9 @@ export default class CompSuit extends Vue {
     } else if (moveX > rightLimit) {
       this.moveX = rightLimit
     }
-
     this.updateUi()
   }
+
   handleMoveY (val: number) {
     if (this.isLocked) { return }
     if (!this.enableMoveY) { return }
@@ -230,16 +308,9 @@ export default class CompSuit extends Vue {
         this.moveY = bottomLimit
       }
     }
-
     this.updateUi()
-    // if (moveY >= topLimit && moveY <= bottomLimit) {
-    //   this.moveY = moveY
-    // } else if (moveY < topLimit) {
-    //   this.moveY = topLimit
-    // } else if (moveY > bottomLimit) {
-    //   this.moveY = bottomLimit
-    // }
   }
+
   handleSizeX (val: number, direction: '←' | '→') {
     if (this.isLocked) { return }
     const { leftLimit, widthLimit, minWidth } = this
@@ -256,8 +327,10 @@ export default class CompSuit extends Vue {
     } else if (widthLimit >= sizeX) {
       this.sizeX = sizeX
     }
+
     this.updateUi()
   }
+
   handleSizeY (val: number, direction: '↑' | '↓') {
     if (this.isLocked) { return }
     const { topLimit, minHeight } = this
@@ -276,11 +349,12 @@ export default class CompSuit extends Vue {
     }
     this.updateUi()
   }
+
   handleMouseDown (e: MouseEvent): void {
     e.stopPropagation()
     // @ts-ignore
     const className = e.target.className
-
+    this.handleActive()
     switch (true) {
       case className.indexOf('↖') !== -1: this.isSizeT = true; this.isSizeL = true; break
       case className.indexOf('↑') !== -1: this.isSizeT = true; break
@@ -298,14 +372,28 @@ export default class CompSuit extends Vue {
       !this.isSizeR &&
       !this.isSizeB
     ) {
-      this.handleActive()
+      if (
+        this.activeTool === ActiveTools.select
+      ) {
+        this.handleMove()
+      } else if (
+        this.activeTool === ActiveTools.draw
+      ) {
+        this.handleDraw(e)
+      }
     }
   }
   handleMouseMove (e: MouseEvent): void {
     if (this.isLocked) { return }
+
     if (this.isMove) {
       this.handleMoveX(e.movementX)
       this.handleMoveY(e.movementY)
+    } else if (
+      this.isDraw
+    ) {
+      this.handleDrawX(e.movementX)
+      this.handleDrawY(e.movementY)
     } else {
       if (this.isSizeL) {
         this.handleSizeX(e.movementX, '←')
@@ -321,11 +409,80 @@ export default class CompSuit extends Vue {
   }
   handleMouseUp (e: MouseEvent): void {
     if (this.isLocked) { return }
+    this.isDraw = false
     this.isMove = false
     this.isSizeL = false
     this.isSizeR = false
     this.isSizeT = false
     this.isSizeB = false
+  }
+
+  handleKeyDown (e: KeyboardEvent) {
+    console.log(e)
+
+
+    if (this.isMove) {
+      if (e.code === 'KeyW') {
+        this.handleMoveY(-1)
+      }
+      if (e.code === 'KeyS') {
+        this.handleMoveY(1)
+      }
+      if (e.code === 'KeyA') {
+        this.handleMoveX(-1)
+      }
+      if (e.code === 'KeyD') {
+        this.handleMoveX(1)
+      }
+    } else if (
+      this.isDraw
+    ) {
+      if (e.code === 'KeyW') {
+        this.handleDrawY(-1)
+      }
+      if (e.code === 'KeyS') {
+        this.handleDrawY(1)
+      }
+      if (e.code === 'KeyA') {
+        this.handleDrawX(-1)
+      }
+      if (e.code === 'KeyD') {
+        this.handleDrawX(1)
+      }
+    } else {
+      if (this.isSizeL) {
+        if (e.code === 'KeyA') {
+          this.handleSizeX(-1, '←')
+        }
+        if (e.code === 'KeyD') {
+          this.handleSizeX(1, '←')
+        }
+        // this.handleSizeX(e.movementX, '←')
+      } else if (this.isSizeR) {
+        // this.handleSizeX(e.movementX, '→')
+        if (e.code === 'KeyA') {
+          this.handleSizeX(-1, '→')
+        }
+        if (e.code === 'KeyD') {
+          this.handleSizeX(1, '→')
+        }
+      }
+      if (this.isSizeT) {
+        if (e.code === 'KeyW') {
+          this.handleSizeY(-1, '↑')
+        }
+        if (e.code === 'KeyS') {
+          this.handleSizeY(1, '↑')
+        }
+      } else if (this.isSizeB) {
+        if (e.code === 'KeyW') {
+          this.handleSizeY(-1, '↓')
+        }
+        if (e.code === 'KeyS') {
+          this.handleSizeY(1, '↓')
+        }
+      }
+    }
   }
 
   mountSuits () {
@@ -340,34 +497,36 @@ export default class CompSuit extends Vue {
   addSuitListeners () {
     document.addEventListener('mousemove', this.handleMouseMove as EventListener)
     document.addEventListener('mouseup', this.handleMouseUp as EventListener)
+    document.addEventListener('keydown', this.handleKeyDown as EventListener)
     this.$el.addEventListener('mousedown', this.handleMouseDown as EventListener)
   }
 
   removeSuitListeners () {
     document.removeEventListener('mousemove', this.handleMouseMove as EventListener)
     document.removeEventListener('mouseup', this.handleMouseUp as EventListener)
+    document.removeEventListener('keydown', this.handleKeyDown as EventListener)
     this.$el.removeEventListener('mousedown', this.handleMouseDown as EventListener)
   }
 
   render (h: CreateElement) {
-    this.node.nodeData.class = this.node.nodeData.class ? {
-      [`uid-${this.node.uid}`]: true,
-      ...this.node.nodeData.class,
+    this.value.nodeData.class = this.value.nodeData.class ? {
+      [`uid-${this.value.uid}`]: true,
+      ...this.value.nodeData.class,
       ...this.classes
     } : {
-      [`uid-${this.node.uid}`]: true,
+      [`uid-${this.value.uid}`]: true,
       ...this.classes
     }
 
-    // this.node.nodeData.attrs = this.node.nodeData.attrs ? this.node.nodeData.attrs : {
-    //   [`data-uid-${this.node.uid}`]: true
+    // this.value.nodeData.attrs = this.value.nodeData.attrs ? this.value.nodeData.attrs : {
+    //   [`data-uid-${this.value.uid}`]: true
     // }
 
 
     return h(
-      this.node.name,
-      this.node.nodeData,
-      this.node.children ? compiler(h, this.node.children) : []
+      this.value.name,
+      this.value.nodeData,
+      this.value.children ? compiler(h, this.value.children) : []
     )
   }
 
