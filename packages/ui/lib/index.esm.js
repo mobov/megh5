@@ -1349,7 +1349,7 @@ function (_Vue) {
       genPosition(styles, position);
       genEllipsis(styles, Number(ellipsis));
       genSize(styles, 'width', width);
-      genSize(styles, 'height', height);
+      genSize(styles, 'min-height', height);
       genSize(styles, 'fontSize', fontSize);
       genPosX(styles, x, _float);
       genPosY(styles, y, _float);
@@ -1429,15 +1429,15 @@ __vue_render__$4._withStripped = true;
 
 var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-ee019a50_0", {
-    source: ".h-text[data-v-ee019a50] {\n  background-repeat: no-repeat;\n  /*white-space: pre-line !important;*/\n}\n\n/*# sourceMappingURL=text.vue.map */",
+  inject("data-v-2ded605d_0", {
+    source: ".h-text[data-v-2ded605d] {\n  background-repeat: no-repeat;\n  /*white-space: pre-line !important;*/\n}\n\n/*# sourceMappingURL=text.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\text\\text.vue", "text.vue"],
       "names": [],
       "mappings": "AACA;EACA,4BAAA;EACA,oCAAA;AAAA;;ACCA,mCAAmC",
       "file": "text.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n    /*white-space: pre-line !important;*/\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\" v-html=\"viewText\">\r\n    <!--<slot>-->\r\n      <!--{{viewText}}-->\r\n    <!--</slot>-->\r\n    <!--<div v-html=\"viewText\"></div>-->\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, Number(ellipsis))\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat;\n  /*white-space: pre-line !important;*/ }\n\n/*# sourceMappingURL=text.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n    /*white-space: pre-line !important;*/\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\" v-html=\"viewText\">\r\n    <!--<slot>-->\r\n      <!--{{viewText}}-->\r\n    <!--</slot>-->\r\n    <!--<div v-html=\"viewText\"></div>-->\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, Number(ellipsis))\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat;\n  /*white-space: pre-line !important;*/ }\n\n/*# sourceMappingURL=text.vue.map */"]
     },
     media: undefined
   });
@@ -1445,7 +1445,7 @@ var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$5 = "data-v-ee019a50";
+var __vue_scope_id__$5 = "data-v-2ded605d";
 /* module identifier */
 
 var __vue_module_identifier__$5 = undefined;

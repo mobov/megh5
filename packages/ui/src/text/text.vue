@@ -58,7 +58,7 @@ export default class HText extends Vue {
     genPosition(styles, position)
     genEllipsis(styles, Number(ellipsis))
     genSize(styles, 'width', width)
-    genSize(styles, 'height', height)
+    genSize(styles, 'min-height', height)
     genSize(styles, 'fontSize', fontSize)
     genPosX(styles, x, float)
     genPosY(styles, y, float)
