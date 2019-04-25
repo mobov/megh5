@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
+import i18n from './i18n'
 import '@mobov/vui/lib/style.css'
 import Mobov from '@mobov/vui'
 import 'vuetify/dist/vuetify.min.css'
@@ -43,6 +44,7 @@ document.onmousedown = function (e: MouseEvent) {
 document.oncontextmenu = new Function('return false')
 
 new Vue({
+  i18n,
   store,
   render: h => h(App)
 }).$mount('#app')

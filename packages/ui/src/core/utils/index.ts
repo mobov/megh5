@@ -184,14 +184,14 @@ export function getStrValue ($vue: any, value: string) {
   let result = value
   const tArrs = value.match(/\$t{.+?}/g)
   const pArrs = value.match(/\$p{.+?}/g)
-  console.log(value.match(/\$t{.+?}/g))
+
   if (tArrs) {
-    console.log(tArrs)
     tArrs.forEach(item => {
       const param = item.substr(3, item.length - 4)
-      result = result.replace(item, param)
       if ($vue && $vue.$t) {
         result = result.replace(item, $vue.$t(param))
+      } else {
+        result = result.replace(item, param)
       }
       console.log(result)
     })
@@ -203,8 +203,7 @@ export function getStrValue ($vue: any, value: string) {
       result = result.replace(item, getUrlParam(param) || param)
     })
   }
-  console.log(1111)
-  console.log(result)
+
   return result
 }
 
