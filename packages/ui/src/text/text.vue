@@ -1,7 +1,7 @@
 <style lang="scss" scoped>
   .h-text {
     background-repeat: no-repeat;
-    white-space: pre-line !important;
+    /*white-space: pre-line !important;*/
   }
 </style>
 <template>
@@ -9,7 +9,7 @@
     <!--<slot>-->
       <!--{{viewText}}-->
     <!--</slot>-->
-    {{viewText}}
+    <div v-html="viewText"></div>
   </div>
 </template>
 <script lang="ts">
