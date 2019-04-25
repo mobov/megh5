@@ -10,7 +10,7 @@ export default {
     "i18n": "onemt-i18n --config=./config/i18n.js"
   },
   "dependencies": {
-    "@megh5/ui": "^0.2.7",
+    "@megh5/ui": "^0.2.8",
     "@mobov/es-helper": "^1.0.10",
     "@mobov/scss-helper": "^0.0.5",
     "core-js": "^2.6.5",
