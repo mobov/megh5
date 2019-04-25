@@ -5,11 +5,11 @@
   }
 </style>
 <template>
-  <div class="h-text" :style="styles">
+  <div class="h-text" :style="styles" v-html="viewText">
     <!--<slot>-->
       <!--{{viewText}}-->
     <!--</slot>-->
-    <div v-html="viewText"></div>
+    <!--<div v-html="viewText"></div>-->
   </div>
 </template>
 <script lang="ts">
