@@ -1,6 +1,7 @@
 <style lang="scss" scoped>
   .h-text {
     background-repeat: no-repeat;
+    white-space: pre-line !important;
   }
 </style>
 <template>

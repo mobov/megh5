@@ -5,11 +5,15 @@
 </style>
 <template>
   <div class="editor-item-text">
-    <v-text-field
-      v-model="_value"
+    <!--<v-text-field-->
+      <!--v-model="_value"-->
+      <!--:label="label"-->
+      <!--required-->
+    <!--&gt;</v-text-field>-->
+    <v-textarea
       :label="label"
-      required
-    ></v-text-field>
+      v-model="_value"
+    ></v-textarea>
   </div>
 </template>
 <script lang="ts">
