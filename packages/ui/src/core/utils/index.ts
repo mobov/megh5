@@ -52,15 +52,15 @@ export function genSize (styles: any = {}, property: string, val: string | numbe
  */
 export function genPosX (styles: any = {}, val: string | number | undefined, float: boolean = false) {
   if (val !== undefined) {
-    if (Client.lang === 'ar') {
-      if (float) {
-        styles['marginLeft'] = getUnitVal(val)
+    if (float) {
+      if (Client.lang === 'ar') {
+        styles['right'] = getUnitVal(val)
       } else {
         styles['left'] = getUnitVal(val)
       }
     } else {
-      if (float) {
-        styles['left'] = getUnitVal(val)
+      if (Client.lang === 'ar') {
+        styles['marginRight'] = getUnitVal(val)
       } else {
         styles['marginLeft'] = getUnitVal(val)
       }

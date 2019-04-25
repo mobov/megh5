@@ -197,15 +197,15 @@ function genPosX() {
   var _float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
-    if (Client.lang === 'ar') {
-      if (_float) {
-        styles['marginLeft'] = getUnitVal(val);
+    if (_float) {
+      if (Client.lang === 'ar') {
+        styles['right'] = getUnitVal(val);
       } else {
         styles['left'] = getUnitVal(val);
       }
     } else {
-      if (_float) {
-        styles['left'] = getUnitVal(val);
+      if (Client.lang === 'ar') {
+        styles['marginRight'] = getUnitVal(val);
       } else {
         styles['marginLeft'] = getUnitVal(val);
       }

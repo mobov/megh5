@@ -111,6 +111,37 @@ function __decorate(decorators, target, key, desc) {
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
 
+// export default class HAppStore extends Vue {
+//   root!: VueConstructor
+//
+//   public SET_ROOT (val: VueConstructor) {
+//     this.root = val
+//   }
+// }
+
+var HAppStore =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HAppStore, _Vue);
+
+  function HAppStore() {
+    _classCallCheck(this, HAppStore);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HAppStore).apply(this, arguments));
+  }
+
+  _createClass(HAppStore, [{
+    key: "SET_APP",
+    value: function SET_APP(val) {
+      this.$app = val;
+    }
+  }]);
+
+  return HAppStore;
+}(vuePropertyDecorator.Vue);
+
+var Store = new HAppStore();
+
 var unit = '100vw / 100'; // interface screenSize {
 //   height: '100vh',
 //   width: '100vw'
@@ -171,9 +202,17 @@ function genPosX() {
 
   if (val !== undefined) {
     if (_float) {
-      styles['left'] = getUnitVal(val);
+      if (esHelper.Client.lang === 'ar') {
+        styles['right'] = getUnitVal(val);
+      } else {
+        styles['left'] = getUnitVal(val);
+      }
     } else {
-      styles['marginLeft'] = getUnitVal(val);
+      if (esHelper.Client.lang === 'ar') {
+        styles['marginRight'] = getUnitVal(val);
+      } else {
+        styles['marginLeft'] = getUnitVal(val);
+      }
     }
   }
 }
@@ -212,6 +251,23 @@ function genBgImg() {
     styles['backgroundImage'] = "url(".concat(val, ")");
   } else {
     styles['backgroundImage'] = 'unset';
+  }
+}
+/**
+ * 计算背景图片样式
+ * @param styles
+ * @param val
+ */
+
+function genBgSize() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var val = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(val);
+
+  if (['contain', 'cover'].includes(val)) {
+    styles['backgroundSize'] = val;
+  } else {
+    styles['backgroundSize'] = '100% 100%';
   }
 }
 /**
@@ -257,7 +313,7 @@ function genEllipsis() {
   if (val !== undefined) {
     if (val === 0) {
       Object.assign(styles, {
-        'overflow': 'auto',
+        'overflow': 'unset',
         'text-overflow': 'normal',
         'white-space': 'normal',
         'word-break': 'normal',
@@ -333,17 +389,18 @@ function uuid() {
 }
 
 var index = /*#__PURE__*/Object.freeze({
-    unit: unit,
-    getUnitVal: getUnitVal,
-    genSize: genSize,
-    genPosX: genPosX,
-    genPosY: genPosY,
-    genBgImg: genBgImg,
-    genColor: genColor,
-    genPosition: genPosition,
-    genEllipsis: genEllipsis,
-    getStrValue: getStrValue,
-    uuid: uuid
+  unit: unit,
+  getUnitVal: getUnitVal,
+  genSize: genSize,
+  genPosX: genPosX,
+  genPosY: genPosY,
+  genBgImg: genBgImg,
+  genBgSize: genBgSize,
+  genColor: genColor,
+  genPosition: genPosition,
+  genEllipsis: genEllipsis,
+  getStrValue: getStrValue,
+  uuid: uuid
 });
 
 var HApp =
@@ -358,16 +415,21 @@ function (_Vue) {
   }
 
   _createClass(HApp, [{
+    key: "mounted",
+    value: function mounted() {
+      Store.SET_APP(this);
+    }
+  }, {
     key: "styles",
     get: function get() {
       var height = this.height,
           width = this.width,
-          bgColor = this.bgColor,
-          bgImg = this.bgImg;
+          bgImg = this.bgImg,
+          bgSize = this.bgSize;
       var styles = {};
+      genBgSize(styles, bgSize);
       genSize(styles, 'min-height', height);
       genSize(styles, 'width', width);
-      genColor(styles, 'background-color', bgColor);
       genBgImg(styles, bgImg);
       return styles;
     }
@@ -388,13 +450,13 @@ __decorate([vuePropertyDecorator.Prop({
 
 __decorate([vuePropertyDecorator.Prop({
   type: String,
-  "default": 'transparent'
-})], HApp.prototype, "bgColor", void 0);
+  "default": ''
+})], HApp.prototype, "bgImg", void 0);
 
 __decorate([vuePropertyDecorator.Prop({
   type: String,
-  "default": ''
-})], HApp.prototype, "bgImg", void 0);
+  "default": 'spread'
+})], HApp.prototype, "bgSize", void 0);
 
 HApp = __decorate([vuePropertyDecorator.Component], HApp);
 var script = HApp;
@@ -549,7 +611,10 @@ var __vue_render__ = function __vue_render__() {
 
   return _c("div", {
     staticClass: "h-app",
-    style: _vm.styles
+    style: _vm.styles,
+    attrs: {
+      id: "h-app"
+    }
   }, [_c("div", {
     staticClass: "h-app-main"
   }, [_vm._t("default")], 2), _vm._v(" "), _vm._t("footer")], 2);
@@ -561,15 +626,15 @@ __vue_render__._withStripped = true;
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-54dd5a72_0", {
-    source: ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
+  inject("data-v-b749e802_0", {
+    source: "html {\n  font-size: 62.5%;\n}\n.h-app {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative;\n}\n.h-app .h-app-main {\n    flex-grow: 1;\n    position: relative;\n}\n\n/*# sourceMappingURL=app.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\app\\app.vue", "app.vue"],
       "names": [],
-      "mappings": "AACA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AANA;IAQA,YAAA;IACA,kBAAA;AAAA;;ACCA,kCAAkC",
+      "mappings": "AACA;EACA,gBAAA;AAAA;AAGA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,gBAAA;EACA,WAAA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,kBAAA;AAAA;AATA;IAWA,YAAA;IACA,kBAAA;AAAA;;ACAA,kCAAkC",
       "file": "app.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-app {\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { genSize, genColor, genBgImg } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: 'transparent' })\r\n  bgColor!: string\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgColor, bgImg } = this\r\n    const styles = {}\r\n\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genColor(styles, 'background-color', bgColor)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-app {\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  html {\r\n    font-size: 62.5%;\r\n  }\r\n\r\n  .h-app {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    min-height: 100%;\r\n    width: 100%;\r\n    display: flex;\r\n    align-items: stretch;\r\n    flex-direction: column;\r\n    position: relative;\r\n    .h-app-main {\r\n      flex-grow: 1;\r\n      position: relative;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div id=\"h-app\" class=\"h-app\" :style=\"styles\">\r\n    <div class=\"h-app-main\">\r\n      <slot></slot>\r\n    </div>\r\n    <slot name=\"footer\" />\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\nimport { genSize, genColor, genBgImg, genBgSize } from '../core/utils'\r\n\r\n@Component\r\nexport default class HApp extends Vue {\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: '100%' })\r\n  width!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: 'spread' })\r\n  bgSize!: string\r\n\r\n  get styles (): any {\r\n    const { height, width, bgImg, bgSize } = this\r\n    const styles = {}\r\n\r\n    genBgSize(styles, bgSize)\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  mounted () {\r\n    Store.SET_APP(this)\r\n  }\r\n}\r\n</script>\r\n", "html {\n  font-size: 62.5%; }\n\n.h-app {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  min-height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: stretch;\n  flex-direction: column;\n  position: relative; }\n  .h-app .h-app-main {\n    flex-grow: 1;\n    position: relative; }\n\n/*# sourceMappingURL=app.vue.map */"]
     },
     media: undefined
   });
@@ -765,7 +830,9 @@ function (_Vue) {
         "staticClass": "h-view",
         "class": classes,
         "style": styles
-      }, [$slots["default"]]);
+      }, [h("div", {
+        "staticClass": "h-view-main"
+      }, [$slots["default"]])]);
     }
   }, {
     key: "float",
@@ -787,11 +854,13 @@ function (_Vue) {
           width = this.width,
           x = this.x,
           y = this.y,
-          position = this.position;
+          position = this.position,
+          bgSize = this.bgSize;
       var styles = {};
+      genBgSize(styles, bgSize);
       genPosition(styles, position);
       genBgImg(styles, bgImg);
-      genSize(styles, 'height', height);
+      genSize(styles, 'min-height', height);
       genSize(styles, 'width', width);
       genPosX(styles, x, _float);
       genPosY(styles, y, _float);
@@ -837,6 +906,11 @@ __decorate([vuePropertyDecorator.Prop({
   "default": ''
 })], HView.prototype, "bgImg", void 0);
 
+__decorate([vuePropertyDecorator.Prop({
+  type: String,
+  "default": 'spread'
+})], HView.prototype, "bgSize", void 0);
+
 HView = __decorate([vuePropertyDecorator.Component], HView);
 var script$2 = HView;
 
@@ -848,15 +922,15 @@ var __vue_script__$2 = script$2;
 
 var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-c93c1bba_0", {
-    source: ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: stretch;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden;\n}\n.h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n.h-view.--direction-y {\n    flex-direction: column;\n}\n\n/*# sourceMappingURL=view.vue.map */",
+  inject("data-v-5600425d_0", {
+    source: ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: flex-start;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden;\n}\n.h-view > .h-view-main {\n    display: flex;\n    align-items: flex-start;\n    position: relative;\n    flex-direction: column;\n}\n.h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n.h-view.--direction-x > .h-view-main {\n      flex-direction: row;\n      flex-wrap: nowrap;\n}\n.h-view.--direction-y {\n    flex-direction: column;\n}\n.h-view.--direction-y > .h-view-main {\n      flex-direction: column;\n}\n\n/*# sourceMappingURL=view.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\view\\view.vue", "view.vue"],
       "names": [],
-      "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,aAAA;EACA,oBAAA;EACA,kBAAA;EACA,sBAAA;EACA,gBAAA;AAAA;AARA;IAUA,mBAAA;IACA,eAAA;AAAA;AAXA;IAcA,sBAAA;AAAA;;ACAA,mCAAmC",
+      "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,aAAA;EACA,uBAAA;EACA,kBAAA;EACA,sBAAA;EACA,gBAAA;AAAA;AARA;IAUA,aAAA;IACA,uBAAA;IACA,kBAAA;IACA,sBAAA;AAAA;AAbA;IAgBA,mBAAA;IACA,eAAA;AAAA;AAjBA;MAmBA,mBAAA;MACA,iBAAA;AAAA;AApBA;IAwBA,sBAAA;AAAA;AAxBA;MA0BA,sBAAA;AAAA;;ACFA,mCAAmC",
       "file": "view.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-view {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: stretch;\r\n    position: relative;\r\n    flex-direction: column;\r\n    overflow: hidden;\r\n    &.--direction-x  {\r\n      flex-direction: row;\r\n      flex-wrap: wrap;\r\n    }\r\n    &.--direction-y  {\r\n      flex-direction: column;\r\n    }\r\n  }\r\n</style>\r\n<script lang=\"tsx\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { positionType } from '../core/constants'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition } from '../core/utils'\r\n\r\n@Component\r\nexport default class HView extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: String, default: 'y' })\r\n  direction!: 'x' | 'y'\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get classes () {\r\n    const { direction } = this\r\n\r\n    return {\r\n      [`--direction-${direction}`]: true\r\n    }\r\n  }\r\n\r\n  get styles (): any {\r\n    const { float, bgImg, height, width, x, y, position } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n\r\n  render () {\r\n    const { styles, $slots, classes } = this\r\n\r\n    return (\r\n      <div staticClass=\"h-view\"\r\n        class={classes}\r\n        style={styles}>\r\n        {$slots.default}\r\n      </div>\r\n    )\r\n  }\r\n}\r\n</script>\r\n", ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: stretch;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden; }\n  .h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap; }\n  .h-view.--direction-y {\n    flex-direction: column; }\n\n/*# sourceMappingURL=view.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  .h-view {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: flex-start;\r\n    position: relative;\r\n    flex-direction: column;\r\n    overflow: hidden;\r\n    >.h-view-main {\r\n      display: flex;\r\n      align-items: flex-start;\r\n      position: relative;\r\n      flex-direction: column;\r\n    }\r\n    &.--direction-x  {\r\n      flex-direction: row;\r\n      flex-wrap: wrap;\r\n      >.h-view-main {\r\n        flex-direction: row;\r\n        flex-wrap: nowrap;\r\n      }\r\n    }\r\n    &.--direction-y  {\r\n      flex-direction: column;\r\n      >.h-view-main {\r\n        flex-direction: column;\r\n      }\r\n    }\r\n  }\r\n</style>\r\n<script lang=\"tsx\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject } from 'vue-property-decorator'\r\nimport { positionType } from '../core/constants'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition, genBgSize } from '../core/utils'\r\n\r\n@Component\r\nexport default class HView extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: String, default: 'y' })\r\n  direction!: 'x' | 'y'\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: 'spread' })\r\n  bgSize!: string\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get classes () {\r\n    const { direction } = this\r\n\r\n    return {\r\n      [`--direction-${direction}`]: true\r\n    }\r\n  }\r\n\r\n  get styles (): any {\r\n    const { float, bgImg, height, width, x, y, position, bgSize} = this\r\n    const styles = {}\r\n\r\n    genBgSize(styles, bgSize)\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'min-height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n\r\n  render () {\r\n    const { styles, $slots, classes } = this\r\n\r\n    return (\r\n      <div staticClass=\"h-view\"\r\n        class={classes}\r\n        style={styles}>\r\n        <div staticClass=\"h-view-main\">\r\n          {$slots.default}\r\n        </div>\r\n      </div>\r\n    )\r\n  }\r\n}\r\n</script>\r\n", ".h-view {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: flex-start;\n  position: relative;\n  flex-direction: column;\n  overflow: hidden; }\n  .h-view > .h-view-main {\n    display: flex;\n    align-items: flex-start;\n    position: relative;\n    flex-direction: column; }\n  .h-view.--direction-x {\n    flex-direction: row;\n    flex-wrap: wrap; }\n    .h-view.--direction-x > .h-view-main {\n      flex-direction: row;\n      flex-wrap: nowrap; }\n  .h-view.--direction-y {\n    flex-direction: column; }\n    .h-view.--direction-y > .h-view-main {\n      flex-direction: column; }\n\n/*# sourceMappingURL=view.vue.map */"]
     },
     media: undefined
   });
@@ -906,13 +980,27 @@ function (_Vue) {
       return getStrValue(this, this.copyright);
     }
   }, {
+    key: "float",
+    get: function get() {
+      return this.position !== 'relative';
+    }
+  }, {
     key: "styles",
     get: function get() {
       var height = this.height,
-          bgImg = this.bgImg;
+          width = this.width,
+          position = this.position,
+          bgImg = this.bgImg,
+          x = this.x,
+          y = this.y,
+          _float = this["float"];
       var styles = {};
+      genPosition(styles, position);
+      genPosX(styles, x, _float);
+      genPosY(styles, y, _float);
       genBgImg(styles, bgImg);
       genSize(styles, 'height', height);
+      genSize(styles, 'width', width);
       return styles;
     }
   }]);
@@ -921,9 +1009,29 @@ function (_Vue) {
 }(vuePropertyDecorator.Vue);
 
 __decorate([vuePropertyDecorator.Prop({
+  type: String,
+  "default": 'relative'
+})], HFooter.prototype, "position", void 0);
+
+__decorate([vuePropertyDecorator.Prop({
   type: [Number, String],
   "default": 100
 })], HFooter.prototype, "height", void 0);
+
+__decorate([vuePropertyDecorator.Prop({
+  type: [Number, String],
+  "default": 320
+})], HFooter.prototype, "width", void 0);
+
+__decorate([vuePropertyDecorator.Prop({
+  type: [Number, String],
+  "default": 0
+})], HFooter.prototype, "x", void 0);
+
+__decorate([vuePropertyDecorator.Prop({
+  type: [Number, String],
+  "default": 0
+})], HFooter.prototype, "y", void 0);
 
 __decorate([vuePropertyDecorator.Prop({
   type: String,
@@ -1006,7 +1114,7 @@ __vue_render__$2._withStripped = true;
 
 var __vue_inject_styles__$3 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-03c91711_0", {
+  inject("data-v-7ddde02a_0", {
     source: ".h-footer {\n  width: 100%;\n  height: 100px;\n  background-color: black;\n  color: white;\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  padding: 2rem;\n  box-sizing: border-box;\n  font-size: 12px;\n}\n.h-footer .h-footer__logo {\n    user-select: none;\n    max-height: 50px;\n    max-width: 30%;\n}\n.h-footer .h-footer__copyright {\n    color: #916339;\n}\n.h-footer .h-footer-main {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    color: #cf9159;\n}\n.h-footer a {\n    text-decoration: none;\n    outline: none;\n    color: inherit;\n}\n\n/*# sourceMappingURL=footer.vue.map */",
     map: {
       "version": 3,
@@ -1014,7 +1122,7 @@ var __vue_inject_styles__$3 = function __vue_inject_styles__(inject) {
       "names": [],
       "mappings": "AAGA;EACA,WAAA;EACA,aAJA;EAKA,uBAAA;EACA,YAAA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,aAAA;EACA,sBAAA;EACA,eAAA;AAAA;AAVA;IAYA,iBAAA;IACA,gBAdA;IAeA,cAAA;AAAA;AAdA;IAiBA,cACA;AAAA;AAlBA;IAoBA,aAAA;IACA,mBAAA;IACA,8BAAA;IACA,cAAA;AAAA;AAvBA;IA0BA,qBAAA;IACA,aAAA;IACA,cAAA;AAAA;;ACJA,qCAAqC",
       "file": "footer.vue",
-      "sourcesContent": ["<style lang=\"scss\">\r\n  $--footer-size: 100px;\r\n  $--footer-logo-size: 50px;\r\n  .h-footer {\r\n    width: 100%;\r\n    height: $--footer-size;\r\n    background-color: black;\r\n    color: white;\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    padding: 2rem;\r\n    box-sizing: border-box;\r\n    font-size: 12px;\r\n    .h-footer__logo {\r\n      user-select: none;\r\n      max-height: $--footer-logo-size;\r\n      max-width: 30%;\r\n    }\r\n    .h-footer__copyright {\r\n      color: #916339\r\n    }\r\n    .h-footer-main {\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: space-between;\r\n      color: #cf9159;\r\n    }\r\n    a {\r\n      text-decoration:none;\r\n      outline: none;\r\n      color: inherit;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-footer\" :style=\"styles\">\r\n    <div class=\"h-footer-main\">\r\n      <img class=\"h-footer__logo\" ondragstart=\"return false\" :src=\"logo\" alt=\"\" />\r\n      <span class=\"h-footer__policy\">\r\n        <a :href=\"termsLink.href\">{{viewTermsText}}</a> / <a :href=\"policyLink.href\">{{viewPolicyText}}</a>\r\n      </span>\r\n    </div>\r\n    <div class=\"h-footer__copyright\">\r\n      {{viewCopyright}}\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genBgImg, genSize, getStrValue } from '../core/utils'\r\nimport { PropTypeLink } from '../core/constants'\r\n\r\n@Component\r\nexport default class HFooter extends Vue {\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String })\r\n  logo!: string\r\n\r\n  @Prop({ type: Object, default: () => ({ text: 'Terms Of Service', href: '' }) })\r\n  termsLink!: PropTypeLink\r\n\r\n  @Prop({ type: Object, default: () => ({ text: 'Privacy Policy', href: '' }) })\r\n  policyLink!: PropTypeLink\r\n\r\n  @Prop({ type: String, default: 'Copyright 2019 * Limited All right reserved' })\r\n  copyright!: string\r\n\r\n  get viewTermsText () {\r\n    return getStrValue(this, this.termsLink.text)\r\n  }\r\n\r\n  get viewPolicyText () {\r\n    return getStrValue(this, this.policyLink.text)\r\n  }\r\n\r\n  get viewCopyright () {\r\n    return getStrValue(this, this.copyright)\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, bgImg } = this\r\n    const styles = {}\r\n\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-footer {\n  width: 100%;\n  height: 100px;\n  background-color: black;\n  color: white;\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  padding: 2rem;\n  box-sizing: border-box;\n  font-size: 12px; }\n  .h-footer .h-footer__logo {\n    user-select: none;\n    max-height: 50px;\n    max-width: 30%; }\n  .h-footer .h-footer__copyright {\n    color: #916339; }\n  .h-footer .h-footer-main {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    color: #cf9159; }\n  .h-footer a {\n    text-decoration: none;\n    outline: none;\n    color: inherit; }\n\n/*# sourceMappingURL=footer.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\">\r\n  $--footer-size: 100px;\r\n  $--footer-logo-size: 50px;\r\n  .h-footer {\r\n    width: 100%;\r\n    height: $--footer-size;\r\n    background-color: black;\r\n    color: white;\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    padding: 2rem;\r\n    box-sizing: border-box;\r\n    font-size: 12px;\r\n    .h-footer__logo {\r\n      user-select: none;\r\n      max-height: $--footer-logo-size;\r\n      max-width: 30%;\r\n    }\r\n    .h-footer__copyright {\r\n      color: #916339\r\n    }\r\n    .h-footer-main {\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: space-between;\r\n      color: #cf9159;\r\n    }\r\n    a {\r\n      text-decoration:none;\r\n      outline: none;\r\n      color: inherit;\r\n    }\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-footer\" :style=\"styles\">\r\n    <div class=\"h-footer-main\">\r\n      <img class=\"h-footer__logo\" ondragstart=\"return false\" :src=\"logo\" alt=\"\" />\r\n      <span class=\"h-footer__policy\">\r\n        <a :href=\"termsLink.href\">{{viewTermsText}}</a> / <a :href=\"policyLink.href\">{{viewPolicyText}}</a>\r\n      </span>\r\n    </div>\r\n    <div class=\"h-footer__copyright\">\r\n      {{viewCopyright}}\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genBgImg, genSize, getStrValue, genPosition, genPosY, genPosX } from '../core/utils'\r\nimport { PropTypeLink, positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HFooter extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  height!: number\r\n\r\n  @Prop({ type: [Number, String], default: 320 })\r\n  width!: number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String })\r\n  logo!: string\r\n\r\n  @Prop({ type: Object, default: () => ({ text: 'Terms Of Service', href: '' }) })\r\n  termsLink!: PropTypeLink\r\n\r\n  @Prop({ type: Object, default: () => ({ text: 'Privacy Policy', href: '' }) })\r\n  policyLink!: PropTypeLink\r\n\r\n  @Prop({ type: String, default: 'Copyright 2019 * Limited All right reserved' })\r\n  copyright!: string\r\n\r\n  get viewTermsText () {\r\n    return getStrValue(this, this.termsLink.text)\r\n  }\r\n\r\n  get viewPolicyText () {\r\n    return getStrValue(this, this.policyLink.text)\r\n  }\r\n\r\n  get viewCopyright () {\r\n    return getStrValue(this, this.copyright)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, position, bgImg, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-footer {\n  width: 100%;\n  height: 100px;\n  background-color: black;\n  color: white;\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  padding: 2rem;\n  box-sizing: border-box;\n  font-size: 12px; }\n  .h-footer .h-footer__logo {\n    user-select: none;\n    max-height: 50px;\n    max-width: 30%; }\n  .h-footer .h-footer__copyright {\n    color: #916339; }\n  .h-footer .h-footer-main {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    color: #cf9159; }\n  .h-footer a {\n    text-decoration: none;\n    outline: none;\n    color: inherit; }\n\n/*# sourceMappingURL=footer.vue.map */"]
     },
     media: undefined
   });
@@ -1243,7 +1351,7 @@ function (_Vue) {
           _float = this["float"];
       var styles = {};
       genPosition(styles, position);
-      genEllipsis(styles, ellipsis);
+      genEllipsis(styles, Number(ellipsis));
       genSize(styles, 'width', width);
       genSize(styles, 'height', height);
       genSize(styles, 'fontSize', fontSize);
@@ -1313,7 +1421,7 @@ var __vue_render__$4 = function __vue_render__() {
   return _c("div", {
     staticClass: "h-text",
     style: _vm.styles
-  }, [_vm._v("\n  " + _vm._s(_vm.viewText) + "\n")]);
+  }, [_vm._t("default", [_vm._v("\n    " + _vm._s(_vm.text) + "\n  ")])], 2);
 };
 
 var __vue_staticRenderFns__$4 = [];
@@ -1322,15 +1430,15 @@ __vue_render__$4._withStripped = true;
 
 var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-e2ae0278_0", {
-    source: ".h-text[data-v-e2ae0278] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
+  inject("data-v-0e2571d8_0", {
+    source: ".h-text[data-v-0e2571d8] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\text\\text.vue", "text.vue"],
       "names": [],
       "mappings": "AACA;EACA,4BAAA;AAAA;;ACCA,mCAAmC",
       "file": "text.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    {{viewText}}\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, ellipsis)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    <slot>\r\n      {{text}}\r\n    </slot>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, Number(ellipsis))\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
     },
     media: undefined
   });
@@ -1338,7 +1446,7 @@ var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$5 = "data-v-e2ae0278";
+var __vue_scope_id__$5 = "data-v-0e2571d8";
 /* module identifier */
 
 var __vue_module_identifier__$5 = undefined;
@@ -1455,8 +1563,6 @@ function (_Vue) {
   }, {
     key: "updateInstance",
     value: function updateInstance(newVal, oldVal) {
-      console.log(newVal);
-      console.log(oldVal);
       var $video = this.$video,
           source = this.source;
 
@@ -1475,7 +1581,8 @@ function (_Vue) {
 
       var source = this.source,
           height = this.height,
-          width = this.width;
+          width = this.width,
+          autoPlay = this.autoPlay;
       this.videoId = uuid();
 
       if (source === VideoSource.youtube) {
@@ -1486,13 +1593,19 @@ function (_Vue) {
         this.$refs.box.appendChild($container);
 
         var initYTPlayer = function initYTPlayer() {
-          console.log(_this2.videoId);
           _this2.instance = new YT.Player($container, {
             width: width,
             height: height,
             videoId: _this2.link,
-            showinfo: 0
+            showinfo: 0,
+            rel: 0
           });
+
+          if (autoPlay) {
+            setTimeout(function () {
+              _this2.instance.playVideo();
+            }, 500);
+          }
         };
 
         if (YT) {
@@ -1579,6 +1692,11 @@ __decorate([vuePropertyDecorator.Prop({
 })], HVideo.prototype, "bgImg", void 0);
 
 __decorate([vuePropertyDecorator.Prop({
+  type: Boolean,
+  "default": false
+})], HVideo.prototype, "autoPlay", void 0);
+
+__decorate([vuePropertyDecorator.Prop({
   type: String,
   "default": 'youtube'
 })], HVideo.prototype, "source", void 0);
@@ -1620,7 +1738,7 @@ var __vue_render__$5 = function __vue_render__() {
       frameborder: "0",
       allowfullscreen: ""
     }
-  }) : _vm._e(), _vm._v(" "), void 0], 2)]);
+  }) : _vm._e()])]);
 };
 
 var __vue_staticRenderFns__$5 = [];
@@ -1629,15 +1747,15 @@ __vue_render__$5._withStripped = true;
 
 var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-ce4e3992_0", {
-    source: ".h-video[data-v-ce4e3992] {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=video.vue.map */",
+  inject("data-v-309073a7_0", {
+    source: ".h-video[data-v-309073a7] {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=video.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\video\\video.vue", "video.vue"],
       "names": [],
       "mappings": "AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;AAAA;;ACCA,oCAAoC",
       "file": "video.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-video {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-video\" :style=\"styles\">\r\n    <div class=\"h-video-box\" ref=\"box\">\r\n      <!--<div v-if=\"source === 'youtube'\" v-once :id=\"videoId\"></div>-->\r\n      <iframe v-if=\"source !== 'youtube'\"\r\n              :height=\"height\"\r\n              :width=\"width\"\r\n              :src=\"videoHref\"\r\n              frameborder=\"0\" allowfullscreen>\r\n      </iframe>\r\n      <template>\r\n\r\n      </template>\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\n// @ts-ignore\r\nimport './sdk/youtube'\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'\r\nimport { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n// <iframe height=498 width=510 src='http://player.youku.com/embed/XNDEzNzc1MzUwNA==' frameborder=0 'allowfullscreen'></iframe>\r\ntype videoSource = 'youtube' | 'youku'\r\n\r\nenum VideoSource {\r\n  youtube = 'youtube',\r\n  youku = 'youku'\r\n}\r\n\r\nconst VideoHrefs = {\r\n  youtube: '',\r\n  youku: 'http://player.youku.com/embed/'\r\n}\r\n\r\n@Component\r\nexport default class HVideo extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  // @Prop({ type: String, default: false })\r\n  // modal!: videoType\r\n\r\n  @Prop({ type: String, default: 'youtube' })\r\n  source!: videoSource\r\n\r\n  @Prop({ type: String, default: 'XNDEzNzc1MzUwNA==' })\r\n  link!: string\r\n\r\n  @Watch('height')\r\n  @Watch('width')\r\n  updateSize () {\r\n    const { $video, source, height, width } = this\r\n    if (source === VideoSource.youtube) {\r\n      $video.setAttribute('height', height as string)\r\n      $video.setAttribute('width', width as string)\r\n    }\r\n  }\r\n\r\n  @Watch('source')\r\n  updateInstance (newVal: VideoSource, oldVal: VideoSource) {\r\n    console.log(newVal)\r\n    console.log(oldVal)\r\n    const { $video, source } = this\r\n    if (oldVal === VideoSource.youtube) {\r\n      this.instance.destroy()\r\n    }\r\n\r\n    this.init()\r\n  }\r\n  //\r\n  // @Watch('link')\r\n\r\n  private get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  private get styles (): any {\r\n    const { height, width, position, x, y, float, bgImg } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  private get $video (): HTMLFrameElement {\r\n    return (this.$refs.box as HTMLElement)!.children[0] as HTMLFrameElement\r\n  }\r\n\r\n  get videoHref () {\r\n    return `${VideoHrefs[this.source]}${this.link}`\r\n  }\r\n\r\n  private videoId: string = ''\r\n\r\n  private instance: any = null\r\n\r\n  private init () {\r\n    const { source, height, width } = this\r\n\r\n    this.videoId = uuid()\r\n\r\n    if (source === VideoSource.youtube) {\r\n      const $container = document.createElement('div')\r\n      const YT = window.YT\r\n\r\n      $container.setAttribute('id', this.videoId)\r\n      // @ts-ignore\r\n      this.$refs.box.appendChild($container)\r\n\r\n      const initYTPlayer = () => {\r\n        console.log(this.videoId)\r\n        this.instance = new YT.Player($container, {\r\n          width,\r\n          height,\r\n          videoId: this.link,\r\n          showinfo: 0\r\n        })\r\n      }\r\n\r\n      if (YT) {\r\n        initYTPlayer()\r\n      } else {\r\n        window.onYouTubeIframeAPIReady = () => {\r\n          initYTPlayer()\r\n        }\r\n      }\r\n    } else {\r\n\r\n    }\r\n  }\r\n\r\n  mounted () {\r\n    this.init()\r\n  }\r\n}\r\n</script>\r\n", ".h-video {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=video.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-video {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-video\" :style=\"styles\">\r\n    <div class=\"h-video-box\" ref=\"box\">\r\n      <!--<div v-if=\"source === 'youtube'\" v-once :id=\"videoId\"></div>-->\r\n      <iframe v-if=\"source !== 'youtube'\"\r\n              :height=\"height\"\r\n              :width=\"width\"\r\n              :src=\"videoHref\"\r\n              frameborder=\"0\" allowfullscreen>\r\n      </iframe>\r\n    </div>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\n// @ts-ignore\r\nimport './sdk/youtube'\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins, Watch } from 'vue-property-decorator'\r\nimport { genSize, genPosition, genPosX, genPosY, genBgImg, getUnitVal, uuid } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\ntype videoSource = 'youtube' | 'youku'\r\n\r\nenum VideoSource {\r\n  youtube = 'youtube',\r\n  youku = 'youku'\r\n}\r\n\r\nconst VideoHrefs = {\r\n  youtube: '',\r\n  youku: 'http://player.youku.com/embed/'\r\n}\r\n\r\n@Component\r\nexport default class HVideo extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: Boolean, default: false })\r\n  autoPlay!: boolean\r\n\r\n  @Prop({ type: String, default: 'youtube' })\r\n  source!: videoSource\r\n\r\n  @Prop({ type: String, default: 'XNDEzNzc1MzUwNA==' })\r\n  link!: string\r\n\r\n  @Watch('height')\r\n  @Watch('width')\r\n  updateSize () {\r\n    const { $video, source, height, width } = this\r\n    if (source === VideoSource.youtube) {\r\n      $video.setAttribute('height', height as string)\r\n      $video.setAttribute('width', width as string)\r\n    }\r\n  }\r\n\r\n  @Watch('source')\r\n  updateInstance (newVal: VideoSource, oldVal: VideoSource) {\r\n    const { $video, source } = this\r\n    if (oldVal === VideoSource.youtube) {\r\n      this.instance.destroy()\r\n    }\r\n\r\n    this.init()\r\n  }\r\n  //\r\n  // @Watch('link')\r\n\r\n  private get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  private get styles (): any {\r\n    const { height, width, position, x, y, float, bgImg } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n    genBgImg(styles, bgImg)\r\n\r\n    return styles\r\n  }\r\n\r\n  private get $video (): HTMLFrameElement {\r\n    return (this.$refs.box as HTMLElement)!.children[0] as HTMLFrameElement\r\n  }\r\n\r\n  get videoHref () {\r\n    return `${VideoHrefs[this.source]}${this.link}`\r\n  }\r\n\r\n  private videoId: string = ''\r\n\r\n  private instance: any = null\r\n\r\n  private init () {\r\n    const { source, height, width, autoPlay } = this\r\n\r\n    this.videoId = uuid()\r\n\r\n    if (source === VideoSource.youtube) {\r\n      const $container = document.createElement('div')\r\n      const YT = window.YT\r\n\r\n      $container.setAttribute('id', this.videoId)\r\n      // @ts-ignore\r\n      this.$refs.box.appendChild($container)\r\n\r\n      const initYTPlayer = () => {\r\n        this.instance = new YT.Player($container, {\r\n          width,\r\n          height,\r\n          videoId: this.link,\r\n          showinfo: 0,\r\n          rel: 0\r\n        })\r\n\r\n        if (autoPlay) {\r\n          setTimeout(() => {\r\n            this.instance.playVideo()\r\n          }, 500)\r\n        }\r\n      }\r\n\r\n      if (YT) {\r\n        initYTPlayer()\r\n      } else {\r\n        window.onYouTubeIframeAPIReady = () => {\r\n          initYTPlayer()\r\n        }\r\n      }\r\n    } else {\r\n      // if (autoPlay) {\r\n      //   setTimeout(() => {\r\n      //     this.$video.click()\r\n      //   }, 500)\r\n      // }\r\n    }\r\n  }\r\n\r\n  mounted () {\r\n    this.init()\r\n  }\r\n}\r\n</script>\r\n", ".h-video {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=video.vue.map */"]
     },
     media: undefined
   });
@@ -1645,7 +1763,7 @@ var __vue_inject_styles__$6 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$6 = "data-v-ce4e3992";
+var __vue_scope_id__$6 = "data-v-309073a7";
 /* module identifier */
 
 var __vue_module_identifier__$6 = undefined;
@@ -1663,16 +1781,171 @@ HVideo$1.install = function (Vue) {
   Vue.component('HVideo', HVideo$1);
 };
 
+var zIndex = 2000;
+
+function getZIndex() {
+  return zIndex++;
+}
+
+var HModal =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(HModal, _Vue);
+
+  function HModal() {
+    var _this;
+
+    _classCallCheck(this, HModal);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HModal).apply(this, arguments));
+    _this.zIndex = getZIndex();
+    return _this;
+  }
+
+  _createClass(HModal, [{
+    key: "beforeEnter",
+    value: function beforeEnter() {
+      this.zIndex = getZIndex();
+    }
+  }, {
+    key: "afterLeave",
+    value: function afterLeave() {}
+  }, {
+    key: "handleMaskClick",
+    value: function handleMaskClick() {
+      this.$emit('input', false);
+    } // @Watch('appendToRoot')
+    // mountEl () {
+    //   if (this.isMounted) {
+    //     // console.log(this.$el)
+    //     // @ts-ignore
+    //     this.$el.parentNode.removeChild(this.$el)
+    //   }
+    //   this.isMounted = true
+    //   // console.log(this.$el)
+    //   // console.log(Store.$app)
+    //   if (this.appendToRoot) {
+    //     Store.$app.$el.appendChild(this.$el)
+    //   } else {
+    //     this.$parent.$el.appendChild(this.$el)
+    //   }
+    // }
+
+  }, {
+    key: "mounted",
+    value: function mounted() {
+      console.log(this);
+
+      if (this.$parent.$parent.$el.id === 'h-app') {
+        this.$parent.$parent.$el.appendChild(this.$el);
+      }
+    }
+  }, {
+    key: "styles",
+    get: function get() {
+      var zIndex = this.zIndex;
+      return {
+        zIndex: zIndex
+      };
+    }
+  }]);
+
+  return HModal;
+}(vuePropertyDecorator.Vue);
+
+__decorate([vuePropertyDecorator.Prop({
+  type: Boolean,
+  "default": false
+})], HModal.prototype, "value", void 0);
+
+HModal = __decorate([vuePropertyDecorator.Component], HModal);
+var script$7 = HModal;
+
+/* script */
+var __vue_script__$7 = script$7;
+/* template */
+
+var __vue_render__$6 = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c("transition", {
+    attrs: {
+      name: "modal"
+    },
+    on: {
+      "before-enter": _vm.beforeEnter,
+      "after-leave": _vm.afterLeave
+    }
+  }, [_c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.value,
+      expression: "value"
+    }],
+    staticClass: "h-modal",
+    style: _vm.styles,
+    on: {
+      click: _vm.handleMaskClick
+    }
+  }, [_vm._t("default")], 2)]);
+};
+
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
+/* style */
+
+var __vue_inject_styles__$7 = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-16e6fc98_0", {
+    source: ".h-modal[data-v-16e6fc98] {\n  height: 100%;\n  width: 100%;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n  position: absolute;\n  /*&.--append-to-root {*/\n  /*position: fixed;*/\n  /*}*/\n}\n.modal-enter[data-v-16e6fc98],\n.modal-leave-active[data-v-16e6fc98] {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0;\n}\n\n/*# sourceMappingURL=modal.vue.map */",
+    map: {
+      "version": 3,
+      "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\modal\\modal.vue", "modal.vue"],
+      "names": [],
+      "mappings": "AAEA;EACA,YAAA;EACA,WAAA;EACA,OAAA;EACA,MAAA;EACA,oCAAA;EACA,aAAA;EACA,sBAAA;EACA,4BAAA;EACA,iBAAA;EACA,kBAAA;EACA,uBAAA;EACA,mBAAA;EACA,IAAA;AAAA;AAEA;;EAEA,oBAAA;EACA,4BAAA;EACA,UACA;AAAA;;ACDA,oCAAoC",
+      "file": "modal.vue",
+      "sourcesContent": ["<!--弹窗-->\r\n<style lang=\"scss\" scoped>\r\n  .h-modal {\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    background-color: rgba(0, 0, 0, 0.7);\r\n    display: flex;\r\n    flex-direction: column;\r\n    transition: opacity .3s ease;\r\n    will-change: auto;\r\n    position: absolute;\r\n    /*&.--append-to-root {*/\r\n      /*position: fixed;*/\r\n    /*}*/\r\n  }\r\n  .modal-enter,\r\n  .modal-leave-active {\r\n    will-change: opacity;\r\n    transition: opacity .3s ease;\r\n    opacity: 0\r\n  }\r\n</style>\r\n\r\n<template>\r\n  <transition name=\"modal\" @before-enter=\"beforeEnter\"  @after-leave=\"afterLeave\">\r\n    <div class=\"h-modal\" :style=\"styles\" v-show=\"value\"  @click=\"handleMaskClick\">\r\n     <slot>\r\n     </slot>\r\n    </div>\r\n  </transition>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Watch, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport Store from '../core/store'\r\n\r\nlet zIndex =  2000\r\n\r\nfunction getZIndex (): number {\r\n  return zIndex ++\r\n}\r\n\r\n@Component\r\nexport default class HModal extends Vue {\r\n  @Prop({ type: Boolean, default: false })\r\n  value!: boolean\r\n\r\n  get styles (): any {\r\n    const { zIndex } = this\r\n    return {\r\n      zIndex\r\n    }\r\n  }\r\n\r\n  zIndex: number = getZIndex()\r\n\r\n  beforeEnter () {\r\n    this.zIndex = getZIndex()\r\n  }\r\n\r\n  afterLeave () {\r\n\r\n  }\r\n\r\n  handleMaskClick () {\r\n    this.$emit('input', false)\r\n  }\r\n\r\n  // @Watch('appendToRoot')\r\n  // mountEl () {\r\n  //   if (this.isMounted) {\r\n  //     // console.log(this.$el)\r\n  //     // @ts-ignore\r\n  //     this.$el.parentNode.removeChild(this.$el)\r\n  //   }\r\n  //   this.isMounted = true\r\n  //   // console.log(this.$el)\r\n  //   // console.log(Store.$app)\r\n  //   if (this.appendToRoot) {\r\n  //     Store.$app.$el.appendChild(this.$el)\r\n  //   } else {\r\n  //     this.$parent.$el.appendChild(this.$el)\r\n  //   }\r\n  // }\r\n\r\n  mounted () {\r\n    console.log(this)\r\n    if (this.$parent.$parent.$el.id === 'h-app') {\r\n      this.$parent!.$parent!.$el.appendChild(this.$el)\r\n    }\r\n  }\r\n}\r\n</script>\r\n", ".h-modal {\n  height: 100%;\n  width: 100%;\n  left: 0;\n  top: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n  will-change: auto;\n  position: absolute;\n  /*&.--append-to-root {*/\n  /*position: fixed;*/\n  /*}*/ }\n\n.modal-enter,\n.modal-leave-active {\n  will-change: opacity;\n  transition: opacity .3s ease;\n  opacity: 0; }\n\n/*# sourceMappingURL=modal.vue.map */"]
+    },
+    media: undefined
+  });
+};
+/* scoped */
+
+
+var __vue_scope_id__$7 = "data-v-16e6fc98";
+/* module identifier */
+
+var __vue_module_identifier__$7 = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$7 = false;
+/* style inject SSR */
+
+var HModal$1 = normalizeComponent_1({
+  render: __vue_render__$6,
+  staticRenderFns: __vue_staticRenderFns__$6
+}, __vue_inject_styles__$7, __vue_script__$7, __vue_scope_id__$7, __vue_is_functional_template__$7, __vue_module_identifier__$7, browser, undefined);
+
+HModal$1.install = function (Vue) {
+  Vue.component('HModal', HModal$1);
+};
+
 // export { default as HSwiper } from './swiper'
 
 var components = /*#__PURE__*/Object.freeze({
-    HApp: HApp$1,
-    HButton: HButton$1,
-    HView: HView$1,
-    HFooter: HFooter$1,
-    HPromoCode: HPromoCode$1,
-    HText: HText$1,
-    HVideo: HVideo$1
+  HApp: HApp$1,
+  HButton: HButton$1,
+  HView: HView$1,
+  HFooter: HFooter$1,
+  HPromoCode: HPromoCode$1,
+  HText: HText$1,
+  HVideo: HVideo$1,
+  HModal: HModal$1
 });
 
 var Mode;
@@ -1692,8 +1965,8 @@ var UiMode;
 })(UiMode || (UiMode = {}));
 
 var index$1 = /*#__PURE__*/Object.freeze({
-    get Mode () { return Mode; },
-    get UiMode () { return UiMode; }
+  get Mode () { return Mode; },
+  get UiMode () { return UiMode; }
 });
 
 var MegH5 = {
@@ -1718,6 +1991,7 @@ exports.Constants = index$1;
 exports.HApp = HApp$1;
 exports.HButton = HButton$1;
 exports.HFooter = HFooter$1;
+exports.HModal = HModal$1;
 exports.HPromoCode = HPromoCode$1;
 exports.HText = HText$1;
 exports.HVideo = HVideo$1;
