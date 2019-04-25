@@ -12,7 +12,7 @@
   <div class="h-button"
        :style="styles"
        @click="onClick">
-    {{text}}
+    {{viewText}}
   </div>
 </template>
 <script lang="ts">

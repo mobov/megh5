@@ -337,8 +337,6 @@ function genEllipsis() {
     }
   }
 }
-var tReg = /\$t{.+?}/g;
-var pReg = /\$p{.+?}/g;
 /**
  * 获取转换后的字符串值，$t{key}表示翻译值，$p{key}表示url值
  * @param $vue
@@ -347,18 +345,21 @@ var pReg = /\$p{.+?}/g;
 
 function getStrValue($vue, value) {
   var result = value;
-  var tArrs = value.match(tReg);
-  var pArrs = value.match(pReg);
+  var tArrs = value.match(/\$t{.+?}/g);
+  var pArrs = value.match(/\$p{.+?}/g);
+  console.log(value.match(/\$t{.+?}/g));
 
   if (tArrs) {
+    console.log(tArrs);
     tArrs.forEach(function (item) {
       var param = item.substr(3, item.length - 4);
+      result = result.replace(item, param);
 
       if ($vue && $vue.$t) {
         result = result.replace(item, $vue.$t(param));
-      } else {
-        result = result.replace(item, param);
       }
+
+      console.log(result);
     });
   }
 
@@ -369,6 +370,8 @@ function getStrValue($vue, value) {
     });
   }
 
+  console.log(1111);
+  console.log(result);
   return result;
 }
 function uuid() {
@@ -761,7 +764,7 @@ var __vue_render__$1 = function __vue_render__() {
     on: {
       click: _vm.onClick
     }
-  }, [_vm._v("\n  " + _vm._s(_vm.text) + "\n")]);
+  }, [_vm._v("\n  " + _vm._s(_vm.viewText) + "\n")]);
 };
 
 var __vue_staticRenderFns__$1 = [];
@@ -770,7 +773,7 @@ __vue_render__$1._withStripped = true;
 
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-3e9ca97a_0", {
+  inject("data-v-515c39d5_0", {
     source: "\n.h-button {\n  background-position: center;\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n",
     map: {
       "version": 3,
@@ -778,7 +781,7 @@ var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
       "names": [],
       "mappings": ";AACA;EACA,2BAAA;EACA,0BAAA;EACA,4BAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;AACA",
       "file": "button.vue",
-      "sourcesContent": ["<style>\r\n  .h-button {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-button\"\r\n       :style=\"styles\"\r\n       @click=\"onClick\">\r\n    {{text}}\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition, getStrValue } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HButton extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: '按钮' })\r\n  text!: string\r\n\r\n  @Emit('click')\r\n  onClick (e: Event) { }\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, x, y, bgImg, position, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n"]
+      "sourcesContent": ["<style>\r\n  .h-button {\r\n    background-position: center;\r\n    background-size: 100% 100%;\r\n    background-repeat: no-repeat;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-button\"\r\n       :style=\"styles\"\r\n       @click=\"onClick\">\r\n    {{viewText}}\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genBgImg, genSize, genPosX, genPosY, genPosition, getStrValue } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HButton extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: String, default: '' })\r\n  bgImg!: string\r\n\r\n  @Prop({ type: String, default: '按钮' })\r\n  text!: string\r\n\r\n  @Emit('click')\r\n  onClick (e: Event) { }\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, x, y, bgImg, position, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genBgImg(styles, bgImg)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'width', width)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n"]
     },
     media: undefined
   });
@@ -1417,7 +1420,7 @@ var __vue_render__$4 = function __vue_render__() {
   return _c("div", {
     staticClass: "h-text",
     style: _vm.styles
-  }, [_vm._t("default", [_vm._v("\n    " + _vm._s(_vm.text) + "\n  ")])], 2);
+  }, [_vm._v("\n  " + _vm._s(_vm.viewText) + "\n")]);
 };
 
 var __vue_staticRenderFns__$4 = [];
@@ -1426,15 +1429,15 @@ __vue_render__$4._withStripped = true;
 
 var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-0e2571d8_0", {
-    source: ".h-text[data-v-0e2571d8] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
+  inject("data-v-12b1d731_0", {
+    source: ".h-text[data-v-12b1d731] {\n  background-repeat: no-repeat;\n}\n\n/*# sourceMappingURL=text.vue.map */",
     map: {
       "version": 3,
       "sources": ["D:\\Projects\\mobov\\packages\\megh5\\packages\\ui\\src\\text\\text.vue", "text.vue"],
       "names": [],
       "mappings": "AACA;EACA,4BAAA;AAAA;;ACCA,mCAAmC",
       "file": "text.vue",
-      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    <slot>\r\n      {{text}}\r\n    </slot>\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, Number(ellipsis))\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
+      "sourcesContent": ["<style lang=\"scss\" scoped>\r\n  .h-text {\r\n    background-repeat: no-repeat;\r\n  }\r\n</style>\r\n<template>\r\n  <div class=\"h-text\" :style=\"styles\">\r\n    <!--<slot>-->\r\n      <!--{{viewText}}-->\r\n    <!--</slot>-->\r\n    {{viewText}}\r\n  </div>\r\n</template>\r\n<script lang=\"ts\">\r\nimport { Vue, Component, Prop, Provide, Emit, Inject, Mixins } from 'vue-property-decorator'\r\nimport { genSize, genEllipsis, getStrValue, genPosition, genPosX, genPosY } from '../core/utils'\r\nimport { positionType } from '../core/constants'\r\n\r\n@Component\r\nexport default class HText extends Vue {\r\n  @Prop({ type: String, default: 'relative' })\r\n  position!: positionType\r\n\r\n  @Prop({ type: [Number, String], default: 50 })\r\n  height!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 100 })\r\n  width!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 12 })\r\n  fontSize!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  x!: string | number\r\n\r\n  @Prop({ type: [Number, String], default: 0 })\r\n  y!: string | number\r\n\r\n  @Prop({ type: Number, default: 0 })\r\n  ellipsis!: number\r\n\r\n  @Prop({ type: String, default: '内容' })\r\n  text!: string\r\n\r\n  get viewText () {\r\n    return getStrValue(this, this.text)\r\n  }\r\n\r\n  get float (): boolean {\r\n    return this.position !== 'relative'\r\n  }\r\n\r\n  get styles (): any {\r\n    const { height, width, ellipsis, fontSize, position, x, y, float } = this\r\n    const styles = {}\r\n\r\n    genPosition(styles, position)\r\n    genEllipsis(styles, Number(ellipsis))\r\n    genSize(styles, 'width', width)\r\n    genSize(styles, 'height', height)\r\n    genSize(styles, 'fontSize', fontSize)\r\n    genPosX(styles, x, float)\r\n    genPosY(styles, y, float)\r\n\r\n    return styles\r\n  }\r\n}\r\n</script>\r\n", ".h-text {\n  background-repeat: no-repeat; }\n\n/*# sourceMappingURL=text.vue.map */"]
     },
     media: undefined
   });
@@ -1442,7 +1445,7 @@ var __vue_inject_styles__$5 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$5 = "data-v-0e2571d8";
+var __vue_scope_id__$5 = "data-v-12b1d731";
 /* module identifier */
 
 var __vue_module_identifier__$5 = undefined;

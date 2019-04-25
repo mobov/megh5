@@ -418,9 +418,6 @@ export default class CompSuit extends Vue {
   }
 
   handleKeyDown (e: KeyboardEvent) {
-    console.log(e)
-
-
     if (this.isMove) {
       if (e.code === 'KeyW') {
         this.handleMoveY(-1)
