@@ -333,7 +333,7 @@ export default class CompSuit extends Vue {
 
   handleSizeY (val: number, direction: '↑' | '↓') {
     if (this.isLocked) { return }
-    const { topLimit, minHeight } = this
+    const { topLimit, heightLimit, minHeight } = this
     const sizeY = this.sizeY + (direction === '↑' ? -val : val)
 
     if (sizeY < minHeight) { return }
@@ -344,7 +344,7 @@ export default class CompSuit extends Vue {
         this.sizeY = sizeY
         this.moveY = moveY
       }
-    } else {
+    } else if (heightLimit >= sizeY) {
       this.sizeY = sizeY
     }
     this.updateUi()

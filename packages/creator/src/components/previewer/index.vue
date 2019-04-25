@@ -14,6 +14,8 @@
       position: relative;
       z-index: 1;
       cursor: $--previewer-cursor-select;
+      will-change: contents;
+      transform: translate3d(0, 0, 0);
       &.--on-select {
         cursor: $--previewer-cursor-select;
       }

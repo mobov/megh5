@@ -1,5 +1,5 @@
 import { Vue, Prop, Component, Emit, Watch } from 'vue-property-decorator';
-import { getUrlParam } from '@mobov/es-helper';
+import { Client, getUrlParam } from '@mobov/es-helper';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -197,10 +197,18 @@ function genPosX() {
   var _float = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (val !== undefined) {
-    if (_float) {
-      styles['left'] = getUnitVal(val);
+    if (Client.lang === 'ar') {
+      if (_float) {
+        styles['marginLeft'] = getUnitVal(val);
+      } else {
+        styles['left'] = getUnitVal(val);
+      }
     } else {
-      styles['marginLeft'] = getUnitVal(val);
+      if (_float) {
+        styles['left'] = getUnitVal(val);
+      } else {
+        styles['marginLeft'] = getUnitVal(val);
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import { getUrlParam } from '@mobov/es-helper'
+import { Client } from '@mobov/es-helper'
 import { positionType } from '../constants'
 
 export const unit = '100vw / 100'
@@ -51,10 +52,18 @@ export function genSize (styles: any = {}, property: string, val: string | numbe
  */
 export function genPosX (styles: any = {}, val: string | number | undefined, float: boolean = false) {
   if (val !== undefined) {
-    if (float) {
-      styles['left'] = getUnitVal(val)
+    if (Client.lang === 'ar') {
+      if (float) {
+        styles['marginLeft'] = getUnitVal(val)
+      } else {
+        styles['left'] = getUnitVal(val)
+      }
     } else {
-      styles['marginLeft'] = getUnitVal(val)
+      if (float) {
+        styles['left'] = getUnitVal(val)
+      } else {
+        styles['marginLeft'] = getUnitVal(val)
+      }
     }
   }
 }

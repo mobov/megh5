@@ -10,15 +10,15 @@ export default {
     "i18n": "onemt-i18n --config=./config/i18n.js"
   },
   "dependencies": {
-    "@megh5/ui": "^0.2.5",
-    "@mobov/es-helper": "^1.0.6",
+    "@megh5/ui": "^0.2.7",
+    "@mobov/es-helper": "^1.0.10",
     "@mobov/scss-helper": "^0.0.5",
+    "core-js": "^2.6.5",
     "fastclick": "^1.0.6",
+    "vue": "^2.6.6",
     "vue-class-component": "^7.0.1",
     "vue-i18n": "^7.8.0",
-    "vue-property-decorator": "^7.3.0",
-    "core-js": "^2.6.5",
-    "vue": "^2.6.6"
+    "vue-property-decorator": "^7.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
